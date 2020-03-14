@@ -1,6 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>BFS搜索</title>
+    <url>/2020/03/11/BFS%E6%90%9C%E7%B4%A2/</url>
+    <content><![CDATA[<p>广度优先搜索<br> <a id="more"></a></p>
+<h1 id="BFS搜索"><a href="#BFS搜索" class="headerlink" title="BFS搜索"></a>BFS搜索</h1><p>广度优先搜索一层一层遍历，每一层得到的所有新节点，要用队列存储起来以备下一层遍历的时候再遍历。</p>
+<p>而深度优先搜索在得到一个新节点时立即对新节点进行遍历：从节点 0 出发开始遍历，得到到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。</p>
+<p>从一个节点出发，使用 DFS 对一个图进行遍历时，能够遍历到的节点都是从初始节点可达的，DFS 常用来求解这种 可达性 问题。</p>
+<p>在程序实现 DFS 时需要考虑以下问题：</p>
+<p>栈：用栈来保存当前节点信息，当遍历新节点返回时能够继续遍历当前节点。可以使用递归栈。<br>标记：和 BFS 一样同样需要对已经遍历过的节点进行标记。</p>
+<h3 id="模板1"><a href="#模板1" class="headerlink" title="模板1"></a>模板1</h3><pre><code>void BFS()
+{
+    定义队列;
+    定义备忘录，用于记录已经访问的位置；
+
+    判断边界条件，是否能直接返回结果的。
+
+    将起始位置加入到队列中，同时更新备忘录。
+
+    while (队列不为空) {
+        获取当前队列中的元素个数。
+        for (元素个数) {
+            取出一个位置节点。
+            判断是否到达终点位置。
+            获取它对应的下一个所有的节点。
+            条件判断，过滤掉不符合条件的位置。
+            新位置重新加入队列。
+        }
+    }
+}</code></pre><h3 id="模板2"><a href="#模板2" class="headerlink" title="模板2"></a>模板2</h3><pre><code>void BFS()
+{
+    1.判断边界条件，是否能直接返回结果的。
+
+    2.定义队列。
+
+    3.定义备忘录。
+
+    4.将起始位置加入到队列中，同时更新备忘录。
+
+
+    5.BFS遍历
+    while (队列不为空) {
+        5.1 获取当前队列中的元素个数。
+        for (元素个数) {
+            5.2 取出一个位置节点。
+
+            5.3 判断是否到达终点位置。
+
+            5.4 获取它对应的下一个所有的节点。
+
+            5.5 条件判断，过滤掉不符合条件的位置。
+
+            5.6 新位置重新加入队列，并更新备忘录。
+        }
+    }
+}</code></pre><h1 id="1-矩阵"><a href="#1-矩阵" class="headerlink" title="1.矩阵"></a>1.矩阵</h1><p>leetcode 1091，题目描述：0 表示可以经过某个位置，求解从左上角到右下角的最短路径长度。</p>
+<pre><code>class Solution {
+    public int shortestPathBinaryMatrix(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        // 当矩阵第一个元素为1或者最后一个元素为1时，直接返回-1
+        if(grid[0][0]==1 || grid[grid.length-1][grid[0].length-1]==1) return -1;
+        grid[0][0] = 1;
+        // 创建队列用于保存每一格可以走的步
+        Queue&lt;int[]&gt; q=new LinkedList&lt;&gt;();
+        q.add(new int[]{0, 0});
+        // 队列长度,c要和队列做对比,知道何时到达队列长度
+        int len = q.size();
+        int c = 0;
+        // 定义八个方向
+        int[][] dir = {{1, 0}, {1, 1}, {1,-1}, {0, 1}, {0, -1}, {-1, 0},{-1, -1}, {-1, 1}};
+        // 定义最短路径长度
+        int path = 1;
+        while(!q.isEmpty()){
+            int[] data = q.poll();
+            // x、y代表当前的坐标（x，y）
+            int x = data[0];
+            int y = data[1];
+            // 如果走到最后一格，返回
+            if(x == m - 1 &amp;&amp; y == n - 1) return path;
+            // 此处填充队列，将可走的步添加进队列
+            for(int[] d : dir){
+                // x1，y1代表当前坐标移动后的坐标（x1，y1）
+                int x1 = x + d[0];
+                int y1 = y + d[1];
+                if(x1 &gt;= 0 &amp;&amp; y1 &gt;= 0 &amp;&amp; x1 &lt; m &amp;&amp; y1 &lt; n &amp;&amp; grid[x1][y1] == 0){
+                    q.add(new int[]{x1, y1});
+                    grid[x1][y1] = 1;
+                }
+            }
+            c++;
+            if(c == len){
+                c = 0;
+                path++;
+                len = q.size();
+            }
+        }
+        return -1;
+    }
+}</code></pre><h1 id="2-单词接龙"><a href="#2-单词接龙" class="headerlink" title="2.单词接龙"></a>2.单词接龙</h1><p>leetcode127，题目描述：找出一条从 beginWord 到 endWord 的最短路径，每次移动规定为改变一个字符，并且改变之后的字符串必须在 wordList 中。</p>
+<pre><code>class Solution {
+    public int ladderLength(String beginWord, String endWord, List&lt;String&gt; wordList) {
+        if (!wordList.contains(endWord)) {
+            return 0;
+        }
+
+        int len = beginWord.length();
+        // 将字符替换模板“a*b”作为key，所有符合模板的字符串作为value创建哈希表，以此为边建立无向图
+        Map&lt;String, List&lt;String&gt;&gt; patternMap = generatePatternMap(wordList, len);
+
+        Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
+        Set&lt;String&gt; visited = new HashSet&lt;&gt;();
+
+        queue.add(beginWord);
+        visited.add(beginWord);
+
+        int res = 1;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i &lt; size; i++) {
+                String word = queue.poll();
+
+                if (word.equals(endWord)) {
+                    return res;
+                }
+
+                for (int j = 0; j &lt; len; j++) {
+                    String pattern = word.substring(0, j) + &quot;*&quot; + word.substring(j + 1, len);
+                    List&lt;String&gt; nextWords = patternMap.getOrDefault(pattern, new ArrayList&lt;&gt;());
+                    for (String nextWord : nextWords) {
+                        if (!visited.contains(nextWord)) {
+                            queue.add(nextWord);
+                            visited.add(nextWord);
+                        }
+                    }
+                }
+            }
+            res++;
+        }
+        return 0;
+    }
+
+
+    public Map&lt;String, List&lt;String&gt;&gt; generatePatternMap(List&lt;String&gt; wordList, int len) {
+        Map&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;&gt;();
+        for (String word : wordList) {
+            for (int i = 0; i &lt; len; i++) {
+                String pattern = word.substring(0, i) + &quot;*&quot; + word.substring(i + 1, len);
+                map.putIfAbsent(pattern, new ArrayList&lt;&gt;());
+                map.get(pattern).add(word);
+            }
+        }
+        return map;
+    }
+}</code></pre>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CSS基础笔记</title>
     <url>/2020/03/11/CSS%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p>CSS基础入门笔记<br> <a id="more"></a></p>
@@ -355,164 +516,342 @@
       </tags>
   </entry>
   <entry>
-    <title>BFS搜索</title>
-    <url>/2020/03/11/BFS%E6%90%9C%E7%B4%A2/</url>
-    <content><![CDATA[<p>广度优先搜索<br> <a id="more"></a></p>
-<h1 id="BFS搜索"><a href="#BFS搜索" class="headerlink" title="BFS搜索"></a>BFS搜索</h1><p>广度优先搜索一层一层遍历，每一层得到的所有新节点，要用队列存储起来以备下一层遍历的时候再遍历。</p>
-<p>而深度优先搜索在得到一个新节点时立即对新节点进行遍历：从节点 0 出发开始遍历，得到到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。</p>
-<p>从一个节点出发，使用 DFS 对一个图进行遍历时，能够遍历到的节点都是从初始节点可达的，DFS 常用来求解这种 可达性 问题。</p>
-<p>在程序实现 DFS 时需要考虑以下问题：</p>
-<p>栈：用栈来保存当前节点信息，当遍历新节点返回时能够继续遍历当前节点。可以使用递归栈。<br>标记：和 BFS 一样同样需要对已经遍历过的节点进行标记。</p>
-<h3 id="模板1"><a href="#模板1" class="headerlink" title="模板1"></a>模板1</h3><pre><code>void BFS()
-{
-    定义队列;
-    定义备忘录，用于记录已经访问的位置；
+    <title>HTML快速入门笔记</title>
+    <url>/2020/03/11/HTML%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>HTML快速入门笔记<br> <a id="more"></a></p>
+<h2 id="web概念概述"><a href="#web概念概述" class="headerlink" title="web概念概述"></a>web概念概述</h2><pre><code>* JavaWeb：
+    * 使用Java语言开发基于互联网的项目
 
-    判断边界条件，是否能直接返回结果的。
+* 软件架构：
+    1. C/S: Client/Server 客户端/服务器端
+        * 在用户本地有一个客户端程序，在远程有一个服务器端程序
+        * 如：QQ，迅雷...
+        * 优点：
+            1. 用户体验好
+        * 缺点：
+            1. 开发、安装，部署，维护 麻烦
+    2. B/S: Browser/Server 浏览器/服务器端
+        * 只需要一个浏览器，用户通过不同的网址(URL)，客户访问不同的服务器端程序
+        * 优点：
+            1. 开发、安装，部署，维护 简单
+        * 缺点：
+            1. 如果应用过大，用户的体验可能会受到影响
+            2. 对硬件要求过高
 
-    将起始位置加入到队列中，同时更新备忘录。
-
-    while (队列不为空) {
-        获取当前队列中的元素个数。
-        for (元素个数) {
-            取出一个位置节点。
-            判断是否到达终点位置。
-            获取它对应的下一个所有的节点。
-            条件判断，过滤掉不符合条件的位置。
-            新位置重新加入队列。
-        }
-    }
-}</code></pre><h3 id="模板2"><a href="#模板2" class="headerlink" title="模板2"></a>模板2</h3><pre><code>void BFS()
-{
-    1.判断边界条件，是否能直接返回结果的。
-
-    2.定义队列。
-
-    3.定义备忘录。
-
-    4.将起始位置加入到队列中，同时更新备忘录。
-
-
-    5.BFS遍历
-    while (队列不为空) {
-        5.1 获取当前队列中的元素个数。
-        for (元素个数) {
-            5.2 取出一个位置节点。
-
-            5.3 判断是否到达终点位置。
-
-            5.4 获取它对应的下一个所有的节点。
-
-            5.5 条件判断，过滤掉不符合条件的位置。
-
-            5.6 新位置重新加入队列，并更新备忘录。
-        }
-    }
-}</code></pre><h1 id="1-矩阵"><a href="#1-矩阵" class="headerlink" title="1.矩阵"></a>1.矩阵</h1><p>leetcode 1091，题目描述：0 表示可以经过某个位置，求解从左上角到右下角的最短路径长度。</p>
-<pre><code>class Solution {
-    public int shortestPathBinaryMatrix(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        // 当矩阵第一个元素为1或者最后一个元素为1时，直接返回-1
-        if(grid[0][0]==1 || grid[grid.length-1][grid[0].length-1]==1) return -1;
-        grid[0][0] = 1;
-        // 创建队列用于保存每一格可以走的步
-        Queue&lt;int[]&gt; q=new LinkedList&lt;&gt;();
-        q.add(new int[]{0, 0});
-        // 队列长度,c要和队列做对比,知道何时到达队列长度
-        int len = q.size();
-        int c = 0;
-        // 定义八个方向
-        int[][] dir = {{1, 0}, {1, 1}, {1,-1}, {0, 1}, {0, -1}, {-1, 0},{-1, -1}, {-1, 1}};
-        // 定义最短路径长度
-        int path = 1;
-        while(!q.isEmpty()){
-            int[] data = q.poll();
-            // x、y代表当前的坐标（x，y）
-            int x = data[0];
-            int y = data[1];
-            // 如果走到最后一格，返回
-            if(x == m - 1 &amp;&amp; y == n - 1) return path;
-            // 此处填充队列，将可走的步添加进队列
-            for(int[] d : dir){
-                // x1，y1代表当前坐标移动后的坐标（x1，y1）
-                int x1 = x + d[0];
-                int y1 = y + d[1];
-                if(x1 &gt;= 0 &amp;&amp; y1 &gt;= 0 &amp;&amp; x1 &lt; m &amp;&amp; y1 &lt; n &amp;&amp; grid[x1][y1] == 0){
-                    q.add(new int[]{x1, y1});
-                    grid[x1][y1] = 1;
-                }
-            }
-            c++;
-            if(c == len){
-                c = 0;
-                path++;
-                len = q.size();
-            }
-        }
-        return -1;
-    }
-}</code></pre><h1 id="2-单词接龙"><a href="#2-单词接龙" class="headerlink" title="2.单词接龙"></a>2.单词接龙</h1><p>leetcode127，题目描述：找出一条从 beginWord 到 endWord 的最短路径，每次移动规定为改变一个字符，并且改变之后的字符串必须在 wordList 中。</p>
-<pre><code>class Solution {
-    public int ladderLength(String beginWord, String endWord, List&lt;String&gt; wordList) {
-        if (!wordList.contains(endWord)) {
-            return 0;
-        }
-
-        int len = beginWord.length();
-        // 将字符替换模板“a*b”作为key，所有符合模板的字符串作为value创建哈希表，以此为边建立无向图
-        Map&lt;String, List&lt;String&gt;&gt; patternMap = generatePatternMap(wordList, len);
-
-        Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
-        Set&lt;String&gt; visited = new HashSet&lt;&gt;();
-
-        queue.add(beginWord);
-        visited.add(beginWord);
-
-        int res = 1;
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i &lt; size; i++) {
-                String word = queue.poll();
-
-                if (word.equals(endWord)) {
-                    return res;
-                }
-
-                for (int j = 0; j &lt; len; j++) {
-                    String pattern = word.substring(0, j) + &quot;*&quot; + word.substring(j + 1, len);
-                    List&lt;String&gt; nextWords = patternMap.getOrDefault(pattern, new ArrayList&lt;&gt;());
-                    for (String nextWord : nextWords) {
-                        if (!visited.contains(nextWord)) {
-                            queue.add(nextWord);
-                            visited.add(nextWord);
-                        }
-                    }
-                }
-            }
-            res++;
-        }
-        return 0;
-    }
+* B/S架构详解
+    * 资源分类：
+        1. 静态资源：
+            * 使用静态网页开发技术发布的资源。
+            * 特点：
+                * 所有用户访问，得到的结果是一样的。
+                * 如：文本，图片，音频、视频, HTML,CSS,JavaScript
+                * 如果用户请求的是静态资源，那么服务器会直接将静态资源发送给浏览器。浏览器中内置了静态资源的解析引擎，可以展示静态资源
+        2. 动态资源：
+            * 使用动态网页及时发布的资源。
+            * 特点：
+                * 所有用户访问，得到的结果可能不一样。
+                * 如：jsp/servlet,php,asp...
+                * 如果用户请求的是动态资源，那么服务器会执行动态资源，转换为静态资源，再发送给浏览器
 
 
-    public Map&lt;String, List&lt;String&gt;&gt; generatePatternMap(List&lt;String&gt; wordList, int len) {
-        Map&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;&gt;();
-        for (String word : wordList) {
-            for (int i = 0; i &lt; len; i++) {
-                String pattern = word.substring(0, i) + &quot;*&quot; + word.substring(i + 1, len);
-                map.putIfAbsent(pattern, new ArrayList&lt;&gt;());
-                map.get(pattern).add(word);
-            }
-        }
-        return map;
-    }
-}</code></pre>]]></content>
+
+    * 静态资源：
+        * HTML：用于搭建基础网页，展示页面的内容
+        * CSS：用于美化页面，布局页面
+        * JavaScript：控制页面的元素，让页面有一些动态的效果</code></pre><h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><pre><code>1. 概念：是最基础的网页开发语言
+    * Hyper Text Markup Language 超文本标记语言
+        * 超文本:
+            * 超文本是用超链接的方法，将各种不同空间的文字信息组织在一起的网状文本.
+        * 标记语言:
+            * 由标签构成的语言。&lt;标签名称&gt; 如 html，xml
+            * 标记语言不是编程语言
+
+2. 快速入门：
+    * 语法：
+        1. html文档后缀名 .html 或者 .htm
+        2. 标签分为
+            1. 围堵标签：有开始标签和结束标签。如 &lt;html&gt; &lt;/html&gt;
+            2. 自闭和标签：开始标签和结束标签在一起。如 &lt;br/&gt;
+
+        3. 标签可以嵌套：
+            需要正确嵌套，不能你中有我，我中有你
+            错误：&lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt;
+            正确：&lt;a&gt;&lt;b&gt;&lt;/b&gt;&lt;/a&gt;
+
+        4. 在开始标签中可以定义属性。属性是由键值对构成，值需要用引号(单双都可)引起来
+        5. html的标签不区分大小写，但是建议使用小写。
+
+    * 代码：
+        &lt;html&gt;
+
+            &lt;head&gt;
+                &lt;title&gt;title&lt;/title&gt;
+            &lt;/head&gt;
+
+            &lt;body&gt;
+                &lt;FONT color=&apos;red&apos;&gt;Hello World&lt;/font&gt;&lt;br/&gt;
+
+                &lt;font color=&apos;green&apos;&gt;Hello World&lt;/font&gt;
+
+            &lt;/body&gt;
+
+        &lt;/html&gt;
+
+3. 标签学习：
+    1. 文件标签：构成html最基本的标签
+        * html:html文档的根标签
+        * head：头标签。用于指定html文档的一些属性。引入外部的资源
+        * title：标题标签。
+        * body：体标签
+        * &lt;!DOCTYPE html&gt;：html5中定义该文档是html文档
+    2. 文本标签：和文本有关的标签
+        * 注释：&lt;!-- 注释内容 --&gt;
+        * &lt;h1&gt; to &lt;h6&gt;：标题标签
+            * h1~h6:字体大小逐渐递减
+        * &lt;p&gt;：段落标签
+        * &lt;br&gt;：换行标签
+        * &lt;hr&gt;：展示一条水平线
+            * 属性：
+                * color：颜色
+                * width：宽度
+                * size：高度
+                * align：对其方式
+                    * center：居中
+                    * left：左对齐
+                    * right：右对齐
+        * &lt;b&gt;：字体加粗
+        * &lt;i&gt;：字体斜体
+        * &lt;font&gt;:字体标签
+        * &lt;center&gt;:文本居中
+            * 属性：
+                * color：颜色
+                * size：大小
+                * face：字体
+
+        * 属性定义：
+            * color：
+                1. 英文单词：red,green,blue
+                2. rgb(值1，值2，值3)：值的范围：0~255  如  rgb(0,0,255)
+                3. #值1值2值3：值的范围：00~FF之间。如： #FF00FF
+            * width：
+                1. 数值：width=&apos;20&apos; ,数值的单位，默认是 px(像素)
+                2. 数值%：占比相对于父元素的比例
+
+    3. 图片标签：
+        * img：展示图片
+            * 属性：
+                * src：指定图片的位置
+
+        * 代码：
+             &lt;!--展示一张图片 img--&gt;
+
+            &lt;img src=&quot;image/jingxuan_2.jpg&quot; align=&quot;right&quot; alt=&quot;古镇&quot; width=&quot;500&quot; height=&quot;500&quot;/&gt;
+
+            &lt;!--
+                相对路径
+                    * 以.开头的路径
+                        * ./：代表当前目录  ./image/1.jpg
+                        * ../:代表上一级目录
+             --&gt;
+
+            &lt;img src=&quot;./image/jiangwai_1.jpg&quot;&gt;
+
+            &lt;img src=&quot;../image/jiangwai_1.jpg&quot;&gt;
+    4. 列表标签：
+        * 有序列表：
+            * ol:
+            * li:
+        * 无序列表：
+            * ul:
+            * li:
+    5. 链接标签：
+        * a:定义一个超链接
+            * 属性：
+                * href：指定访问资源的URL(统一资源定位符)
+                * target：指定打开资源的方式
+                    * _self:默认值，在当前页面打开
+                    * _blank：在空白页面打开
+
+        * 代码：
+             &lt;!--超链接  a--&gt;
+
+            &lt;a href=&quot;http://www.itcast.cn&quot;&gt;点我&lt;/a&gt;
+            &lt;br&gt;
+
+            &lt;a href=&quot;http://www.itcast.cn&quot; target=&quot;_self&quot;&gt;点我&lt;/a&gt;
+            &lt;br&gt;
+            &lt;a href=&quot;http://www.itcast.cn&quot; target=&quot;_blank&quot;&gt;点我&lt;/a&gt;
+
+            &lt;br&gt;
+
+            &lt;a href=&quot;./5_列表标签.html&quot;&gt;列表标签&lt;/a&gt;&lt;br&gt;
+            &lt;a href=&quot;mailto:itcast@itcast.cn&quot;&gt;联系我们&lt;/a&gt;
+
+            &lt;br&gt;
+            &lt;a href=&quot;http://www.itcast.cn&quot;&gt;&lt;img src=&quot;image/jiangwai_1.jpg&quot;&gt;&lt;/a&gt;
+    6. div和span：
+        * div:每一个div占满一整行。块级标签
+        * span：文本信息在一行展示，行内标签 内联标签
+
+    7. 语义化标签：html5中为了提高程序的可读性，提供了一些标签。
+        1. &lt;header&gt;：页眉
+        2. &lt;footer&gt;：页脚
+
+
+    8. 表格标签：
+        * table：定义表格
+            * width：宽度
+            * border：边框
+            * cellpadding：定义内容和单元格的距离
+            * cellspacing：定义单元格之间的距离。如果指定为0，则单元格的线会合为一条、
+            * bgcolor：背景色
+            * align：对齐方式
+        * tr：定义行
+            * bgcolor：背景色
+            * align：对齐方式
+        * td：定义单元格
+            * colspan：合并列
+            * rowspan：合并行
+        * th：定义表头单元格
+        * &lt;caption&gt;：表格标题
+        * &lt;thead&gt;：表示表格的头部分
+        * &lt;tbody&gt;：表示表格的体部分
+        * &lt;tfoot&gt;：表示表格的脚部分</code></pre>]]></content>
       <categories>
-        <category>leetcode</category>
+        <category>JavaWeb</category>
       </categories>
       <tags>
-        <tag>数据结构</tag>
-        <tag>算法</tag>
+        <tag>前端</tag>
+        <tag>HTML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MarkDown的基本语法</title>
+    <url>/2020/03/11/Markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</url>
+    <content><![CDATA[<p>MarkDown的基本语法使用说明<br> <a id="more"></a></p>
+<h1 id="MarkDown的基本语法"><a href="#MarkDown的基本语法" class="headerlink" title="MarkDown的基本语法"></a>MarkDown的基本语法</h1><p>更多操作，可查看<a href="https://www.runoob.com" target="_blank" rel="noopener">菜鸟教程</a></p>
+<h2 id="1-标题"><a href="#1-标题" class="headerlink" title="1.标题"></a>1.标题</h2><p>使用 # 号标记<br>使用 # 号可表示 1-6 级标题，一级标题对应一个 # 号，二级标题对应两个 # 号，以此类推，效果如下：  </p>
+<pre><code># 一级标题
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题</code></pre><h1 id="我是一级标题"><a href="#我是一级标题" class="headerlink" title="我是一级标题"></a>我是一级标题</h1><h2 id="我是二级标题"><a href="#我是二级标题" class="headerlink" title="我是二级标题"></a>我是二级标题</h2><h3 id="我是三级标题"><a href="#我是三级标题" class="headerlink" title="我是三级标题"></a>我是三级标题</h3><h4 id="我是四级标题"><a href="#我是四级标题" class="headerlink" title="我是四级标题"></a>我是四级标题</h4><h5 id="我是五级标题"><a href="#我是五级标题" class="headerlink" title="我是五级标题"></a>我是五级标题</h5><h6 id="我是六级标题"><a href="#我是六级标题" class="headerlink" title="我是六级标题"></a>我是六级标题</h6><h2 id="2-Markdown-段落"><a href="#2-Markdown-段落" class="headerlink" title="2.Markdown 段落"></a>2.Markdown 段落</h2><p>Markdown 段落没有特殊的格式，直接编写文字就好，段落的换行是使用两个以上空格加上回车。</p>
+<h2 id="3-字体与分割线"><a href="#3-字体与分割线" class="headerlink" title="3.字体与分割线"></a>3.字体与分割线</h2><p>Markdown 可以使用以下几种字体：</p>
+<pre><code>*斜体文本*
+_斜体文本_
+**粗体文本**
+__粗体文本__
+***粗斜体文本***
+___粗斜体文本___</code></pre><p><em>斜体文本</em><br><em>斜体文本</em><br><strong>粗体文本</strong><br><strong>粗体文本</strong><br><strong><em>粗斜体文本</em></strong><br><strong><em>粗斜体文本</em></strong>  </p>
+<p>分隔线，可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线。</p>
+<pre><code>***
+
+* * *
+
+*****
+
+- - -
+
+----------</code></pre><hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<p>如果段落上的文字要添加删除线，只需要在文字的两端加上两个波浪线 ~~ 即可，实例如下：</p>
+<p>RUNOOB.COM<br><del>BAIDU.COM</del>  </p>
+<h2 id="4-图片链接"><a href="#4-图片链接" class="headerlink" title="4.图片链接"></a>4.图片链接</h2><h3 id="4-1链接"><a href="#4-1链接" class="headerlink" title="4.1链接"></a>4.1链接</h3><p>Markdown 链接<br>链接使用方法如下：</p>
+<pre><code>[链接名称](链接地址)或者&lt;链接地址&gt;
+例如：
+这是一个链接 [菜鸟教程](https://www.runoob.com)</code></pre><p><a href="https://www.runoob.com" target="_blank" rel="noopener">菜鸟教程</a></p>
+<h3 id="4-2图片"><a href="#4-2图片" class="headerlink" title="4.2图片"></a>4.2图片</h3><p>Markdown 图片语法格式如下：</p>
+<pre><code>![alt 属性文本](图片地址)
+![alt 属性文本](图片地址 &quot;可选标题&quot;)</code></pre><p>开头一个感叹号 !接着一个方括号，里面放上图片的替代文字接着一个普通括号，里面放上图片的网址，最后还可以用引号包住并加上选择性的 ‘title’ 属性的文字。</p>
+<h2 id="5-Markdown-代码"><a href="#5-Markdown-代码" class="headerlink" title="5.Markdown 代码"></a>5.Markdown 代码</h2><h3 id="5-1代码"><a href="#5-1代码" class="headerlink" title="5.1代码"></a>5.1代码</h3><p>如果是段落上的一个函数或片段的代码可以用反引号把它包起来（`），例如：</p>
+<pre><code>`hello world</code></pre><p>`hello world</p>
+<h3 id="5-2代码块"><a href="#5-2代码块" class="headerlink" title="5.2代码块"></a>5.2代码块</h3><p>代码区块使用 4 个空格或者一个制表符（Tab 键）。选中代码块按制表符即可，注意，上下需要个空一行。<br>Markdown 区块引用是在段落开头使用 &gt; 符号 ，然后后面紧跟一个空格符号：</p>
+<h2 id="6-区块"><a href="#6-区块" class="headerlink" title="6.区块"></a>6.区块</h2><pre><code>&gt; hello
+&gt; &gt; world</code></pre><blockquote>
+<p>hello</p>
+<blockquote>
+<p>world</p>
+</blockquote>
+</blockquote>
+<h2 id="7-列表"><a href="#7-列表" class="headerlink" title="7.列表"></a>7.列表</h2><p>Markdown 支持有序列表和无序列表。</p>
+<h3 id="7-1无序列表"><a href="#7-1无序列表" class="headerlink" title="7.1无序列表"></a>7.1无序列表</h3><p>无序列表使用星号(*)、加号(+)或是减号(-)作为列表标记：</p>
+<pre><code>* 第一项
+* 第二项
+* 第三项
+
++ 第一项
++ 第二项
++ 第三项
+
+- 第一项
+- 第二项
+- 第三项</code></pre><ul>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ul>
+<ul>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ul>
+<ul>
+<li><p>第一项</p>
+</li>
+<li><p>第二项</p>
+</li>
+<li><p>第三项</p>
+<h3 id="7-2有序列表"><a href="#7-2有序列表" class="headerlink" title="7.2有序列表"></a>7.2有序列表</h3><p>有序列表使用数字并加上 . 号来表示，如：</p>
+<ol>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ol>
+</li>
+</ul>
+<ol>
+<li><p>第一项</p>
+</li>
+<li><p>第二项</p>
+</li>
+<li><p>第三项</p>
+<h3 id="7-3列表嵌套"><a href="#7-3列表嵌套" class="headerlink" title="7.3列表嵌套"></a>7.3列表嵌套</h3><p>列表嵌套只需在子列表中的选项添加四个空格即可：</p>
+<ol>
+<li>第一项：<ul>
+<li>第一项嵌套的第一个元素</li>
+<li>第一项嵌套的第二个元素</li>
+</ul>
+</li>
+<li>第二项：<ul>
+<li>第二项嵌套的第一个元素</li>
+<li>第二项嵌套的第二个元素</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>第一项：</p>
+<ul>
+<li>第一项嵌套的第一个元素</li>
+<li>第一项嵌套的第二个元素</li>
+</ul>
+</li>
+<li><p>第二项：</p>
+<ul>
+<li>第二项嵌套的第一个元素</li>
+<li>第二项嵌套的第二个元素</li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Markdown</tag>
       </tags>
   </entry>
   <entry>
@@ -783,213 +1122,304 @@
       </tags>
   </entry>
   <entry>
-    <title>HTML快速入门笔记</title>
-    <url>/2020/03/11/HTML%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p>HTML快速入门笔记<br> <a id="more"></a></p>
-<h2 id="web概念概述"><a href="#web概念概述" class="headerlink" title="web概念概述"></a>web概念概述</h2><pre><code>* JavaWeb：
-    * 使用Java语言开发基于互联网的项目
+    <title>Tomcat&amp;Servlet笔记</title>
+    <url>/2020/03/11/Tomcat/</url>
+    <content><![CDATA[<p>Tomcat &amp; Servlet快速入门笔记<br> <a id="more"></a></p>
+<h1 id="笔记内容"><a href="#笔记内容" class="headerlink" title="笔记内容"></a>笔记内容</h1><ol>
+<li>web相关概念回顾</li>
+<li>web服务器软件：Tomcat</li>
+<li>Servlet入门学习</li>
+</ol>
+<h2 id="web相关概念回顾"><a href="#web相关概念回顾" class="headerlink" title="web相关概念回顾"></a>web相关概念回顾</h2><ol>
+<li><p>软件架构</p>
+<ol>
+<li>C/S：客户端/服务器端</li>
+<li>B/S：浏览器/服务器端</li>
+</ol>
+</li>
+<li><p>资源分类</p>
+<ol>
+<li>静态资源：所有用户访问后，得到的结果都是一样的，称为静态资源.静态资源可以直接被浏览器解析<ul>
+<li>如： html,css,JavaScript</li>
+</ul>
+</li>
+<li>动态资源:每个用户访问相同资源后，得到的结果可能不一样。称为动态资源。动态资源被访问后，需要先转换为静态资源，在返回给浏览器<ul>
+<li>如：servlet/jsp,php,asp….</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>网络通信三要素</p>
+<ol>
+<li>IP：电子设备(计算机)在网络中的唯一标识。</li>
+<li>端口：应用程序在计算机中的唯一标识。 0~65536</li>
+<li>传输协议：规定了数据传输的规则<ol>
+<li>基础协议：<ol>
+<li>tcp:安全协议，三次握手。 速度稍慢</li>
+<li>udp：不安全协议。 速度快</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="web服务器软件："><a href="#web服务器软件：" class="headerlink" title="web服务器软件："></a>web服务器软件：</h2><ul>
+<li><p>服务器：安装了服务器软件的计算机</p>
+</li>
+<li><p>服务器软件：接收用户的请求，处理请求，做出响应</p>
+</li>
+<li><p>web服务器软件：接收用户的请求，处理请求，做出响应。</p>
+<ul>
+<li>在web服务器软件中，可以部署web项目，让用户通过浏览器来访问这些项目</li>
+<li>web容器</li>
+</ul>
+</li>
+<li><p>常见的java相关的web服务器软件：</p>
+<ul>
+<li>webLogic：oracle公司，大型的JavaEE服务器，支持所有的JavaEE规范，收费的。</li>
+<li>webSphere：IBM公司，大型的JavaEE服务器，支持所有的JavaEE规范，收费的。</li>
+<li>JBOSS：JBOSS公司的，大型的JavaEE服务器，支持所有的JavaEE规范，收费的。</li>
+<li>Tomcat：Apache基金组织，中小型的JavaEE服务器，仅仅支持少量的JavaEE规范servlet/jsp。开源的，免费的。</li>
+</ul>
+</li>
+<li><p>JavaEE：Java语言在企业级开发中使用的技术规范的总和，一共规定了13项大的规范</p>
+</li>
+<li><p>Tomcat：web服务器软件</p>
+<ol>
+<li><p>下载：<a href="http://tomcat.apache.org/" target="_blank" rel="noopener">http://tomcat.apache.org/</a></p>
+</li>
+<li><p>安装：解压压缩包即可。</p>
+<ul>
+<li>注意：安装目录建议不要有中文和空格</li>
+</ul>
+</li>
+<li><p>卸载：删除目录就行了</p>
+</li>
+<li><p>启动：</p>
+<ul>
+<li><p>bin/startup.bat ,双击运行该文件即可</p>
+</li>
+<li><p>访问：浏览器输入：<a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> 回车访问自己</p>
+<pre><code>http://别人的ip:8080 访问别人</code></pre></li>
+<li><p>可能遇到的问题：</p>
+<ol>
+<li><p>黑窗口一闪而过：</p>
+<ul>
+<li>原因： 没有正确配置JAVA_HOME环境变量</li>
+<li>解决方案：正确配置JAVA_HOME环境变量</li>
+</ul>
+</li>
+<li><p>启动报错：</p>
+<ol>
+<li>暴力：找到占用的端口号，并且找到对应的进程，杀死该进程<ul>
+<li>netstat -ano</li>
+</ul>
+</li>
+<li>温柔：修改自身的端口号<ul>
+<li>conf/server.xml</li>
+<li><Connector port="8888" protocol="HTTP/1.1"
+ connectionTimeout="20000"
+ redirectPort="8445" /></li>
+<li>一般会将tomcat的默认端口号修改为80。80端口号是http协议的默认端口号。<ul>
+<li>好处：在访问时，就不用输入端口号</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>关闭：</p>
+<ol>
+<li>正常关闭：<ul>
+<li>bin/shutdown.bat</li>
+<li>ctrl+c</li>
+</ul>
+</li>
+<li>强制关闭：<ul>
+<li>点击启动窗口的×</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>配置:</p>
+<ul>
+<li><p>部署项目的方式：</p>
+<ol>
+<li><p>直接将项目放到webapps目录下即可。</p>
+<ul>
+<li>/hello：项目的访问路径–&gt;虚拟目录</li>
+<li>简化部署：将项目打成一个war包，再将war包放置到webapps目录下。<ul>
+<li>war包会自动解压缩</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>配置conf/server.xml文件<br> 在<Host>标签体中配置</p>
+ <Context docBase="D:\hello" path="/hehe" />
+ * docBase:项目存放的路径
+ * path：虚拟目录
+</li>
+<li><p>在conf\Catalina\localhost创建任意名称的xml文件。在文件中编写</p>
+ <Context docBase="D:\hello" />
+ * 虚拟目录：xml文件的名称
+</li>
+</ol>
+</li>
+<li><p>静态项目和动态项目：</p>
+<ul>
+<li>目录结构<ul>
+<li>java动态项目的目录结构：<br>  – 项目的根目录<pre><code>-- WEB-INF目录：
+    -- web.xml：web项目的核心配置文件
+    -- classes目录：放置字节码文件的目录
+    -- lib目录：放置依赖的jar包</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p>​        * 将Tomcat集成到IDEA中，并且创建JavaEE的项目，部署项目。</p>
+<h2 id="Servlet：-server-applet"><a href="#Servlet：-server-applet" class="headerlink" title="Servlet：  server applet"></a>Servlet：  server applet</h2><ul>
+<li><p>概念：运行在服务器端的小程序</p>
+<ul>
+<li>Servlet就是一个接口，定义了Java类被浏览器访问到(tomcat识别)的规则。</li>
+<li>将来我们自定义一个类，实现Servlet接口，复写方法。</li>
+</ul>
+</li>
+<li><p>快速入门：</p>
+<ol>
+<li><p>创建JavaEE项目</p>
+</li>
+<li><p>定义一个类，实现Servlet接口</p>
+<ul>
+<li>public class ServletDemo1 implements Servlet</li>
+</ul>
+</li>
+<li><p>实现接口中的抽象方法</p>
+</li>
+<li><p>配置Servlet<br>  在web.xml中配置：</p>
+ <!--配置Servlet -->
+ <servlet>
+     <servlet-name>demo1</servlet-name>
+     <servlet-class>cn.itcast.web.servlet.ServletDemo1</servlet-class>
+ </servlet>
 
-* 软件架构：
-    1. C/S: Client/Server 客户端/服务器端
-        * 在用户本地有一个客户端程序，在远程有一个服务器端程序
-        * 如：QQ，迅雷...
-        * 优点：
-            1. 用户体验好
-        * 缺点：
-            1. 开发、安装，部署，维护 麻烦
-    2. B/S: Browser/Server 浏览器/服务器端
-        * 只需要一个浏览器，用户通过不同的网址(URL)，客户访问不同的服务器端程序
-        * 优点：
-            1. 开发、安装，部署，维护 简单
-        * 缺点：
-            1. 如果应用过大，用户的体验可能会受到影响
-            2. 对硬件要求过高
-
-* B/S架构详解
-    * 资源分类：
-        1. 静态资源：
-            * 使用静态网页开发技术发布的资源。
-            * 特点：
-                * 所有用户访问，得到的结果是一样的。
-                * 如：文本，图片，音频、视频, HTML,CSS,JavaScript
-                * 如果用户请求的是静态资源，那么服务器会直接将静态资源发送给浏览器。浏览器中内置了静态资源的解析引擎，可以展示静态资源
-        2. 动态资源：
-            * 使用动态网页及时发布的资源。
-            * 特点：
-                * 所有用户访问，得到的结果可能不一样。
-                * 如：jsp/servlet,php,asp...
-                * 如果用户请求的是动态资源，那么服务器会执行动态资源，转换为静态资源，再发送给浏览器
-
-
-
-    * 静态资源：
-        * HTML：用于搭建基础网页，展示页面的内容
-        * CSS：用于美化页面，布局页面
-        * JavaScript：控制页面的元素，让页面有一些动态的效果</code></pre><h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><pre><code>1. 概念：是最基础的网页开发语言
-    * Hyper Text Markup Language 超文本标记语言
-        * 超文本:
-            * 超文本是用超链接的方法，将各种不同空间的文字信息组织在一起的网状文本.
-        * 标记语言:
-            * 由标签构成的语言。&lt;标签名称&gt; 如 html，xml
-            * 标记语言不是编程语言
-
-2. 快速入门：
-    * 语法：
-        1. html文档后缀名 .html 或者 .htm
-        2. 标签分为
-            1. 围堵标签：有开始标签和结束标签。如 &lt;html&gt; &lt;/html&gt;
-            2. 自闭和标签：开始标签和结束标签在一起。如 &lt;br/&gt;
-
-        3. 标签可以嵌套：
-            需要正确嵌套，不能你中有我，我中有你
-            错误：&lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt;
-            正确：&lt;a&gt;&lt;b&gt;&lt;/b&gt;&lt;/a&gt;
-
-        4. 在开始标签中可以定义属性。属性是由键值对构成，值需要用引号(单双都可)引起来
-        5. html的标签不区分大小写，但是建议使用小写。
-
-    * 代码：
-        &lt;html&gt;
-
-            &lt;head&gt;
-                &lt;title&gt;title&lt;/title&gt;
-            &lt;/head&gt;
-
-            &lt;body&gt;
-                &lt;FONT color=&apos;red&apos;&gt;Hello World&lt;/font&gt;&lt;br/&gt;
-
-                &lt;font color=&apos;green&apos;&gt;Hello World&lt;/font&gt;
-
-            &lt;/body&gt;
-
-        &lt;/html&gt;
-
-3. 标签学习：
-    1. 文件标签：构成html最基本的标签
-        * html:html文档的根标签
-        * head：头标签。用于指定html文档的一些属性。引入外部的资源
-        * title：标题标签。
-        * body：体标签
-        * &lt;!DOCTYPE html&gt;：html5中定义该文档是html文档
-    2. 文本标签：和文本有关的标签
-        * 注释：&lt;!-- 注释内容 --&gt;
-        * &lt;h1&gt; to &lt;h6&gt;：标题标签
-            * h1~h6:字体大小逐渐递减
-        * &lt;p&gt;：段落标签
-        * &lt;br&gt;：换行标签
-        * &lt;hr&gt;：展示一条水平线
-            * 属性：
-                * color：颜色
-                * width：宽度
-                * size：高度
-                * align：对其方式
-                    * center：居中
-                    * left：左对齐
-                    * right：右对齐
-        * &lt;b&gt;：字体加粗
-        * &lt;i&gt;：字体斜体
-        * &lt;font&gt;:字体标签
-        * &lt;center&gt;:文本居中
-            * 属性：
-                * color：颜色
-                * size：大小
-                * face：字体
-
-        * 属性定义：
-            * color：
-                1. 英文单词：red,green,blue
-                2. rgb(值1，值2，值3)：值的范围：0~255  如  rgb(0,0,255)
-                3. #值1值2值3：值的范围：00~FF之间。如： #FF00FF
-            * width：
-                1. 数值：width=&apos;20&apos; ,数值的单位，默认是 px(像素)
-                2. 数值%：占比相对于父元素的比例
-
-    3. 图片标签：
-        * img：展示图片
-            * 属性：
-                * src：指定图片的位置
-
-        * 代码：
-             &lt;!--展示一张图片 img--&gt;
-
-            &lt;img src=&quot;image/jingxuan_2.jpg&quot; align=&quot;right&quot; alt=&quot;古镇&quot; width=&quot;500&quot; height=&quot;500&quot;/&gt;
-
-            &lt;!--
-                相对路径
-                    * 以.开头的路径
-                        * ./：代表当前目录  ./image/1.jpg
-                        * ../:代表上一级目录
-             --&gt;
-
-            &lt;img src=&quot;./image/jiangwai_1.jpg&quot;&gt;
-
-            &lt;img src=&quot;../image/jiangwai_1.jpg&quot;&gt;
-    4. 列表标签：
-        * 有序列表：
-            * ol:
-            * li:
-        * 无序列表：
-            * ul:
-            * li:
-    5. 链接标签：
-        * a:定义一个超链接
-            * 属性：
-                * href：指定访问资源的URL(统一资源定位符)
-                * target：指定打开资源的方式
-                    * _self:默认值，在当前页面打开
-                    * _blank：在空白页面打开
-
-        * 代码：
-             &lt;!--超链接  a--&gt;
-
-            &lt;a href=&quot;http://www.itcast.cn&quot;&gt;点我&lt;/a&gt;
-            &lt;br&gt;
-
-            &lt;a href=&quot;http://www.itcast.cn&quot; target=&quot;_self&quot;&gt;点我&lt;/a&gt;
-            &lt;br&gt;
-            &lt;a href=&quot;http://www.itcast.cn&quot; target=&quot;_blank&quot;&gt;点我&lt;/a&gt;
-
-            &lt;br&gt;
-
-            &lt;a href=&quot;./5_列表标签.html&quot;&gt;列表标签&lt;/a&gt;&lt;br&gt;
-            &lt;a href=&quot;mailto:itcast@itcast.cn&quot;&gt;联系我们&lt;/a&gt;
-
-            &lt;br&gt;
-            &lt;a href=&quot;http://www.itcast.cn&quot;&gt;&lt;img src=&quot;image/jiangwai_1.jpg&quot;&gt;&lt;/a&gt;
-    6. div和span：
-        * div:每一个div占满一整行。块级标签
-        * span：文本信息在一行展示，行内标签 内联标签
-
-    7. 语义化标签：html5中为了提高程序的可读性，提供了一些标签。
-        1. &lt;header&gt;：页眉
-        2. &lt;footer&gt;：页脚
+ <servlet-mapping>
+     <servlet-name>demo1</servlet-name>
+     <url-pattern>/demo1</url-pattern>
+</servlet-mapping>
+</li>
+</ol>
+</li>
+<li><p>执行原理：</p>
+<ol>
+<li>当服务器接受到客户端浏览器的请求后，会解析请求URL路径，获取访问的Servlet的资源路径</li>
+<li>查找web.xml文件，是否有对应的<url-pattern>标签体内容。</li>
+<li>如果有，则在找到对应的<servlet-class>全类名</li>
+<li>tomcat会将字节码文件加载进内存，并且创建其对象</li>
+<li>调用其方法</li>
+</ol>
+</li>
+<li><p>Servlet中的生命周期方法：</p>
+<ol>
+<li><p>被创建：执行init方法，只执行一次</p>
+<ul>
+<li><p>Servlet什么时候被创建？</p>
+<ul>
+<li>默认情况下，第一次被访问时，Servlet被创建</li>
+<li>可以配置执行Servlet的创建时机。<ul>
+<li>在<servlet>标签下配置<ol>
+<li>第一次被访问时，创建<ul>
+<li><load-on-startup>的值为负数</li>
+</ul>
+</li>
+<li>在服务器启动时，创建<ul>
+<li><load-on-startup>的值为0或正整数</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Servlet的init方法，只执行一次，说明一个Servlet在内存中只存在一个对象，Servlet是单例的</p>
+<ul>
+<li>多个用户同时访问时，可能存在线程安全问题。</li>
+<li>解决：尽量不要在Servlet中定义成员变量。即使定义了成员变量，也不要对修改值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>提供服务：执行service方法，执行多次</p>
+<ul>
+<li>每次访问Servlet时，Service方法都会被调用一次。</li>
+</ul>
+</li>
+<li><p>被销毁：执行destroy方法，只执行一次</p>
+<ul>
+<li>Servlet被销毁时执行。服务器关闭时，Servlet被销毁</li>
+<li>只有服务器正常关闭时，才会执行destroy方法。</li>
+<li>destroy方法在Servlet被销毁之前执行，一般用于释放资源</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>Servlet3.0：</p>
+<ul>
+<li><p>好处：</p>
+<ul>
+<li>支持注解配置。可以不需要web.xml了。</li>
+</ul>
+</li>
+<li><p>步骤：</p>
+<ol>
+<li>创建JavaEE项目，选择Servlet的版本3.0以上，可以不创建web.xml</li>
+<li>定义一个类，实现Servlet接口</li>
+<li>复写方法</li>
+<li>在类上使用@WebServlet注解，进行配置<ul>
+<li>@WebServlet(“资源路径”)</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> WebServlet &#123;</span><br><span class="line">    <span class="function">String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;<span class="comment">//相当于&lt;Servlet-name&gt;</span></span><br><span class="line"></span><br><span class="line">    String[] value() <span class="keyword">default</span> &#123;&#125;;<span class="comment">//代表urlPatterns()属性配置</span></span><br><span class="line"></span><br><span class="line">    String[] urlPatterns() <span class="keyword">default</span> &#123;&#125;;<span class="comment">//相当于&lt;url-pattern&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">loadOnStartup</span><span class="params">()</span> <span class="keyword">default</span> -1</span>;<span class="comment">//相当于&lt;load-on-startup&gt;</span></span><br><span class="line"></span><br><span class="line">    WebInitParam[] initParams() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">asyncSupported</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">smallIcon</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">largeIcon</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">description</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">displayName</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-    8. 表格标签：
-        * table：定义表格
-            * width：宽度
-            * border：边框
-            * cellpadding：定义内容和单元格的距离
-            * cellspacing：定义单元格之间的距离。如果指定为0，则单元格的线会合为一条、
-            * bgcolor：背景色
-            * align：对齐方式
-        * tr：定义行
-            * bgcolor：背景色
-            * align：对齐方式
-        * td：定义单元格
-            * colspan：合并列
-            * rowspan：合并行
-        * th：定义表头单元格
-        * &lt;caption&gt;：表格标题
-        * &lt;thead&gt;：表示表格的头部分
-        * &lt;tbody&gt;：表示表格的体部分
-        * &lt;tfoot&gt;：表示表格的脚部分</code></pre>]]></content>
+
+<h2 id="IDEA与tomcat的相关配置"><a href="#IDEA与tomcat的相关配置" class="headerlink" title="IDEA与tomcat的相关配置"></a>IDEA与tomcat的相关配置</h2><ol>
+<li><p>IDEA会为每一个tomcat部署的项目单独建立一份配置文件</p>
+<ul>
+<li>查看控制台的log：Using CATALINA_BASE:   “C:\Users\fqy.IntelliJIdea2018.1\system\tomcat_itcast”</li>
+</ul>
+</li>
+<li><p>工作空间项目    和     tomcat部署的web项目</p>
+<ul>
+<li>tomcat真正访问的是“tomcat部署的web项目”，”tomcat部署的web项目”对应着”工作空间项目” 的web目录下的所有资源</li>
+<li>WEB-INF目录下的资源不能被浏览器直接访问。</li>
+</ul>
+</li>
+<li><p>断点调试：使用”小虫子”启动 dubug 启动</p>
+</li>
+</ol>
+]]></content>
       <categories>
         <category>JavaWeb</category>
       </categories>
       <tags>
-        <tag>前端</tag>
-        <tag>HTML</tag>
+        <tag>后端</tag>
+        <tag>Tomcat</tag>
       </tags>
   </entry>
   <entry>
@@ -1365,132 +1795,15 @@ class Solution {
       </tags>
   </entry>
   <entry>
-    <title>MarkDown的基本语法</title>
-    <url>/2020/03/11/Markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</url>
-    <content><![CDATA[<p>MarkDown的基本语法使用说明<br> <a id="more"></a></p>
-<h1 id="MarkDown的基本语法"><a href="#MarkDown的基本语法" class="headerlink" title="MarkDown的基本语法"></a>MarkDown的基本语法</h1><p>更多操作，可查看<a href="https://www.runoob.com" target="_blank" rel="noopener">菜鸟教程</a></p>
-<h2 id="1-标题"><a href="#1-标题" class="headerlink" title="1.标题"></a>1.标题</h2><p>使用 # 号标记<br>使用 # 号可表示 1-6 级标题，一级标题对应一个 # 号，二级标题对应两个 # 号，以此类推，效果如下：  </p>
-<pre><code># 一级标题
-## 二级标题
-### 三级标题
-#### 四级标题
-##### 五级标题
-###### 六级标题</code></pre><h1 id="我是一级标题"><a href="#我是一级标题" class="headerlink" title="我是一级标题"></a>我是一级标题</h1><h2 id="我是二级标题"><a href="#我是二级标题" class="headerlink" title="我是二级标题"></a>我是二级标题</h2><h3 id="我是三级标题"><a href="#我是三级标题" class="headerlink" title="我是三级标题"></a>我是三级标题</h3><h4 id="我是四级标题"><a href="#我是四级标题" class="headerlink" title="我是四级标题"></a>我是四级标题</h4><h5 id="我是五级标题"><a href="#我是五级标题" class="headerlink" title="我是五级标题"></a>我是五级标题</h5><h6 id="我是六级标题"><a href="#我是六级标题" class="headerlink" title="我是六级标题"></a>我是六级标题</h6><h2 id="2-Markdown-段落"><a href="#2-Markdown-段落" class="headerlink" title="2.Markdown 段落"></a>2.Markdown 段落</h2><p>Markdown 段落没有特殊的格式，直接编写文字就好，段落的换行是使用两个以上空格加上回车。</p>
-<h2 id="3-字体与分割线"><a href="#3-字体与分割线" class="headerlink" title="3.字体与分割线"></a>3.字体与分割线</h2><p>Markdown 可以使用以下几种字体：</p>
-<pre><code>*斜体文本*
-_斜体文本_
-**粗体文本**
-__粗体文本__
-***粗斜体文本***
-___粗斜体文本___</code></pre><p><em>斜体文本</em><br><em>斜体文本</em><br><strong>粗体文本</strong><br><strong>粗体文本</strong><br><strong><em>粗斜体文本</em></strong><br><strong><em>粗斜体文本</em></strong>  </p>
-<p>分隔线，可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线。</p>
-<pre><code>***
-
-* * *
-
-*****
-
-- - -
-
-----------</code></pre><hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<p>如果段落上的文字要添加删除线，只需要在文字的两端加上两个波浪线 ~~ 即可，实例如下：</p>
-<p>RUNOOB.COM<br><del>BAIDU.COM</del>  </p>
-<h2 id="4-图片链接"><a href="#4-图片链接" class="headerlink" title="4.图片链接"></a>4.图片链接</h2><h3 id="4-1链接"><a href="#4-1链接" class="headerlink" title="4.1链接"></a>4.1链接</h3><p>Markdown 链接<br>链接使用方法如下：</p>
-<pre><code>[链接名称](链接地址)或者&lt;链接地址&gt;
-例如：
-这是一个链接 [菜鸟教程](https://www.runoob.com)</code></pre><p><a href="https://www.runoob.com" target="_blank" rel="noopener">菜鸟教程</a></p>
-<h3 id="4-2图片"><a href="#4-2图片" class="headerlink" title="4.2图片"></a>4.2图片</h3><p>Markdown 图片语法格式如下：</p>
-<pre><code>![alt 属性文本](图片地址)
-![alt 属性文本](图片地址 &quot;可选标题&quot;)</code></pre><p>开头一个感叹号 !接着一个方括号，里面放上图片的替代文字接着一个普通括号，里面放上图片的网址，最后还可以用引号包住并加上选择性的 ‘title’ 属性的文字。</p>
-<h2 id="5-Markdown-代码"><a href="#5-Markdown-代码" class="headerlink" title="5.Markdown 代码"></a>5.Markdown 代码</h2><h3 id="5-1代码"><a href="#5-1代码" class="headerlink" title="5.1代码"></a>5.1代码</h3><p>如果是段落上的一个函数或片段的代码可以用反引号把它包起来（`），例如：</p>
-<pre><code>`hello world</code></pre><p>`hello world</p>
-<h3 id="5-2代码块"><a href="#5-2代码块" class="headerlink" title="5.2代码块"></a>5.2代码块</h3><p>代码区块使用 4 个空格或者一个制表符（Tab 键）。选中代码块按制表符即可，注意，上下需要个空一行。<br>Markdown 区块引用是在段落开头使用 &gt; 符号 ，然后后面紧跟一个空格符号：</p>
-<h2 id="6-区块"><a href="#6-区块" class="headerlink" title="6.区块"></a>6.区块</h2><pre><code>&gt; hello
-&gt; &gt; world</code></pre><blockquote>
-<p>hello</p>
-<blockquote>
-<p>world</p>
-</blockquote>
-</blockquote>
-<h2 id="7-列表"><a href="#7-列表" class="headerlink" title="7.列表"></a>7.列表</h2><p>Markdown 支持有序列表和无序列表。</p>
-<h3 id="7-1无序列表"><a href="#7-1无序列表" class="headerlink" title="7.1无序列表"></a>7.1无序列表</h3><p>无序列表使用星号(*)、加号(+)或是减号(-)作为列表标记：</p>
-<pre><code>* 第一项
-* 第二项
-* 第三项
-
-+ 第一项
-+ 第二项
-+ 第三项
-
-- 第一项
-- 第二项
-- 第三项</code></pre><ul>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ul>
-<ul>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ul>
-<ul>
-<li><p>第一项</p>
-</li>
-<li><p>第二项</p>
-</li>
-<li><p>第三项</p>
-<h3 id="7-2有序列表"><a href="#7-2有序列表" class="headerlink" title="7.2有序列表"></a>7.2有序列表</h3><p>有序列表使用数字并加上 . 号来表示，如：</p>
-<ol>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ol>
-</li>
-</ul>
-<ol>
-<li><p>第一项</p>
-</li>
-<li><p>第二项</p>
-</li>
-<li><p>第三项</p>
-<h3 id="7-3列表嵌套"><a href="#7-3列表嵌套" class="headerlink" title="7.3列表嵌套"></a>7.3列表嵌套</h3><p>列表嵌套只需在子列表中的选项添加四个空格即可：</p>
-<ol>
-<li>第一项：<ul>
-<li>第一项嵌套的第一个元素</li>
-<li>第一项嵌套的第二个元素</li>
-</ul>
-</li>
-<li>第二项：<ul>
-<li>第二项嵌套的第一个元素</li>
-<li>第二项嵌套的第二个元素</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><p>第一项：</p>
-<ul>
-<li>第一项嵌套的第一个元素</li>
-<li>第一项嵌套的第二个元素</li>
-</ul>
-</li>
-<li><p>第二项：</p>
-<ul>
-<li>第二项嵌套的第一个元素</li>
-<li>第二项嵌套的第二个元素</li>
-</ul>
-</li>
-</ol>
+    <title>JavaWeb资料下载</title>
+    <url>/2020/03/11/%E8%B5%84%E6%96%99%E4%B8%8B%E8%BD%BD/</url>
+    <content><![CDATA[<p>JavaWeb资料下载<br> <a id="more"></a><br><strong>点击查看 <a href="https://pan.baidu.com/s/1gl8PcFW_BEXepVbqZ854VA" target="_blank" rel="noopener">JavaWeb资料</a></strong><br><strong>提取码: 2be4</strong><br><strong>视频可转到<a href="https://www.bilibili.com/" target="_blank" rel="noopener">bilibili</a>搜索</strong></p>
 ]]></content>
       <categories>
-        <category>教程</category>
+        <category>JavaWeb</category>
       </categories>
       <tags>
-        <tag>Markdown</tag>
+        <tag>资料下载</tag>
       </tags>
   </entry>
   <entry>
@@ -1510,6 +1823,106 @@ ___粗斜体文本___</code></pre><p><em>斜体文本</em><br><em>斜体文本</
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>leetcode二叉树 递归&lt;一&gt;</title>
+    <url>/2020/03/09/%E4%BA%8C%E5%8F%89%E6%A0%91/</url>
+    <content><![CDATA[<p>leetcode二叉树 递归思想<br> <a id="more"></a></p>
+<p><a href="https://leetcode.com/problems/path-sum/description/" target="_blank" rel="noopener">Leetcode</a>网站 </p>
+<ol start="104">
+<li><p>树的高度 Maximum Depth of Binary Tree (Easy)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public int maxDepth(TreeNode root) &#123;  </span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;  </span><br><span class="line">    return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;  </span><br><span class="line">&#125;&#96;Balanced Binary Tree (Easy)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>平衡树左右子树高度差都小于等于 1,是否为平衡树 Balanced Binary Tree (Easy)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">private boolean result &#x3D; true;</span><br><span class="line"></span><br><span class="line">public boolean isBalanced(TreeNode root) &#123;</span><br><span class="line">    maxDepth(root);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public int maxDepth(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int l &#x3D; maxDepth(root.left);</span><br><span class="line">    int r &#x3D; maxDepth(root.right);</span><br><span class="line">    if (Math.abs(l - r) &gt; 1) result &#x3D; false;</span><br><span class="line">    return 1 + Math.max(l, r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>两节点的最长路径 Diameter of Binary Tree (Easy)</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Input:</span><br><span class="line"></span><br><span class="line">         1</span><br><span class="line">        &#x2F; \</span><br><span class="line">       2  3</span><br><span class="line">      &#x2F; \</span><br><span class="line">     4   5</span><br><span class="line"></span><br><span class="line">Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].</span><br><span class="line">private int max &#x3D; 0;</span><br><span class="line"></span><br><span class="line">public int diameterOfBinaryTree(TreeNode root) &#123;</span><br><span class="line">    depth(root);</span><br><span class="line">    return max;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int depth(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int leftDepth &#x3D; depth(root.left);</span><br><span class="line">    int rightDepth &#x3D; depth(root.right);</span><br><span class="line">    max &#x3D; Math.max(max, leftDepth + rightDepth);</span><br><span class="line">    return Math.max(leftDepth, rightDepth) + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="226">
+<li>翻转一棵树 Invert Binary Tree (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public TreeNode invertTree(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return null;</span><br><span class="line">    TreeNode left &#x3D; root.left;  &#x2F;&#x2F; 后面的操作会改变 left 指针，因此先保存下来</span><br><span class="line">    root.left &#x3D; invertTree(root.right);</span><br><span class="line">    root.right &#x3D; invertTree(left);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="617">
+<li>归并树 Merge Two Binary Trees (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Input:</span><br><span class="line">       Tree 1                     Tree 2</span><br><span class="line">          1                         2</span><br><span class="line">         &#x2F; \                       &#x2F; \</span><br><span class="line">        3   2                     1   3</span><br><span class="line">       &#x2F;                           \   \</span><br><span class="line">      5                             4   7</span><br><span class="line"></span><br><span class="line">Output:</span><br><span class="line">         3</span><br><span class="line">        &#x2F; \</span><br><span class="line">       4   5</span><br><span class="line">      &#x2F; \   \</span><br><span class="line">     5   4   7</span><br><span class="line">public TreeNode mergeTrees(TreeNode t1, TreeNode t2) &#123;</span><br><span class="line">    if (t1 &#x3D;&#x3D; null &amp;&amp; t2 &#x3D;&#x3D; null) return null;</span><br><span class="line">    if (t1 &#x3D;&#x3D; null) return t2;</span><br><span class="line">    if (t2 &#x3D;&#x3D; null) return t1;</span><br><span class="line">    TreeNode root &#x3D; new TreeNode(t1.val + t2.val);</span><br><span class="line">    root.left &#x3D; mergeTrees(t1.left, t2.left);</span><br><span class="line">    root.right &#x3D; mergeTrees(t1.right, t2.right);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="112">
+<li>路径和是否等于一个数Path Sum (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Given the below binary tree and sum &#x3D; 22,</span><br><span class="line"></span><br><span class="line">              5</span><br><span class="line">             &#x2F; \</span><br><span class="line">            4   8</span><br><span class="line">           &#x2F;   &#x2F; \</span><br><span class="line">          11  13  4</span><br><span class="line">         &#x2F;  \      \</span><br><span class="line">        7    2      1</span><br><span class="line"></span><br><span class="line">return true, as there exist a root-to-leaf path 5-&gt;4-&gt;11-&gt;2 which sum is 22.</span><br></pre></td></tr></table></figure>
+
+<p>​        路径和定义为从 root 到 leaf 的所有节点的和。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public boolean hasPathSum(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return false;</span><br><span class="line">    if (root.left &#x3D;&#x3D; null &amp;&amp; root.right &#x3D;&#x3D; null &amp;&amp; root.val &#x3D;&#x3D; sum) return true;</span><br><span class="line">    return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="437">
+<li>统计路径和等于一个数的路径数量 Path Sum III (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root &#x3D; [10,5,-3,3,2,null,11,3,-2,null,1], sum &#x3D; 8</span><br><span class="line"></span><br><span class="line">      10</span><br><span class="line">     &#x2F;  \</span><br><span class="line">    5   -3</span><br><span class="line">   &#x2F; \    \</span><br><span class="line">  3   2   11</span><br><span class="line"> &#x2F; \   \</span><br><span class="line">3  -2   1</span><br><span class="line"></span><br><span class="line">Return 3. The paths that sum to 8 are:</span><br><span class="line"></span><br><span class="line">1.  5 -&gt; 3</span><br><span class="line">2.  5 -&gt; 2 -&gt; 1</span><br><span class="line">3. -3 -&gt; 11</span><br></pre></td></tr></table></figure>
+
+<p>​        路径不一定以 root 开头，也不一定以 leaf 结尾，但是必须连续。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public int pathSum(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int ret &#x3D; pathSumStartWithRoot(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int pathSumStartWithRoot(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int ret &#x3D; 0;</span><br><span class="line">    if (root.val &#x3D;&#x3D; sum) ret++;</span><br><span class="line">    ret +&#x3D; pathSumStartWithRoot(root.left, sum - root.val) + pathSumStartWithRoot(root.right, sum - root.val);</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode二叉树 递归&lt;二&gt;</title>
+    <url>/2020/03/09/%E4%BA%8C%E5%8F%89%E6%A0%912/</url>
+    <content><![CDATA[<p>leetcode二叉树 递归思想<br> <a id="more"></a></p>
+<p><a href="https://leetcode.com/problems/path-sum/description/" target="_blank" rel="noopener">Leetcode</a>网站 </p>
+<ol start="104">
+<li><p>树的高度 Maximum Depth of Binary Tree (Easy)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public int maxDepth(TreeNode root) &#123;  </span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;  </span><br><span class="line">    return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;  </span><br><span class="line">&#125;&#96;Balanced Binary Tree (Easy)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>平衡树左右子树高度差都小于等于 1,是否为平衡树 Balanced Binary Tree (Easy)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">private boolean result &#x3D; true;</span><br><span class="line"></span><br><span class="line">public boolean isBalanced(TreeNode root) &#123;</span><br><span class="line">    maxDepth(root);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public int maxDepth(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int l &#x3D; maxDepth(root.left);</span><br><span class="line">    int r &#x3D; maxDepth(root.right);</span><br><span class="line">    if (Math.abs(l - r) &gt; 1) result &#x3D; false;</span><br><span class="line">    return 1 + Math.max(l, r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>两节点的最长路径 Diameter of Binary Tree (Easy)</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Input:</span><br><span class="line"></span><br><span class="line">         1</span><br><span class="line">        &#x2F; \</span><br><span class="line">       2  3</span><br><span class="line">      &#x2F; \</span><br><span class="line">     4   5</span><br><span class="line"></span><br><span class="line">Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].</span><br><span class="line">private int max &#x3D; 0;</span><br><span class="line"></span><br><span class="line">public int diameterOfBinaryTree(TreeNode root) &#123;</span><br><span class="line">    depth(root);</span><br><span class="line">    return max;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int depth(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int leftDepth &#x3D; depth(root.left);</span><br><span class="line">    int rightDepth &#x3D; depth(root.right);</span><br><span class="line">    max &#x3D; Math.max(max, leftDepth + rightDepth);</span><br><span class="line">    return Math.max(leftDepth, rightDepth) + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="226">
+<li>翻转一棵树 Invert Binary Tree (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public TreeNode invertTree(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return null;</span><br><span class="line">    TreeNode left &#x3D; root.left;  &#x2F;&#x2F; 后面的操作会改变 left 指针，因此先保存下来</span><br><span class="line">    root.left &#x3D; invertTree(root.right);</span><br><span class="line">    root.right &#x3D; invertTree(left);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="617">
+<li>归并树 Merge Two Binary Trees (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Input:</span><br><span class="line">       Tree 1                     Tree 2</span><br><span class="line">          1                         2</span><br><span class="line">         &#x2F; \                       &#x2F; \</span><br><span class="line">        3   2                     1   3</span><br><span class="line">       &#x2F;                           \   \</span><br><span class="line">      5                             4   7</span><br><span class="line"></span><br><span class="line">Output:</span><br><span class="line">         3</span><br><span class="line">        &#x2F; \</span><br><span class="line">       4   5</span><br><span class="line">      &#x2F; \   \</span><br><span class="line">     5   4   7</span><br><span class="line">public TreeNode mergeTrees(TreeNode t1, TreeNode t2) &#123;</span><br><span class="line">    if (t1 &#x3D;&#x3D; null &amp;&amp; t2 &#x3D;&#x3D; null) return null;</span><br><span class="line">    if (t1 &#x3D;&#x3D; null) return t2;</span><br><span class="line">    if (t2 &#x3D;&#x3D; null) return t1;</span><br><span class="line">    TreeNode root &#x3D; new TreeNode(t1.val + t2.val);</span><br><span class="line">    root.left &#x3D; mergeTrees(t1.left, t2.left);</span><br><span class="line">    root.right &#x3D; mergeTrees(t1.right, t2.right);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="112">
+<li>路径和是否等于一个数Path Sum (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Given the below binary tree and sum &#x3D; 22,</span><br><span class="line"></span><br><span class="line">              5</span><br><span class="line">             &#x2F; \</span><br><span class="line">            4   8</span><br><span class="line">           &#x2F;   &#x2F; \</span><br><span class="line">          11  13  4</span><br><span class="line">         &#x2F;  \      \</span><br><span class="line">        7    2      1</span><br><span class="line"></span><br><span class="line">return true, as there exist a root-to-leaf path 5-&gt;4-&gt;11-&gt;2 which sum is 22.</span><br></pre></td></tr></table></figure>
+
+<p>​        路径和定义为从 root 到 leaf 的所有节点的和。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public boolean hasPathSum(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return false;</span><br><span class="line">    if (root.left &#x3D;&#x3D; null &amp;&amp; root.right &#x3D;&#x3D; null &amp;&amp; root.val &#x3D;&#x3D; sum) return true;</span><br><span class="line">    return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="437">
+<li>统计路径和等于一个数的路径数量 Path Sum III (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root &#x3D; [10,5,-3,3,2,null,11,3,-2,null,1], sum &#x3D; 8</span><br><span class="line"></span><br><span class="line">      10</span><br><span class="line">     &#x2F;  \</span><br><span class="line">    5   -3</span><br><span class="line">   &#x2F; \    \</span><br><span class="line">  3   2   11</span><br><span class="line"> &#x2F; \   \</span><br><span class="line">3  -2   1</span><br><span class="line"></span><br><span class="line">Return 3. The paths that sum to 8 are:</span><br><span class="line"></span><br><span class="line">1.  5 -&gt; 3</span><br><span class="line">2.  5 -&gt; 2 -&gt; 1</span><br><span class="line">3. -3 -&gt; 11</span><br></pre></td></tr></table></figure>
+
+<p>​        路径不一定以 root 开头，也不一定以 leaf 结尾，但是必须连续。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public int pathSum(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int ret &#x3D; pathSumStartWithRoot(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int pathSumStartWithRoot(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int ret &#x3D; 0;</span><br><span class="line">    if (root.val &#x3D;&#x3D; sum) ret++;</span><br><span class="line">    ret +&#x3D; pathSumStartWithRoot(root.left, sum - root.val) + pathSumStartWithRoot(root.right, sum - root.val);</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+        <tag>算法</tag>
+      </tags>
   </entry>
   <entry>
     <title>JavaScript进阶笔记</title>

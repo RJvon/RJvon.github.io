@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    XML快速入门笔记 |  Aslan&#39;s blog
+    leetcode二叉树 递归&lt;二&gt; |  Aslan&#39;s blog
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -31,7 +31,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-XML入门笔记" class="article article-type-post" itemscope
+  <article id="post-二叉树2" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -39,7 +39,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  XML快速入门笔记
+  leetcode二叉树 递归&lt;二&gt;
 </h1>
   
 
@@ -48,12 +48,12 @@
 
     
     <div class="article-meta">
-      <a href="/2020/03/11/XML%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time datetime="2020-03-11T09:20:31.000Z" itemprop="datePublished">2020-03-11</time>
+      <a href="/2020/03/09/%E4%BA%8C%E5%8F%89%E6%A0%912/" class="article-date">
+  <time datetime="2020-03-09T09:20:31.000Z" itemprop="datePublished">2020-03-09</time>
 </a>
       
   <div class="article-category">
-    <a class="article-category-link" href="/categories/JavaWeb/">JavaWeb</a>
+    <a class="article-category-link" href="/categories/leetcode/">leetcode</a>
   </div>
 
       
@@ -63,7 +63,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">1.9k字</span>
+            <span class="post-count">671字</span>
         </span>
     </span>
 
@@ -72,7 +72,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">8分钟</span>
+            <span class="post-count">3分钟</span>
         </span>
     </span>
 </div>
@@ -83,8 +83,6 @@
 
     
     
-    <div class="tocbot"></div>
-
 
 
 
@@ -99,223 +97,45 @@
       
 
       
-      <p>XML快速入门笔记<br> <a id="more"></a></p>
-<h1 id="笔记内容"><a href="#笔记内容" class="headerlink" title="笔记内容"></a>笔记内容</h1><pre><code>1. XML
-    1. 概念
-    2. 语法
-    3. 解析</code></pre><h2 id="XML："><a href="#XML：" class="headerlink" title="XML："></a>XML：</h2><pre><code>1. 概念：Extensible Markup Language 可扩展标记语言
-    * 可扩展：标签都是自定义的。 &lt;user&gt;  &lt;student&gt;
+      <p>leetcode二叉树 递归思想<br> <a id="more"></a></p>
+<p><a href="https://leetcode.com/problems/path-sum/description/" target="_blank" rel="noopener">Leetcode</a>网站 </p>
+<ol start="104">
+<li><p>树的高度 Maximum Depth of Binary Tree (Easy)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public int maxDepth(TreeNode root) &#123;  </span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;  </span><br><span class="line">    return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;  </span><br><span class="line">&#125;&#96;Balanced Binary Tree (Easy)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>平衡树左右子树高度差都小于等于 1,是否为平衡树 Balanced Binary Tree (Easy)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">private boolean result &#x3D; true;</span><br><span class="line"></span><br><span class="line">public boolean isBalanced(TreeNode root) &#123;</span><br><span class="line">    maxDepth(root);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public int maxDepth(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int l &#x3D; maxDepth(root.left);</span><br><span class="line">    int r &#x3D; maxDepth(root.right);</span><br><span class="line">    if (Math.abs(l - r) &gt; 1) result &#x3D; false;</span><br><span class="line">    return 1 + Math.max(l, r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>两节点的最长路径 Diameter of Binary Tree (Easy)</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Input:</span><br><span class="line"></span><br><span class="line">         1</span><br><span class="line">        &#x2F; \</span><br><span class="line">       2  3</span><br><span class="line">      &#x2F; \</span><br><span class="line">     4   5</span><br><span class="line"></span><br><span class="line">Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].</span><br><span class="line">private int max &#x3D; 0;</span><br><span class="line"></span><br><span class="line">public int diameterOfBinaryTree(TreeNode root) &#123;</span><br><span class="line">    depth(root);</span><br><span class="line">    return max;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int depth(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int leftDepth &#x3D; depth(root.left);</span><br><span class="line">    int rightDepth &#x3D; depth(root.right);</span><br><span class="line">    max &#x3D; Math.max(max, leftDepth + rightDepth);</span><br><span class="line">    return Math.max(leftDepth, rightDepth) + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    * 功能
-        * 存储数据
-            1. 配置文件
-            2. 在网络中传输
-    * xml与html的区别
-        1. xml标签都是自定义的，html标签是预定义。
-        2. xml的语法严格，html语法松散
-        3. xml是存储数据的，html是展示数据
+<ol start="226">
+<li>翻转一棵树 Invert Binary Tree (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public TreeNode invertTree(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return null;</span><br><span class="line">    TreeNode left &#x3D; root.left;  &#x2F;&#x2F; 后面的操作会改变 left 指针，因此先保存下来</span><br><span class="line">    root.left &#x3D; invertTree(root.right);</span><br><span class="line">    root.right &#x3D; invertTree(left);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-2. 语法：
-    * 基本语法：
-        1. xml文档的后缀名 .xml
-        2. xml第一行必须定义为文档声明
-        3. xml文档中有且仅有一个根标签
-        4. 属性值必须使用引号(单双都可)引起来
-        5. 标签必须正确关闭
-        6. xml标签名称区分大小写
-    * 快速入门：
-        &lt;?xml version=&apos;1.0&apos; ?&gt;
-        &lt;users&gt;
-            &lt;user id=&apos;1&apos;&gt;
-                &lt;name&gt;zhangsan&lt;/name&gt;
-                &lt;age&gt;23&lt;/age&gt;
-                &lt;gender&gt;male&lt;/gender&gt;
-                &lt;br/&gt;
-            &lt;/user&gt;
+<ol start="617">
+<li>归并树 Merge Two Binary Trees (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Input:</span><br><span class="line">       Tree 1                     Tree 2</span><br><span class="line">          1                         2</span><br><span class="line">         &#x2F; \                       &#x2F; \</span><br><span class="line">        3   2                     1   3</span><br><span class="line">       &#x2F;                           \   \</span><br><span class="line">      5                             4   7</span><br><span class="line"></span><br><span class="line">Output:</span><br><span class="line">         3</span><br><span class="line">        &#x2F; \</span><br><span class="line">       4   5</span><br><span class="line">      &#x2F; \   \</span><br><span class="line">     5   4   7</span><br><span class="line">public TreeNode mergeTrees(TreeNode t1, TreeNode t2) &#123;</span><br><span class="line">    if (t1 &#x3D;&#x3D; null &amp;&amp; t2 &#x3D;&#x3D; null) return null;</span><br><span class="line">    if (t1 &#x3D;&#x3D; null) return t2;</span><br><span class="line">    if (t2 &#x3D;&#x3D; null) return t1;</span><br><span class="line">    TreeNode root &#x3D; new TreeNode(t1.val + t2.val);</span><br><span class="line">    root.left &#x3D; mergeTrees(t1.left, t2.left);</span><br><span class="line">    root.right &#x3D; mergeTrees(t1.right, t2.right);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-            &lt;user id=&apos;2&apos;&gt;
-                &lt;name&gt;lisi&lt;/name&gt;
-                &lt;age&gt;24&lt;/age&gt;
-                &lt;gender&gt;female&lt;/gender&gt;
-            &lt;/user&gt;
-        &lt;/users&gt;
+<ol start="112">
+<li>路径和是否等于一个数Path Sum (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Given the below binary tree and sum &#x3D; 22,</span><br><span class="line"></span><br><span class="line">              5</span><br><span class="line">             &#x2F; \</span><br><span class="line">            4   8</span><br><span class="line">           &#x2F;   &#x2F; \</span><br><span class="line">          11  13  4</span><br><span class="line">         &#x2F;  \      \</span><br><span class="line">        7    2      1</span><br><span class="line"></span><br><span class="line">return true, as there exist a root-to-leaf path 5-&gt;4-&gt;11-&gt;2 which sum is 22.</span><br></pre></td></tr></table></figure>
 
-    * 组成部分：
-        1. 文档声明
-            1. 格式：&lt;?xml 属性列表 ?&gt;
-            2. 属性列表：
-                * version：版本号，必须的属性
-                * encoding：编码方式。告知解析引擎当前文档使用的字符集，默认值：ISO-8859-1
-                * standalone：是否独立
-                    * 取值：
-                        * yes：不依赖其他文件
-                        * no：依赖其他文件
-        2. 指令(了解)：结合css的
-            * &lt;?xml-stylesheet type=&quot;text/css&quot; href=&quot;a.css&quot; ?&gt;
-        3. 标签：标签名称自定义的
-            * 规则：
-                * 名称可以包含字母、数字以及其他的字符 
-                * 名称不能以数字或者标点符号开始 
-                * 名称不能以字母 xml（或者 XML、Xml 等等）开始 
-                * 名称不能包含空格 
+<p>​        路径和定义为从 root 到 leaf 的所有节点的和。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public boolean hasPathSum(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return false;</span><br><span class="line">    if (root.left &#x3D;&#x3D; null &amp;&amp; root.right &#x3D;&#x3D; null &amp;&amp; root.val &#x3D;&#x3D; sum) return true;</span><br><span class="line">    return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        4. 属性：
-            id属性值唯一
-        5. 文本：
-            * CDATA区：在该区域中的数据会被原样展示
-                * 格式：  &lt;![CDATA[ 数据 ]]&gt;
+<ol start="437">
+<li>统计路径和等于一个数的路径数量 Path Sum III (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root &#x3D; [10,5,-3,3,2,null,11,3,-2,null,1], sum &#x3D; 8</span><br><span class="line"></span><br><span class="line">      10</span><br><span class="line">     &#x2F;  \</span><br><span class="line">    5   -3</span><br><span class="line">   &#x2F; \    \</span><br><span class="line">  3   2   11</span><br><span class="line"> &#x2F; \   \</span><br><span class="line">3  -2   1</span><br><span class="line"></span><br><span class="line">Return 3. The paths that sum to 8 are:</span><br><span class="line"></span><br><span class="line">1.  5 -&gt; 3</span><br><span class="line">2.  5 -&gt; 2 -&gt; 1</span><br><span class="line">3. -3 -&gt; 11</span><br></pre></td></tr></table></figure>
 
-
-    * 约束：规定xml文档的书写规则
-        * 作为框架的使用者(程序员)：
-            1. 能够在xml中引入约束文档
-            2. 能够简单的读懂约束文档
-
-        * 分类：
-            1. DTD:一种简单的约束技术
-            2. Schema:一种复杂的约束技术
-
-
-        * DTD：
-            * 引入dtd文档到xml文档中
-                * 内部dtd：将约束规则定义在xml文档中
-                * 外部dtd：将约束的规则定义在外部的dtd文件中
-                    * 本地：&lt;!DOCTYPE 根标签名 SYSTEM &quot;dtd文件的位置&quot;&gt;
-                    * 网络：&lt;!DOCTYPE 根标签名 PUBLIC &quot;dtd文件名字&quot; &quot;dtd文件的位置URL&quot;&gt;
-
-
-        * Schema:
-            * 引入：
-                1.填写xml文档的根元素
-                2.引入xsi前缀.  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-                3.引入xsd文件命名空间.  xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;
-                4.为每一个xsd约束声明一个前缀,作为标识  xmlns=&quot;http://www.itcast.cn/xml&quot; 
-
-            &lt;students   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-                xmlns=&quot;http://www.itcast.cn/xml&quot;
-                xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;&gt;
-
-
-
-3. 解析：操作xml文档，将文档中的数据读取到内存中
-    * 操作xml文档
-        1. 解析(读取)：将文档中的数据读取到内存中
-        2. 写入：将内存中的数据保存到xml文档中。持久化的存储
-
-    * 解析xml的方式：
-        1. DOM：将标记语言文档一次性加载进内存，在内存中形成一颗dom树
-            * 优点：操作方便，可以对文档进行CRUD的所有操作
-            * 缺点：占内存
-        2. SAX：逐行读取，基于事件驱动的。
-            * 优点：不占内存。
-            * 缺点：只能读取，不能增删改
-
-
-
-    * xml常见的解析器：
-        1. JAXP：sun公司提供的解析器，支持dom和sax两种思想
-        2. DOM4J：一款非常优秀的解析器
-        3. Jsoup：jsoup 是一款Java 的HTML解析器，可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。
-        4. PULL：Android操作系统内置的解析器，sax方式的。
-
-
-    * Jsoup：jsoup 是一款Java 的HTML解析器，可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。
-        * 快速入门：
-            * 步骤：
-                1. 导入jar包
-                2. 获取Document对象
-                3. 获取对应的标签Element对象
-                4. 获取数据
-
-        * 代码：
-             //2.1获取student.xml的path
-            String path = JsoupDemo1.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath();
-            //2.2解析xml文档，加载文档进内存，获取dom树---&gt;Document
-            Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;);
-            //3.获取元素对象 Element
-            Elements elements = document.getElementsByTag(&quot;name&quot;);
-
-            System.out.println(elements.size());
-            //3.1获取第一个name的Element对象
-            Element element = elements.get(0);
-            //3.2获取数据
-            String name = element.text();
-            System.out.println(name);
-
-    * 对象的使用：
-        1. Jsoup：工具类，可以解析html或xml文档，返回Document
-            * parse：解析html或xml文档，返回Document
-                * parse​(File in, String charsetName)：解析xml或html文件的。
-                * parse​(String html)：解析xml或html字符串
-                * parse​(URL url, int timeoutMillis)：通过网络路径获取指定的html或xml的文档对象
-        2. Document：文档对象。代表内存中的dom树
-            * 获取Element对象
-                * getElementById​(String id)：根据id属性值获取唯一的element对象
-                * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合
-                * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合
-                * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合
-        3. Elements：元素Element对象的集合。可以当做 ArrayList&lt;Element&gt;来使用
-        4. Element：元素对象
-            1. 获取子元素对象
-                * getElementById​(String id)：根据id属性值获取唯一的element对象
-                * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合
-                * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合
-                * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合
-
-            2. 获取属性值
-                * String attr(String key)：根据属性名称获取属性值
-            3. 获取文本内容
-                * String text():获取文本内容
-                * String html():获取标签体的所有内容(包括字标签的字符串内容)
-        5. Node：节点对象
-            * 是Document和Element的父类
-
-
-    * 快捷查询方式：
-        1. selector:选择器
-            * 使用的方法：Elements    select​(String cssQuery)
-                * 语法：参考Selector类中定义的语法
-        2. XPath：XPath即为XML路径语言，它是一种用来确定XML（标准通用标记语言的子集）文档中某部分位置的语言
-            * 使用Jsoup的Xpath需要额外导入jar包。
-            * 查询w3cshool参考手册，使用xpath的语法完成查询
-            * 代码：
-                //1.获取student.xml的path
-                String path = JsoupDemo6.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath();
-                //2.获取Document对象
-                Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;);
-
-                //3.根据document对象，创建JXDocument对象
-                JXDocument jxDocument = new JXDocument(document);
-
-                //4.结合xpath语法查询
-                //4.1查询所有student标签
-                List&lt;JXNode&gt; jxNodes = jxDocument.selN(&quot;//student&quot;);
-                for (JXNode jxNode : jxNodes) {
-                    System.out.println(jxNode);
-                }
-
-                System.out.println(&quot;--------------------&quot;);
-
-                //4.2查询所有student标签下的name标签
-                List&lt;JXNode&gt; jxNodes2 = jxDocument.selN(&quot;//student/name&quot;);
-                for (JXNode jxNode : jxNodes2) {
-                    System.out.println(jxNode);
-                }
-
-                System.out.println(&quot;--------------------&quot;);
-
-                //4.3查询student标签下带有id属性的name标签
-                List&lt;JXNode&gt; jxNodes3 = jxDocument.selN(&quot;//student/name[@id]&quot;);
-                for (JXNode jxNode : jxNodes3) {
-                    System.out.println(jxNode);
-                }
-                System.out.println(&quot;--------------------&quot;);
-                //4.4查询student标签下带有id属性的name标签 并且id属性值为itcast
-
-                List&lt;JXNode&gt; jxNodes4 = jxDocument.selN(&quot;//student/name[@id=&apos;itcast&apos;]&quot;);
-                for (JXNode jxNode : jxNodes4) {
-                    System.out.println(jxNode);
-                }</code></pre>
+<p>​        路径不一定以 root 开头，也不一定以 leaf 结尾，但是必须连续。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public int pathSum(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int ret &#x3D; pathSumStartWithRoot(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int pathSumStartWithRoot(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int ret &#x3D; 0;</span><br><span class="line">    if (root.val &#x3D;&#x3D; sum) ret++;</span><br><span class="line">    ret +&#x3D; pathSumStartWithRoot(root.left, sum - root.val) + pathSumStartWithRoot(root.right, sum - root.val);</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
       <!-- reward -->
       
@@ -384,14 +204,14 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/03/11/XML%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/03/09/%E4%BA%8C%E5%8F%89%E6%A0%912/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/XML/" rel="tag">XML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
 
 
     </footer>
@@ -402,19 +222,19 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/03/11/Tomcat/" class="article-nav-link">
+      <a href="/2020/03/09/%E4%BA%8C%E5%8F%89%E6%A0%91/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            Tomcat&amp;Servlet笔记
+            leetcode二叉树 递归&lt;一&gt;
           
         </div>
       </a>
     
     
-      <a href="/2020/03/11/leetcode%E6%95%B0%E5%AD%A6%E7%B1%BB/" class="article-nav-link">
+      <a href="/2020/02/18/JavaScript%E8%BF%9B%E9%98%B6%E7%AC%94%E8%AE%B0/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">leetcode 数学类</div>
+        <div class="article-nav-title">JavaScript进阶笔记</div>
       </a>
     
   </nav>
