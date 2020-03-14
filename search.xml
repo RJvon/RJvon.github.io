@@ -1,132 +1,1223 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>MarkDown的基本语法</title>
-    <url>/2020/03/11/Markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</url>
-    <content><![CDATA[<p>MarkDown的基本语法使用说明<br> <a id="more"></a></p>
-<h1 id="MarkDown的基本语法"><a href="#MarkDown的基本语法" class="headerlink" title="MarkDown的基本语法"></a>MarkDown的基本语法</h1><p>更多操作，可查看<a href="https://www.runoob.com" target="_blank" rel="noopener">菜鸟教程</a></p>
-<h2 id="1-标题"><a href="#1-标题" class="headerlink" title="1.标题"></a>1.标题</h2><p>使用 # 号标记<br>使用 # 号可表示 1-6 级标题，一级标题对应一个 # 号，二级标题对应两个 # 号，以此类推，效果如下：  </p>
-<pre><code># 一级标题
-## 二级标题
-### 三级标题
-#### 四级标题
-##### 五级标题
-###### 六级标题</code></pre><h1 id="我是一级标题"><a href="#我是一级标题" class="headerlink" title="我是一级标题"></a>我是一级标题</h1><h2 id="我是二级标题"><a href="#我是二级标题" class="headerlink" title="我是二级标题"></a>我是二级标题</h2><h3 id="我是三级标题"><a href="#我是三级标题" class="headerlink" title="我是三级标题"></a>我是三级标题</h3><h4 id="我是四级标题"><a href="#我是四级标题" class="headerlink" title="我是四级标题"></a>我是四级标题</h4><h5 id="我是五级标题"><a href="#我是五级标题" class="headerlink" title="我是五级标题"></a>我是五级标题</h5><h6 id="我是六级标题"><a href="#我是六级标题" class="headerlink" title="我是六级标题"></a>我是六级标题</h6><h2 id="2-Markdown-段落"><a href="#2-Markdown-段落" class="headerlink" title="2.Markdown 段落"></a>2.Markdown 段落</h2><p>Markdown 段落没有特殊的格式，直接编写文字就好，段落的换行是使用两个以上空格加上回车。</p>
-<h2 id="3-字体与分割线"><a href="#3-字体与分割线" class="headerlink" title="3.字体与分割线"></a>3.字体与分割线</h2><p>Markdown 可以使用以下几种字体：</p>
-<pre><code>*斜体文本*
-_斜体文本_
-**粗体文本**
-__粗体文本__
-***粗斜体文本***
-___粗斜体文本___</code></pre><p><em>斜体文本</em><br><em>斜体文本</em><br><strong>粗体文本</strong><br><strong>粗体文本</strong><br><strong><em>粗斜体文本</em></strong><br><strong><em>粗斜体文本</em></strong>  </p>
-<p>分隔线，可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线。</p>
-<pre><code>***
+    <title>CSS基础笔记</title>
+    <url>/2020/03/11/CSS%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>CSS基础入门笔记<br> <a id="more"></a></p>
+<h2 id="HTML标签：表单标签"><a href="#HTML标签：表单标签" class="headerlink" title="HTML标签：表单标签"></a>HTML标签：表单标签</h2><pre><code>* 表单：
+    * 概念：用于采集用户输入的数据的。用于和服务器进行交互。
+    * form：用于定义表单的。可以定义一个范围，范围代表采集用户数据的范围
+        * 属性：
+            * action：指定提交数据的URL
+            * method:指定提交方式
+                * 分类：一共7种，2种比较常用
+                   * get：
+                        1. 请求参数会在地址栏中显示。会封装到请求行中(HTTP协议后讲解)。
+                        2. 请求参数大小是有限制的。
+                        3. 不太安全。
+                   * post：
+                        2. 请求参数不会再地址栏中显示。会封装在请求体中(HTTP协议后讲解)
+                        2. 请求参数的大小没有限制。
+                        3. 较为安全。
 
-* * *
+        * 表单项中的数据要想被提交：必须指定其name属性
 
-*****
 
-- - -
+    * 表单项标签：
+        * input：可以通过type属性值，改变元素展示的样式
+            * type属性：
+                * text：文本输入框，默认值
+                    * placeholder：指定输入框的提示信息，当输入框的内容发生变化，会自动清空提示信息    
+                * password：密码输入框
+                * radio:单选框
+                    * 注意：
+                        1. 要想让多个单选框实现单选的效果，则多个单选框的name属性值必须一样。
+                        2. 一般会给每一个单选框提供value属性，指定其被选中后提交的值
+                        3. checked属性，可以指定默认值
+                * checkbox：复选框
+                    * 注意：
+                        1. 一般会给每一个单选框提供value属性，指定其被选中后提交的值
+                        2. checked属性，可以指定默认值
 
-----------</code></pre><hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<p>如果段落上的文字要添加删除线，只需要在文字的两端加上两个波浪线 ~~ 即可，实例如下：</p>
-<p>RUNOOB.COM<br><del>BAIDU.COM</del>  </p>
-<h2 id="4-图片链接"><a href="#4-图片链接" class="headerlink" title="4.图片链接"></a>4.图片链接</h2><h3 id="4-1链接"><a href="#4-1链接" class="headerlink" title="4.1链接"></a>4.1链接</h3><p>Markdown 链接<br>链接使用方法如下：</p>
-<pre><code>[链接名称](链接地址)或者&lt;链接地址&gt;
-例如：
-这是一个链接 [菜鸟教程](https://www.runoob.com)</code></pre><p><a href="https://www.runoob.com" target="_blank" rel="noopener">菜鸟教程</a></p>
-<h3 id="4-2图片"><a href="#4-2图片" class="headerlink" title="4.2图片"></a>4.2图片</h3><p>Markdown 图片语法格式如下：</p>
-<pre><code>![alt 属性文本](图片地址)
-![alt 属性文本](图片地址 &quot;可选标题&quot;)</code></pre><p>开头一个感叹号 !接着一个方括号，里面放上图片的替代文字接着一个普通括号，里面放上图片的网址，最后还可以用引号包住并加上选择性的 ‘title’ 属性的文字。</p>
-<h2 id="5-Markdown-代码"><a href="#5-Markdown-代码" class="headerlink" title="5.Markdown 代码"></a>5.Markdown 代码</h2><h3 id="5-1代码"><a href="#5-1代码" class="headerlink" title="5.1代码"></a>5.1代码</h3><p>如果是段落上的一个函数或片段的代码可以用反引号把它包起来（`），例如：</p>
-<pre><code>`hello world</code></pre><p>`hello world</p>
-<h3 id="5-2代码块"><a href="#5-2代码块" class="headerlink" title="5.2代码块"></a>5.2代码块</h3><p>代码区块使用 4 个空格或者一个制表符（Tab 键）。选中代码块按制表符即可，注意，上下需要个空一行。<br>Markdown 区块引用是在段落开头使用 &gt; 符号 ，然后后面紧跟一个空格符号：</p>
-<h2 id="6-区块"><a href="#6-区块" class="headerlink" title="6.区块"></a>6.区块</h2><pre><code>&gt; hello
-&gt; &gt; world</code></pre><blockquote>
-<p>hello</p>
-<blockquote>
-<p>world</p>
-</blockquote>
-</blockquote>
-<h2 id="7-列表"><a href="#7-列表" class="headerlink" title="7.列表"></a>7.列表</h2><p>Markdown 支持有序列表和无序列表。</p>
-<h3 id="7-1无序列表"><a href="#7-1无序列表" class="headerlink" title="7.1无序列表"></a>7.1无序列表</h3><p>无序列表使用星号(*)、加号(+)或是减号(-)作为列表标记：</p>
-<pre><code>* 第一项
-* 第二项
-* 第三项
+                * file：文件选择框
+                * hidden：隐藏域，用于提交一些信息。
+                * 按钮：
+                    * submit：提交按钮。可以提交表单
+                    * button：普通按钮
+                    * image：图片提交按钮
+                        * src属性指定图片的路径    
 
-+ 第一项
-+ 第二项
-+ 第三项
+           * label：指定输入项的文字描述信息
+               * 注意：
+                   * label的for属性一般会和 input 的 id属性值 对应。如果对应了，则点击label区域，会让input输入框获取焦点。
+        * select: 下拉列表
+            * 子元素：option，指定列表项
 
-- 第一项
-- 第二项
-- 第三项</code></pre><ul>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ul>
-<ul>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ul>
-<ul>
-<li><p>第一项</p>
-</li>
-<li><p>第二项</p>
-</li>
-<li><p>第三项</p>
-<h3 id="7-2有序列表"><a href="#7-2有序列表" class="headerlink" title="7.2有序列表"></a>7.2有序列表</h3><p>有序列表使用数字并加上 . 号来表示，如：</p>
-<ol>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ol>
-</li>
-</ul>
-<ol>
-<li><p>第一项</p>
-</li>
-<li><p>第二项</p>
-</li>
-<li><p>第三项</p>
-<h3 id="7-3列表嵌套"><a href="#7-3列表嵌套" class="headerlink" title="7.3列表嵌套"></a>7.3列表嵌套</h3><p>列表嵌套只需在子列表中的选项添加四个空格即可：</p>
-<ol>
-<li>第一项：<ul>
-<li>第一项嵌套的第一个元素</li>
-<li>第一项嵌套的第二个元素</li>
-</ul>
-</li>
-<li>第二项：<ul>
-<li>第二项嵌套的第一个元素</li>
-<li>第二项嵌套的第二个元素</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><p>第一项：</p>
-<ul>
-<li>第一项嵌套的第一个元素</li>
-<li>第一项嵌套的第二个元素</li>
-</ul>
-</li>
-<li><p>第二项：</p>
-<ul>
-<li>第二项嵌套的第一个元素</li>
-<li>第二项嵌套的第二个元素</li>
-</ul>
-</li>
-</ol>
-]]></content>
+        * textarea：文本域
+            * cols：指定列数，每一行有多少个字符
+            * rows：默认多少行。</code></pre><h2 id="CSS：页面美化和布局控制"><a href="#CSS：页面美化和布局控制" class="headerlink" title="CSS：页面美化和布局控制"></a>CSS：页面美化和布局控制</h2><pre><code>1. 概念： Cascading Style Sheets 层叠样式表
+    * 层叠：多个样式可以作用在同一个html的元素上，同时生效
+
+2. 好处：
+    1. 功能强大
+    2. 将内容展示和样式控制分离
+        * 降低耦合度。解耦
+        * 让分工协作更容易
+        * 提高开发效率
+
+
+3. CSS的使用：CSS与html结合方式
+    1. 内联样式
+         * 在标签内使用style属性指定css代码
+         * 如：&lt;div style=&quot;color:red;&quot;&gt;hello css&lt;/div&gt;
+    2. 内部样式
+        * 在head标签内，定义style标签，style标签的标签体内容就是css代码
+        * 如：
+            &lt;style&gt;
+                div{
+                    color:blue;
+                }
+
+            &lt;/style&gt;
+            &lt;div&gt;hello css&lt;/div&gt;
+    3. 外部样式
+        1. 定义css资源文件。
+        2. 在head标签内，定义link标签，引入外部的资源文件
+        * 如：
+            * a.css文件：
+                div{
+                    color:green;
+                }
+            &lt;link rel=&quot;stylesheet&quot; href=&quot;css/a.css&quot;&gt;
+            &lt;div&gt;hello css&lt;/div&gt;
+            &lt;div&gt;hello css&lt;/div&gt;
+
+    * 注意：
+        * 1,2,3种方式 css作用范围越来越大
+        * 1方式不常用，后期常用2,3
+        * 3种格式可以写为：
+            &lt;style&gt;
+                @import &quot;css/a.css&quot;;
+            &lt;/style&gt;
+
+4. css语法：
+    * 格式：
+        选择器 {
+            属性名1:属性值1;
+            属性名2:属性值2;
+            ...
+        }
+    * 选择器:筛选具有相似特征的元素
+    * 注意：
+        * 每一对属性需要使用；隔开，最后一对属性可以不加；
+
+
+5. 选择器：筛选具有相似特征的元素
+    * 分类：
+        1. 基础选择器
+            1. id选择器：选择具体的id属性值的元素.建议在一个html页面中id值唯一
+                * 语法：#id属性值{}
+            2. 元素选择器：选择具有相同标签名称的元素
+                * 语法： 标签名称{}
+                * 注意：id选择器优先级高于元素选择器
+            3. 类选择器：选择具有相同的class属性值的元素。
+                * 语法：.class属性值{}
+                * 注意：类选择器选择器优先级高于元素选择器
+        2. 扩展选择器：
+            1. 选择所有元素：
+                * 语法： *{}
+            2. 并集选择器：
+                * 选择器1,选择器2{}
+
+            3. 子选择器：筛选选择器1元素下的选择器2元素
+                * 语法：  选择器1 选择器2{}
+            4. 父选择器：筛选选择器2的父元素选择器1
+                * 语法：  选择器1 &gt; 选择器2{}
+
+            5. 属性选择器：选择元素名称，属性名=属性值的元素
+                * 语法：  元素名称[属性名=&quot;属性值&quot;]{}
+
+            6. 伪类选择器：选择一些元素具有的状态
+                * 语法： 元素:状态{}
+                * 如： &lt;a&gt;
+                    * 状态：
+                        * link：初始化的状态
+                        * visited：被访问过的状态
+                        * active：正在访问状态
+                        * hover：鼠标悬浮状态
+6. 属性
+    1. 字体、文本
+        * font-size：字体大小
+        * color：文本颜色
+        * text-align：对其方式
+        * line-height：行高 
+    2. 背景
+        * background：
+    3. 边框
+        * border：设置边框，符合属性
+    4. 尺寸
+        * width：宽度
+        * height：高度
+    5. 盒子模型：控制布局
+        * margin：外边距
+        * padding：内边距
+            * 默认情况下内边距会影响整个盒子的大小
+            * box-sizing: border-box;  设置盒子的属性，让width和height就是最终盒子的大小
+
+        * float：浮动
+            * left
+            * right</code></pre><h2 id="案例："><a href="#案例：" class="headerlink" title="案例："></a>案例：</h2><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;注册页面&lt;/title&gt;
+&lt;style&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+    }
+    body{
+        background: url(&quot;img/register_bg.png&quot;) no-repeat center;
+        padding-top: 25px;
+    }
+
+    .rg_layout{
+        width: 900px;
+        height: 500px;
+        border: 8px solid #EEEEEE;
+        background-color: white;
+        /*让div水平居中*/
+        margin: auto;
+    }
+
+    .rg_left{
+        /*border: 1px solid red;*/
+        float: left;
+        margin: 15px;
+    }
+    .rg_left &gt; p:first-child{
+        color:#FFD026;
+        font-size: 20px;
+    }
+
+    .rg_left &gt; p:last-child{
+        color:#A6A6A6;
+        font-size: 20px;
+
+    }
+
+
+    .rg_center{
+        float: left;
+       /* border: 1px solid red;*/
+
+    }
+
+    .rg_right{
+        /*border: 1px solid red;*/
+        float: right;
+        margin: 15px;
+    }
+
+    .rg_right &gt; p:first-child{
+        font-size: 15px;
+
+    }
+    .rg_right p a {
+        color:pink;
+    }
+
+    .td_left{
+        width: 100px;
+        text-align: right;
+        height: 45px;
+    }
+    .td_right{
+        padding-left: 50px ;
+    }
+
+    #username,#password,#email,#name,#tel,#birthday,#checkcode{
+        width: 251px;
+        height: 32px;
+        border: 1px solid #A6A6A6 ;
+        /*设置边框圆角*/
+        border-radius: 5px;
+        padding-left: 10px;
+    }
+    #checkcode{
+        width: 110px;
+    }
+
+    #img_check{
+        height: 32px;
+        vertical-align: middle;
+    }
+
+    #btn_sub{
+        width: 150px;
+        height: 40px;
+        background-color: #FFD026;
+        border: 1px solid #FFD026 ;
+    }
+
+&lt;/style&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class=&quot;rg_layout&quot;&gt;
+    &lt;div class=&quot;rg_left&quot;&gt;
+        &lt;p&gt;新用户注册&lt;/p&gt;
+        &lt;p&gt;USER REGISTER&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div class=&quot;rg_center&quot;&gt;
+        &lt;div class=&quot;rg_form&quot;&gt;
+            &lt;!--定义表单 form--&gt;
+            &lt;form action=&quot;#&quot; method=&quot;post&quot;&gt;
+                &lt;table&gt;
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;username&quot;&gt;用户名&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;username&quot; id=&quot;username&quot; placeholder=&quot;请输入用户名&quot;&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;password&quot;&gt;密码&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;password&quot; name=&quot;password&quot; id=&quot;password&quot; placeholder=&quot;请输入密码&quot;&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;email&quot; name=&quot;email&quot; id=&quot;email&quot; placeholder=&quot;请输入邮箱&quot;&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;name&quot;&gt;姓名&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot; placeholder=&quot;请输入姓名&quot;&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;tel&quot;&gt;手机号&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;tel&quot; id=&quot;tel&quot; placeholder=&quot;请输入手机号&quot;&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label&gt;性别&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;
+                            &lt;input type=&quot;radio&quot; name=&quot;gender&quot; value=&quot;male&quot;&gt; 男
+                            &lt;input type=&quot;radio&quot; name=&quot;gender&quot; value=&quot;female&quot;&gt; 女
+                        &lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;birthday&quot;&gt;出生日期&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;date&quot; name=&quot;birthday&quot; id=&quot;birthday&quot; placeholder=&quot;请输入出生日期&quot;&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;checkcode&quot; &gt;验证码&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;checkcode&quot; id=&quot;checkcode&quot; placeholder=&quot;请输入验证码&quot;&gt;
+                            &lt;img id=&quot;img_check&quot; src=&quot;img/verify_code.jpg&quot;&gt;
+                        &lt;/td&gt;
+                    &lt;/tr&gt;
+
+
+                    &lt;tr&gt;
+                        &lt;td colspan=&quot;2&quot; align=&quot;center&quot;&gt;&lt;input type=&quot;submit&quot; id=&quot;btn_sub&quot; value=&quot;注册&quot;&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/table&gt;
+
+            &lt;/form&gt;
+
+
+        &lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div class=&quot;rg_right&quot;&gt;
+        &lt;p&gt;已有账号?&lt;a href=&quot;#&quot;&gt;立即登录&lt;/a&gt;&lt;/p&gt;
+    &lt;/div&gt;
+
+
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>]]></content>
       <categories>
-        <category>教程</category>
+        <category>JavaWeb</category>
       </categories>
       <tags>
-        <tag>Markdown</tag>
+        <tag>前端</tag>
+        <tag>CSS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BFS搜索</title>
+    <url>/2020/03/11/BFS%E6%90%9C%E7%B4%A2/</url>
+    <content><![CDATA[<p>广度优先搜索<br> <a id="more"></a></p>
+<h1 id="BFS搜索"><a href="#BFS搜索" class="headerlink" title="BFS搜索"></a>BFS搜索</h1><p>广度优先搜索一层一层遍历，每一层得到的所有新节点，要用队列存储起来以备下一层遍历的时候再遍历。</p>
+<p>而深度优先搜索在得到一个新节点时立即对新节点进行遍历：从节点 0 出发开始遍历，得到到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。</p>
+<p>从一个节点出发，使用 DFS 对一个图进行遍历时，能够遍历到的节点都是从初始节点可达的，DFS 常用来求解这种 可达性 问题。</p>
+<p>在程序实现 DFS 时需要考虑以下问题：</p>
+<p>栈：用栈来保存当前节点信息，当遍历新节点返回时能够继续遍历当前节点。可以使用递归栈。<br>标记：和 BFS 一样同样需要对已经遍历过的节点进行标记。</p>
+<h3 id="模板1"><a href="#模板1" class="headerlink" title="模板1"></a>模板1</h3><pre><code>void BFS()
+{
+    定义队列;
+    定义备忘录，用于记录已经访问的位置；
+
+    判断边界条件，是否能直接返回结果的。
+
+    将起始位置加入到队列中，同时更新备忘录。
+
+    while (队列不为空) {
+        获取当前队列中的元素个数。
+        for (元素个数) {
+            取出一个位置节点。
+            判断是否到达终点位置。
+            获取它对应的下一个所有的节点。
+            条件判断，过滤掉不符合条件的位置。
+            新位置重新加入队列。
+        }
+    }
+}</code></pre><h3 id="模板2"><a href="#模板2" class="headerlink" title="模板2"></a>模板2</h3><pre><code>void BFS()
+{
+    1.判断边界条件，是否能直接返回结果的。
+
+    2.定义队列。
+
+    3.定义备忘录。
+
+    4.将起始位置加入到队列中，同时更新备忘录。
+
+
+    5.BFS遍历
+    while (队列不为空) {
+        5.1 获取当前队列中的元素个数。
+        for (元素个数) {
+            5.2 取出一个位置节点。
+
+            5.3 判断是否到达终点位置。
+
+            5.4 获取它对应的下一个所有的节点。
+
+            5.5 条件判断，过滤掉不符合条件的位置。
+
+            5.6 新位置重新加入队列，并更新备忘录。
+        }
+    }
+}</code></pre><h1 id="1-矩阵"><a href="#1-矩阵" class="headerlink" title="1.矩阵"></a>1.矩阵</h1><p>leetcode 1091，题目描述：0 表示可以经过某个位置，求解从左上角到右下角的最短路径长度。</p>
+<pre><code>class Solution {
+    public int shortestPathBinaryMatrix(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        // 当矩阵第一个元素为1或者最后一个元素为1时，直接返回-1
+        if(grid[0][0]==1 || grid[grid.length-1][grid[0].length-1]==1) return -1;
+        grid[0][0] = 1;
+        // 创建队列用于保存每一格可以走的步
+        Queue&lt;int[]&gt; q=new LinkedList&lt;&gt;();
+        q.add(new int[]{0, 0});
+        // 队列长度,c要和队列做对比,知道何时到达队列长度
+        int len = q.size();
+        int c = 0;
+        // 定义八个方向
+        int[][] dir = {{1, 0}, {1, 1}, {1,-1}, {0, 1}, {0, -1}, {-1, 0},{-1, -1}, {-1, 1}};
+        // 定义最短路径长度
+        int path = 1;
+        while(!q.isEmpty()){
+            int[] data = q.poll();
+            // x、y代表当前的坐标（x，y）
+            int x = data[0];
+            int y = data[1];
+            // 如果走到最后一格，返回
+            if(x == m - 1 &amp;&amp; y == n - 1) return path;
+            // 此处填充队列，将可走的步添加进队列
+            for(int[] d : dir){
+                // x1，y1代表当前坐标移动后的坐标（x1，y1）
+                int x1 = x + d[0];
+                int y1 = y + d[1];
+                if(x1 &gt;= 0 &amp;&amp; y1 &gt;= 0 &amp;&amp; x1 &lt; m &amp;&amp; y1 &lt; n &amp;&amp; grid[x1][y1] == 0){
+                    q.add(new int[]{x1, y1});
+                    grid[x1][y1] = 1;
+                }
+            }
+            c++;
+            if(c == len){
+                c = 0;
+                path++;
+                len = q.size();
+            }
+        }
+        return -1;
+    }
+}</code></pre><h1 id="2-单词接龙"><a href="#2-单词接龙" class="headerlink" title="2.单词接龙"></a>2.单词接龙</h1><p>leetcode127，题目描述：找出一条从 beginWord 到 endWord 的最短路径，每次移动规定为改变一个字符，并且改变之后的字符串必须在 wordList 中。</p>
+<pre><code>class Solution {
+    public int ladderLength(String beginWord, String endWord, List&lt;String&gt; wordList) {
+        if (!wordList.contains(endWord)) {
+            return 0;
+        }
+
+        int len = beginWord.length();
+        // 将字符替换模板“a*b”作为key，所有符合模板的字符串作为value创建哈希表，以此为边建立无向图
+        Map&lt;String, List&lt;String&gt;&gt; patternMap = generatePatternMap(wordList, len);
+
+        Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
+        Set&lt;String&gt; visited = new HashSet&lt;&gt;();
+
+        queue.add(beginWord);
+        visited.add(beginWord);
+
+        int res = 1;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i &lt; size; i++) {
+                String word = queue.poll();
+
+                if (word.equals(endWord)) {
+                    return res;
+                }
+
+                for (int j = 0; j &lt; len; j++) {
+                    String pattern = word.substring(0, j) + &quot;*&quot; + word.substring(j + 1, len);
+                    List&lt;String&gt; nextWords = patternMap.getOrDefault(pattern, new ArrayList&lt;&gt;());
+                    for (String nextWord : nextWords) {
+                        if (!visited.contains(nextWord)) {
+                            queue.add(nextWord);
+                            visited.add(nextWord);
+                        }
+                    }
+                }
+            }
+            res++;
+        }
+        return 0;
+    }
+
+
+    public Map&lt;String, List&lt;String&gt;&gt; generatePatternMap(List&lt;String&gt; wordList, int len) {
+        Map&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;&gt;();
+        for (String word : wordList) {
+            for (int i = 0; i &lt; len; i++) {
+                String pattern = word.substring(0, i) + &quot;*&quot; + word.substring(i + 1, len);
+                map.putIfAbsent(pattern, new ArrayList&lt;&gt;());
+                map.get(pattern).add(word);
+            }
+        }
+        return map;
+    }
+}</code></pre>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript基础笔记</title>
+    <url>/2020/03/11/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>JavaScript基础入门笔记<br> <a id="more"></a></p>
+<h2 id="JavaScript："><a href="#JavaScript：" class="headerlink" title="JavaScript："></a>JavaScript：</h2><pre><code>* 概念：    一门客户端脚本语言
+    * 运行在客户端浏览器中的。每一个浏览器都有JavaScript的解析引擎
+    * 脚本语言：不需要编译，直接就可以被浏览器解析执行了
+
+* 功能：
+    * 可以来增强用户和html页面的交互过程，可以来控制html元素，让页面有一些动态的效果，增强用户的体验。
+
+* JavaScript发展史：
+    1. 1992年，Nombase公司，开发出第一门客户端脚本语言，专门用于表单的校验。命名为：  C--    ，后来更名为：ScriptEase
+    2. 1995年，Netscape(网景)公司，开发了一门客户端脚本语言：LiveScript。后来，请来SUN公司的专家，修改LiveScript，命名为JavaScript
+    3. 1996年，微软抄袭JavaScript开发出JScript语言
+    4. 1997年，ECMA(欧洲计算机制造商协会)，制定出客户端脚本语言的标准：ECMAScript，就是统一了所有客户端脚本语言的编码方式。
+
+    * JavaScript = ECMAScript + JavaScript自己特有的东西(BOM+DOM)
+
+* ECMAScript：客户端脚本语言的标准
+    1. 基本语法：
+        1. 与html结合方式
+            1. 内部JS：
+                * 定义&lt;script&gt;，标签体内容就是js代码
+            2. 外部JS：
+                * 定义&lt;script&gt;，通过src属性引入外部的js文件
+
+            * 注意：
+                1. &lt;script&gt;可以定义在html页面的任何地方。但是定义的位置会影响执行顺序。
+                2. &lt;script&gt;可以定义多个。
+        2. 注释
+            1. 单行注释：//注释内容
+            2. 多行注释：/*注释内容*/
+        3. 数据类型：
+            1. 原始数据类型(基本数据类型)：
+                1. number：数字。 整数/小数/NaN(not a number 一个不是数字的数字类型)
+                2. string：字符串。 字符串  &quot;abc&quot; &quot;a&quot; &apos;abc&apos;
+                3. boolean: true和false
+                4. null：一个对象为空的占位符
+                5. undefined：未定义。如果一个变量没有给初始化值，则会被默认赋值为undefined
+
+            2. 引用数据类型：对象
+
+        4. 变量
+            * 变量：一小块存储数据的内存空间
+            * Java语言是强类型语言，而JavaScript是弱类型语言。
+                * 强类型：在开辟变量存储空间时，定义了空间将来存储的数据的数据类型。只能存储固定类型的数据
+                * 弱类型：在开辟变量存储空间时，不定义空间将来的存储数据类型，可以存放任意类型的数据。
+            * 语法：
+                * var 变量名 = 初始化值;
+
+            * typeof运算符：获取变量的类型。
+                * 注：null运算后得到的是object
+        5. 运算符
+            1. 一元运算符：只有一个运算数的运算符
+                ++，-- ， +(正号)  
+                * ++ --: 自增(自减)
+                    * ++(--) 在前，先自增(自减)，再运算
+                    * ++(--) 在后，先运算，再自增(自减)
+                * +(-)：正负号
+                * 注意：在JS中，如果运算数不是运算符所要求的类型，那么js引擎会自动的将运算数进行类型转换
+                    * 其他类型转number：
+                        * string转number：按照字面值转换。如果字面值不是数字，则转为NaN（不是数字的数字）
+                        * boolean转number：true转为1，false转为0
+            2. 算数运算符
+                + - * / % ...
+
+            3. 赋值运算符
+                = += -+....
+
+            4. 比较运算符
+                &gt; &lt; &gt;= &lt;= == ===(全等于)
+                * 比较方式
+                  1. 类型相同：直接比较
+                      * 字符串：按照字典顺序比较。按位逐一比较，直到得出大小为止。
+                  2. 类型不同：先进行类型转换，再比较
+                      * ===：全等于。在比较之前，先判断类型，如果类型不一样，则直接返回false
+
+
+            5. 逻辑运算符
+                &amp;&amp; || !
+                * 其他类型转boolean：
+                   1. number：0或NaN为假，其他为真
+                   2. string：除了空字符串(&quot;&quot;)，其他都是true
+                   3. null&amp;undefined:都是false
+                   4. 对象：所有对象都为true
+
+            6. 三元运算符
+                ? : 表达式
+                var a = 3;
+                var b = 4;
+
+                var c = a &gt; b ? 1:0;
+                * 语法：
+                    * 表达式? 值1:值2;
+                    * 判断表达式的值，如果是true则取值1，如果是false则取值2；
+
+        6. 流程控制语句：
+            1. if...else...
+            2. switch:
+                * 在java中，switch语句可以接受的数据类型： byte int shor char,枚举(1.5) ,String(1.7)
+                    * switch(变量):
+                        case 值:
+                * 在JS中,switch语句可以接受任意的原始数据类型
+            3. while
+            4. do...while
+            5. for
+        7. JS特殊语法：
+            1. 语句以;结尾，如果一行只有一条语句则 ;可以省略 (不建议)
+            2. 变量的定义使用var关键字，也可以不使用
+                * 用： 定义的变量是局部变量
+                * 不用：定义的变量是全局变量(不建议)
+
+        8. 练习：99乘法表
+        &lt;!DOCTYPE html&gt;
+        &lt;html lang=&quot;en&quot;&gt;
+        &lt;head&gt;
+            &lt;meta charset=&quot;UTF-8&quot;&gt;
+            &lt;title&gt;99乘法表&lt;/title&gt;
+            &lt;style&gt;
+                td{
+                    border: 1px solid;
+                }
+
+            &lt;/style&gt;
+
+            &lt;script&gt;
+
+                document.write(&quot;&lt;table  align=&apos;center&apos;&gt;&quot;);
+                for (var i = 1; i &lt;= 9 ; i++) {
+                    document.write(&quot;&lt;tr&gt;&quot;);
+                    for (var j = 1; j &lt;=i ; j++) {
+                        document.write(&quot;&lt;td&gt;&quot;);
+
+                        //输出  1 * 1 = 1
+                        document.write(i + &quot; * &quot; + j + &quot; = &quot; + ( i*j) +&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;);
+
+                        document.write(&quot;&lt;/td&gt;&quot;);
+                    }
+                    /*//输出换行
+                    document.write(&quot;&lt;br&gt;&quot;);*/
+
+                    document.write(&quot;&lt;/tr&gt;&quot;);
+                }
+
+                //2.完成表格嵌套
+                document.write(&quot;&lt;/table&gt;&quot;);
+
+            &lt;/script&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+
+        &lt;/body&gt;
+        &lt;/html&gt;
+
+    2. 基本对象：
+        1. Function：函数(方法)对象
+            1. 创建：
+                1. var fun = new Function(形式参数列表,方法体);  //忘掉吧
+                2. 
+                    function 方法名称(形式参数列表){
+                        方法体
+                    }
+
+                3. 
+                   var 方法名 = function(形式参数列表){
+                        方法体
+                   }
+            2. 方法：
+
+            3. 属性：
+                length:代表形参的个数
+            4. 特点：
+                1. 方法定义是，形参的类型不用写,返回值类型也不写。
+                2. 方法是一个对象，如果定义名称相同的方法，会覆盖
+                3. 在JS中，方法的调用只与方法的名称有关，和参数列表无关
+                4. 在方法声明中有一个隐藏的内置对象（数组），arguments,封装所有的实际参数
+            5. 调用：
+                方法名称(实际参数列表);
+
+        2. Array:数组对象
+            1. 创建：
+                1. var arr = new Array(元素列表);
+                2. var arr = new Array(默认长度);
+                3. var arr = [元素列表];
+            2. 方法
+                join(参数):将数组中的元素按照指定的分隔符拼接为字符串
+                push()    向数组的末尾添加一个或更多元素，并返回新的长度。
+            3. 属性
+                length:数组的长度
+            4. 特点：
+                1. JS中，数组元素的类型可变的。
+                2. JS中，数组长度可变的。
+        3. Boolean
+        4. Date：日期对象
+            1. 创建：
+                var date = new Date();
+
+            2. 方法：
+                toLocaleString()：返回当前date对象对应的时间本地字符串格式
+                getTime():获取毫秒值。返回当前如期对象描述的时间到1970年1月1日零点的毫秒值差
+        5. Math：数学对象
+            1. 创建：
+                * 特点：Math对象不用创建，直接使用。  Math.方法名();
+
+            2. 方法：
+                random():返回 0 ~ 1 之间的随机数。 含0不含1
+                ceil(x)：对数进行上舍入。
+                floor(x)：对数进行下舍入。
+                round(x)：把数四舍五入为最接近的整数。
+            3. 属性：
+                PI
+        6. Number
+        7. String
+        8. RegExp：正则表达式对象
+            1. 正则表达式：定义字符串的组成规则。
+                1. 单个字符:[]
+                    如： [a] [ab] [a-zA-Z0-9_]
+                    * 特殊符号代表特殊含义的单个字符:
+                        \d:单个数字字符 [0-9]
+                        \w:单个单词字符[a-zA-Z0-9_]
+                2. 量词符号：
+                    ?：表示出现0次或1次
+                    *：表示出现0次或多次
+                    +：出现1次或多次
+                    {m,n}:表示 m&lt;= 数量 &lt;= n
+                        * m如果缺省： {,n}:最多n次
+                        * n如果缺省：{m,} 最少m次
+                3. 开始结束符号
+                    * ^:开始
+                    * $:结束
+            2. 正则对象：
+                1. 创建
+                    1. var reg = new RegExp(&quot;正则表达式&quot;);
+                    2. var reg = /正则表达式/;
+                2. 方法    
+                    1. test(参数):验证指定的字符串是否符合正则定义的规范    
+        9. Global
+            1. 特点：全局对象，这个Global中封装的方法不需要对象就可以直接调用。  方法名();
+            2. 方法：
+                encodeURI():url编码
+                decodeURI():url解码
+
+                encodeURIComponent():url编码,编码的字符更多
+                decodeURIComponent():url解码
+
+                parseInt():将字符串转为数字
+                    * 逐一判断每一个字符是否是数字，直到不是数字为止，将前边数字部分转为number
+                isNaN():判断一个值是否是NaN
+                    * NaN六亲不认，连自己都不认。NaN参与的==比较全部问false
+
+                eval():讲 JavaScript 字符串，并把它作为脚本代码来执行。
+            3. URL编码
+               传智播客 =  %E4%BC%A0%E6%99%BA%E6%92%AD%E5%AE%A2
+
+* BOM
+
+* DOM</code></pre><p>​    </p>
+]]></content>
+      <categories>
+        <category>JavaWeb</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HTML快速入门笔记</title>
+    <url>/2020/03/11/HTML%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>HTML快速入门笔记<br> <a id="more"></a></p>
+<h2 id="web概念概述"><a href="#web概念概述" class="headerlink" title="web概念概述"></a>web概念概述</h2><pre><code>* JavaWeb：
+    * 使用Java语言开发基于互联网的项目
+
+* 软件架构：
+    1. C/S: Client/Server 客户端/服务器端
+        * 在用户本地有一个客户端程序，在远程有一个服务器端程序
+        * 如：QQ，迅雷...
+        * 优点：
+            1. 用户体验好
+        * 缺点：
+            1. 开发、安装，部署，维护 麻烦
+    2. B/S: Browser/Server 浏览器/服务器端
+        * 只需要一个浏览器，用户通过不同的网址(URL)，客户访问不同的服务器端程序
+        * 优点：
+            1. 开发、安装，部署，维护 简单
+        * 缺点：
+            1. 如果应用过大，用户的体验可能会受到影响
+            2. 对硬件要求过高
+
+* B/S架构详解
+    * 资源分类：
+        1. 静态资源：
+            * 使用静态网页开发技术发布的资源。
+            * 特点：
+                * 所有用户访问，得到的结果是一样的。
+                * 如：文本，图片，音频、视频, HTML,CSS,JavaScript
+                * 如果用户请求的是静态资源，那么服务器会直接将静态资源发送给浏览器。浏览器中内置了静态资源的解析引擎，可以展示静态资源
+        2. 动态资源：
+            * 使用动态网页及时发布的资源。
+            * 特点：
+                * 所有用户访问，得到的结果可能不一样。
+                * 如：jsp/servlet,php,asp...
+                * 如果用户请求的是动态资源，那么服务器会执行动态资源，转换为静态资源，再发送给浏览器
+
+
+
+    * 静态资源：
+        * HTML：用于搭建基础网页，展示页面的内容
+        * CSS：用于美化页面，布局页面
+        * JavaScript：控制页面的元素，让页面有一些动态的效果</code></pre><h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><pre><code>1. 概念：是最基础的网页开发语言
+    * Hyper Text Markup Language 超文本标记语言
+        * 超文本:
+            * 超文本是用超链接的方法，将各种不同空间的文字信息组织在一起的网状文本.
+        * 标记语言:
+            * 由标签构成的语言。&lt;标签名称&gt; 如 html，xml
+            * 标记语言不是编程语言
+
+2. 快速入门：
+    * 语法：
+        1. html文档后缀名 .html 或者 .htm
+        2. 标签分为
+            1. 围堵标签：有开始标签和结束标签。如 &lt;html&gt; &lt;/html&gt;
+            2. 自闭和标签：开始标签和结束标签在一起。如 &lt;br/&gt;
+
+        3. 标签可以嵌套：
+            需要正确嵌套，不能你中有我，我中有你
+            错误：&lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt;
+            正确：&lt;a&gt;&lt;b&gt;&lt;/b&gt;&lt;/a&gt;
+
+        4. 在开始标签中可以定义属性。属性是由键值对构成，值需要用引号(单双都可)引起来
+        5. html的标签不区分大小写，但是建议使用小写。
+
+    * 代码：
+        &lt;html&gt;
+
+            &lt;head&gt;
+                &lt;title&gt;title&lt;/title&gt;
+            &lt;/head&gt;
+
+            &lt;body&gt;
+                &lt;FONT color=&apos;red&apos;&gt;Hello World&lt;/font&gt;&lt;br/&gt;
+
+                &lt;font color=&apos;green&apos;&gt;Hello World&lt;/font&gt;
+
+            &lt;/body&gt;
+
+        &lt;/html&gt;
+
+3. 标签学习：
+    1. 文件标签：构成html最基本的标签
+        * html:html文档的根标签
+        * head：头标签。用于指定html文档的一些属性。引入外部的资源
+        * title：标题标签。
+        * body：体标签
+        * &lt;!DOCTYPE html&gt;：html5中定义该文档是html文档
+    2. 文本标签：和文本有关的标签
+        * 注释：&lt;!-- 注释内容 --&gt;
+        * &lt;h1&gt; to &lt;h6&gt;：标题标签
+            * h1~h6:字体大小逐渐递减
+        * &lt;p&gt;：段落标签
+        * &lt;br&gt;：换行标签
+        * &lt;hr&gt;：展示一条水平线
+            * 属性：
+                * color：颜色
+                * width：宽度
+                * size：高度
+                * align：对其方式
+                    * center：居中
+                    * left：左对齐
+                    * right：右对齐
+        * &lt;b&gt;：字体加粗
+        * &lt;i&gt;：字体斜体
+        * &lt;font&gt;:字体标签
+        * &lt;center&gt;:文本居中
+            * 属性：
+                * color：颜色
+                * size：大小
+                * face：字体
+
+        * 属性定义：
+            * color：
+                1. 英文单词：red,green,blue
+                2. rgb(值1，值2，值3)：值的范围：0~255  如  rgb(0,0,255)
+                3. #值1值2值3：值的范围：00~FF之间。如： #FF00FF
+            * width：
+                1. 数值：width=&apos;20&apos; ,数值的单位，默认是 px(像素)
+                2. 数值%：占比相对于父元素的比例
+
+    3. 图片标签：
+        * img：展示图片
+            * 属性：
+                * src：指定图片的位置
+
+        * 代码：
+             &lt;!--展示一张图片 img--&gt;
+
+            &lt;img src=&quot;image/jingxuan_2.jpg&quot; align=&quot;right&quot; alt=&quot;古镇&quot; width=&quot;500&quot; height=&quot;500&quot;/&gt;
+
+            &lt;!--
+                相对路径
+                    * 以.开头的路径
+                        * ./：代表当前目录  ./image/1.jpg
+                        * ../:代表上一级目录
+             --&gt;
+
+            &lt;img src=&quot;./image/jiangwai_1.jpg&quot;&gt;
+
+            &lt;img src=&quot;../image/jiangwai_1.jpg&quot;&gt;
+    4. 列表标签：
+        * 有序列表：
+            * ol:
+            * li:
+        * 无序列表：
+            * ul:
+            * li:
+    5. 链接标签：
+        * a:定义一个超链接
+            * 属性：
+                * href：指定访问资源的URL(统一资源定位符)
+                * target：指定打开资源的方式
+                    * _self:默认值，在当前页面打开
+                    * _blank：在空白页面打开
+
+        * 代码：
+             &lt;!--超链接  a--&gt;
+
+            &lt;a href=&quot;http://www.itcast.cn&quot;&gt;点我&lt;/a&gt;
+            &lt;br&gt;
+
+            &lt;a href=&quot;http://www.itcast.cn&quot; target=&quot;_self&quot;&gt;点我&lt;/a&gt;
+            &lt;br&gt;
+            &lt;a href=&quot;http://www.itcast.cn&quot; target=&quot;_blank&quot;&gt;点我&lt;/a&gt;
+
+            &lt;br&gt;
+
+            &lt;a href=&quot;./5_列表标签.html&quot;&gt;列表标签&lt;/a&gt;&lt;br&gt;
+            &lt;a href=&quot;mailto:itcast@itcast.cn&quot;&gt;联系我们&lt;/a&gt;
+
+            &lt;br&gt;
+            &lt;a href=&quot;http://www.itcast.cn&quot;&gt;&lt;img src=&quot;image/jiangwai_1.jpg&quot;&gt;&lt;/a&gt;
+    6. div和span：
+        * div:每一个div占满一整行。块级标签
+        * span：文本信息在一行展示，行内标签 内联标签
+
+    7. 语义化标签：html5中为了提高程序的可读性，提供了一些标签。
+        1. &lt;header&gt;：页眉
+        2. &lt;footer&gt;：页脚
+
+
+    8. 表格标签：
+        * table：定义表格
+            * width：宽度
+            * border：边框
+            * cellpadding：定义内容和单元格的距离
+            * cellspacing：定义单元格之间的距离。如果指定为0，则单元格的线会合为一条、
+            * bgcolor：背景色
+            * align：对齐方式
+        * tr：定义行
+            * bgcolor：背景色
+            * align：对齐方式
+        * td：定义单元格
+            * colspan：合并列
+            * rowspan：合并行
+        * th：定义表头单元格
+        * &lt;caption&gt;：表格标题
+        * &lt;thead&gt;：表示表格的头部分
+        * &lt;tbody&gt;：表示表格的体部分
+        * &lt;tfoot&gt;：表示表格的脚部分</code></pre>]]></content>
+      <categories>
+        <category>JavaWeb</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>HTML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>XML快速入门笔记</title>
+    <url>/2020/03/11/XML%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>XML快速入门笔记<br> <a id="more"></a></p>
+<h1 id="笔记内容"><a href="#笔记内容" class="headerlink" title="笔记内容"></a>笔记内容</h1><pre><code>1. XML
+    1. 概念
+    2. 语法
+    3. 解析</code></pre><h2 id="XML："><a href="#XML：" class="headerlink" title="XML："></a>XML：</h2><pre><code>1. 概念：Extensible Markup Language 可扩展标记语言
+    * 可扩展：标签都是自定义的。 &lt;user&gt;  &lt;student&gt;
+
+    * 功能
+        * 存储数据
+            1. 配置文件
+            2. 在网络中传输
+    * xml与html的区别
+        1. xml标签都是自定义的，html标签是预定义。
+        2. xml的语法严格，html语法松散
+        3. xml是存储数据的，html是展示数据
+
+2. 语法：
+    * 基本语法：
+        1. xml文档的后缀名 .xml
+        2. xml第一行必须定义为文档声明
+        3. xml文档中有且仅有一个根标签
+        4. 属性值必须使用引号(单双都可)引起来
+        5. 标签必须正确关闭
+        6. xml标签名称区分大小写
+    * 快速入门：
+        &lt;?xml version=&apos;1.0&apos; ?&gt;
+        &lt;users&gt;
+            &lt;user id=&apos;1&apos;&gt;
+                &lt;name&gt;zhangsan&lt;/name&gt;
+                &lt;age&gt;23&lt;/age&gt;
+                &lt;gender&gt;male&lt;/gender&gt;
+                &lt;br/&gt;
+            &lt;/user&gt;
+
+            &lt;user id=&apos;2&apos;&gt;
+                &lt;name&gt;lisi&lt;/name&gt;
+                &lt;age&gt;24&lt;/age&gt;
+                &lt;gender&gt;female&lt;/gender&gt;
+            &lt;/user&gt;
+        &lt;/users&gt;
+
+    * 组成部分：
+        1. 文档声明
+            1. 格式：&lt;?xml 属性列表 ?&gt;
+            2. 属性列表：
+                * version：版本号，必须的属性
+                * encoding：编码方式。告知解析引擎当前文档使用的字符集，默认值：ISO-8859-1
+                * standalone：是否独立
+                    * 取值：
+                        * yes：不依赖其他文件
+                        * no：依赖其他文件
+        2. 指令(了解)：结合css的
+            * &lt;?xml-stylesheet type=&quot;text/css&quot; href=&quot;a.css&quot; ?&gt;
+        3. 标签：标签名称自定义的
+            * 规则：
+                * 名称可以包含字母、数字以及其他的字符 
+                * 名称不能以数字或者标点符号开始 
+                * 名称不能以字母 xml（或者 XML、Xml 等等）开始 
+                * 名称不能包含空格 
+
+        4. 属性：
+            id属性值唯一
+        5. 文本：
+            * CDATA区：在该区域中的数据会被原样展示
+                * 格式：  &lt;![CDATA[ 数据 ]]&gt;
+
+
+    * 约束：规定xml文档的书写规则
+        * 作为框架的使用者(程序员)：
+            1. 能够在xml中引入约束文档
+            2. 能够简单的读懂约束文档
+
+        * 分类：
+            1. DTD:一种简单的约束技术
+            2. Schema:一种复杂的约束技术
+
+
+        * DTD：
+            * 引入dtd文档到xml文档中
+                * 内部dtd：将约束规则定义在xml文档中
+                * 外部dtd：将约束的规则定义在外部的dtd文件中
+                    * 本地：&lt;!DOCTYPE 根标签名 SYSTEM &quot;dtd文件的位置&quot;&gt;
+                    * 网络：&lt;!DOCTYPE 根标签名 PUBLIC &quot;dtd文件名字&quot; &quot;dtd文件的位置URL&quot;&gt;
+
+
+        * Schema:
+            * 引入：
+                1.填写xml文档的根元素
+                2.引入xsi前缀.  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+                3.引入xsd文件命名空间.  xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;
+                4.为每一个xsd约束声明一个前缀,作为标识  xmlns=&quot;http://www.itcast.cn/xml&quot; 
+
+            &lt;students   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+                xmlns=&quot;http://www.itcast.cn/xml&quot;
+                xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;&gt;
+
+
+
+3. 解析：操作xml文档，将文档中的数据读取到内存中
+    * 操作xml文档
+        1. 解析(读取)：将文档中的数据读取到内存中
+        2. 写入：将内存中的数据保存到xml文档中。持久化的存储
+
+    * 解析xml的方式：
+        1. DOM：将标记语言文档一次性加载进内存，在内存中形成一颗dom树
+            * 优点：操作方便，可以对文档进行CRUD的所有操作
+            * 缺点：占内存
+        2. SAX：逐行读取，基于事件驱动的。
+            * 优点：不占内存。
+            * 缺点：只能读取，不能增删改
+
+
+
+    * xml常见的解析器：
+        1. JAXP：sun公司提供的解析器，支持dom和sax两种思想
+        2. DOM4J：一款非常优秀的解析器
+        3. Jsoup：jsoup 是一款Java 的HTML解析器，可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。
+        4. PULL：Android操作系统内置的解析器，sax方式的。
+
+
+    * Jsoup：jsoup 是一款Java 的HTML解析器，可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。
+        * 快速入门：
+            * 步骤：
+                1. 导入jar包
+                2. 获取Document对象
+                3. 获取对应的标签Element对象
+                4. 获取数据
+
+        * 代码：
+             //2.1获取student.xml的path
+            String path = JsoupDemo1.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath();
+            //2.2解析xml文档，加载文档进内存，获取dom树---&gt;Document
+            Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;);
+            //3.获取元素对象 Element
+            Elements elements = document.getElementsByTag(&quot;name&quot;);
+
+            System.out.println(elements.size());
+            //3.1获取第一个name的Element对象
+            Element element = elements.get(0);
+            //3.2获取数据
+            String name = element.text();
+            System.out.println(name);
+
+    * 对象的使用：
+        1. Jsoup：工具类，可以解析html或xml文档，返回Document
+            * parse：解析html或xml文档，返回Document
+                * parse​(File in, String charsetName)：解析xml或html文件的。
+                * parse​(String html)：解析xml或html字符串
+                * parse​(URL url, int timeoutMillis)：通过网络路径获取指定的html或xml的文档对象
+        2. Document：文档对象。代表内存中的dom树
+            * 获取Element对象
+                * getElementById​(String id)：根据id属性值获取唯一的element对象
+                * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合
+                * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合
+                * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合
+        3. Elements：元素Element对象的集合。可以当做 ArrayList&lt;Element&gt;来使用
+        4. Element：元素对象
+            1. 获取子元素对象
+                * getElementById​(String id)：根据id属性值获取唯一的element对象
+                * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合
+                * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合
+                * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合
+
+            2. 获取属性值
+                * String attr(String key)：根据属性名称获取属性值
+            3. 获取文本内容
+                * String text():获取文本内容
+                * String html():获取标签体的所有内容(包括字标签的字符串内容)
+        5. Node：节点对象
+            * 是Document和Element的父类
+
+
+    * 快捷查询方式：
+        1. selector:选择器
+            * 使用的方法：Elements    select​(String cssQuery)
+                * 语法：参考Selector类中定义的语法
+        2. XPath：XPath即为XML路径语言，它是一种用来确定XML（标准通用标记语言的子集）文档中某部分位置的语言
+            * 使用Jsoup的Xpath需要额外导入jar包。
+            * 查询w3cshool参考手册，使用xpath的语法完成查询
+            * 代码：
+                //1.获取student.xml的path
+                String path = JsoupDemo6.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath();
+                //2.获取Document对象
+                Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;);
+
+                //3.根据document对象，创建JXDocument对象
+                JXDocument jxDocument = new JXDocument(document);
+
+                //4.结合xpath语法查询
+                //4.1查询所有student标签
+                List&lt;JXNode&gt; jxNodes = jxDocument.selN(&quot;//student&quot;);
+                for (JXNode jxNode : jxNodes) {
+                    System.out.println(jxNode);
+                }
+
+                System.out.println(&quot;--------------------&quot;);
+
+                //4.2查询所有student标签下的name标签
+                List&lt;JXNode&gt; jxNodes2 = jxDocument.selN(&quot;//student/name&quot;);
+                for (JXNode jxNode : jxNodes2) {
+                    System.out.println(jxNode);
+                }
+
+                System.out.println(&quot;--------------------&quot;);
+
+                //4.3查询student标签下带有id属性的name标签
+                List&lt;JXNode&gt; jxNodes3 = jxDocument.selN(&quot;//student/name[@id]&quot;);
+                for (JXNode jxNode : jxNodes3) {
+                    System.out.println(jxNode);
+                }
+                System.out.println(&quot;--------------------&quot;);
+                //4.4查询student标签下带有id属性的name标签 并且id属性值为itcast
+
+                List&lt;JXNode&gt; jxNodes4 = jxDocument.selN(&quot;//student/name[@id=&apos;itcast&apos;]&quot;);
+                for (JXNode jxNode : jxNodes4) {
+                    System.out.println(jxNode);
+                }</code></pre>]]></content>
+      <categories>
+        <category>JavaWeb</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>XML</tag>
       </tags>
   </entry>
   <entry>
@@ -274,26 +1365,132 @@ class Solution {
       </tags>
   </entry>
   <entry>
-    <title>我的文章</title>
-    <url>/2020/03/11/%E6%88%91%E7%9A%84%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<h1 id="归去来兮"><a href="#归去来兮" class="headerlink" title="归去来兮"></a>归去来兮</h1> <a id="more"></a>
-<p>####陶渊明</p>
-<p>　　余家贫，耕植不足以自给。幼稚盈室，瓶无储粟，生生所资，未见其术。亲故多劝余为长吏，脱然有怀，求之靡途。会有四方之事，诸侯以惠爱为德，家叔以余贫苦，遂见用于小邑。于时风波未静，心惮远役，彭泽去家百里，公田之利，足以为酒。故便求之。及少日，眷然有归欤之情。何则？质性自然，非矫厉所得。饥冻虽切，违己交病。尝从人事，皆口腹自役。于是怅然慷慨，深愧平生之志。犹望一稔，当敛裳宵逝。寻程氏妹丧于武昌，情在骏奔，自免去职。仲秋至冬，在官八十余日。因事顺心，命篇曰《归去来兮》。乙巳岁十一月也。</p>
-<p>　　归去来兮，田园将芜胡不归？既自以心为形役，奚惆怅而独悲？悟已往之不谏，知来者之可追。实迷途其未远，觉今是而昨非。舟遥遥以轻飏，风飘飘而吹衣。问征夫以前路，恨晨光之熹微。</p>
-<p>　　乃瞻衡宇，载欣载奔。僮仆欢迎，稚子候门。三径就荒，松菊犹存。携幼入室，有酒盈樽。引壶觞以自酌，眄庭柯以怡颜。倚南窗以寄傲，审容膝之易安。园日涉以成趣，门虽设而常关。策扶老以流憩，时矫首而遐观。云无心以出岫，鸟倦飞而知还。景翳翳以将入，抚孤松而盘桓。</p>
-<p>　　归去来兮，请息交以绝游。世与我而相违，复驾言兮焉求？悦亲戚之情话，乐琴书以消忧。农人告余以春及，将有事于西畴。或命巾车，或棹孤舟。既窈窕以寻壑，亦崎岖而经丘。木欣欣以向荣，泉涓涓而始流。善万物之得时，感吾生之行休。</p>
-<p>　　已矣乎！寓形宇内复几时？曷不委心任去留？胡为乎遑遑欲何之？富贵非吾愿，帝乡不可期。怀良辰以孤往，或植杖而耘耔。登东皋以舒啸，临清流而赋诗。聊乘化以归尽，乐夫天命复奚疑！  </p>
-<p><img src="data:image/jpeg;base64,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" alt="avatar"></p>
-<p>[百度]（<a href="https://so.gushiwen.org/shiwenv_987458864738.aspx）" target="_blank" rel="noopener">https://so.gushiwen.org/shiwenv_987458864738.aspx）</a></p>
+    <title>MarkDown的基本语法</title>
+    <url>/2020/03/11/Markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</url>
+    <content><![CDATA[<p>MarkDown的基本语法使用说明<br> <a id="more"></a></p>
+<h1 id="MarkDown的基本语法"><a href="#MarkDown的基本语法" class="headerlink" title="MarkDown的基本语法"></a>MarkDown的基本语法</h1><p>更多操作，可查看<a href="https://www.runoob.com" target="_blank" rel="noopener">菜鸟教程</a></p>
+<h2 id="1-标题"><a href="#1-标题" class="headerlink" title="1.标题"></a>1.标题</h2><p>使用 # 号标记<br>使用 # 号可表示 1-6 级标题，一级标题对应一个 # 号，二级标题对应两个 # 号，以此类推，效果如下：  </p>
+<pre><code># 一级标题
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题</code></pre><h1 id="我是一级标题"><a href="#我是一级标题" class="headerlink" title="我是一级标题"></a>我是一级标题</h1><h2 id="我是二级标题"><a href="#我是二级标题" class="headerlink" title="我是二级标题"></a>我是二级标题</h2><h3 id="我是三级标题"><a href="#我是三级标题" class="headerlink" title="我是三级标题"></a>我是三级标题</h3><h4 id="我是四级标题"><a href="#我是四级标题" class="headerlink" title="我是四级标题"></a>我是四级标题</h4><h5 id="我是五级标题"><a href="#我是五级标题" class="headerlink" title="我是五级标题"></a>我是五级标题</h5><h6 id="我是六级标题"><a href="#我是六级标题" class="headerlink" title="我是六级标题"></a>我是六级标题</h6><h2 id="2-Markdown-段落"><a href="#2-Markdown-段落" class="headerlink" title="2.Markdown 段落"></a>2.Markdown 段落</h2><p>Markdown 段落没有特殊的格式，直接编写文字就好，段落的换行是使用两个以上空格加上回车。</p>
+<h2 id="3-字体与分割线"><a href="#3-字体与分割线" class="headerlink" title="3.字体与分割线"></a>3.字体与分割线</h2><p>Markdown 可以使用以下几种字体：</p>
+<pre><code>*斜体文本*
+_斜体文本_
+**粗体文本**
+__粗体文本__
+***粗斜体文本***
+___粗斜体文本___</code></pre><p><em>斜体文本</em><br><em>斜体文本</em><br><strong>粗体文本</strong><br><strong>粗体文本</strong><br><strong><em>粗斜体文本</em></strong><br><strong><em>粗斜体文本</em></strong>  </p>
+<p>分隔线，可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线。</p>
+<pre><code>***
+
+* * *
+
+*****
+
+- - -
+
+----------</code></pre><hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<p>如果段落上的文字要添加删除线，只需要在文字的两端加上两个波浪线 ~~ 即可，实例如下：</p>
+<p>RUNOOB.COM<br><del>BAIDU.COM</del>  </p>
+<h2 id="4-图片链接"><a href="#4-图片链接" class="headerlink" title="4.图片链接"></a>4.图片链接</h2><h3 id="4-1链接"><a href="#4-1链接" class="headerlink" title="4.1链接"></a>4.1链接</h3><p>Markdown 链接<br>链接使用方法如下：</p>
+<pre><code>[链接名称](链接地址)或者&lt;链接地址&gt;
+例如：
+这是一个链接 [菜鸟教程](https://www.runoob.com)</code></pre><p><a href="https://www.runoob.com" target="_blank" rel="noopener">菜鸟教程</a></p>
+<h3 id="4-2图片"><a href="#4-2图片" class="headerlink" title="4.2图片"></a>4.2图片</h3><p>Markdown 图片语法格式如下：</p>
+<pre><code>![alt 属性文本](图片地址)
+![alt 属性文本](图片地址 &quot;可选标题&quot;)</code></pre><p>开头一个感叹号 !接着一个方括号，里面放上图片的替代文字接着一个普通括号，里面放上图片的网址，最后还可以用引号包住并加上选择性的 ‘title’ 属性的文字。</p>
+<h2 id="5-Markdown-代码"><a href="#5-Markdown-代码" class="headerlink" title="5.Markdown 代码"></a>5.Markdown 代码</h2><h3 id="5-1代码"><a href="#5-1代码" class="headerlink" title="5.1代码"></a>5.1代码</h3><p>如果是段落上的一个函数或片段的代码可以用反引号把它包起来（`），例如：</p>
+<pre><code>`hello world</code></pre><p>`hello world</p>
+<h3 id="5-2代码块"><a href="#5-2代码块" class="headerlink" title="5.2代码块"></a>5.2代码块</h3><p>代码区块使用 4 个空格或者一个制表符（Tab 键）。选中代码块按制表符即可，注意，上下需要个空一行。<br>Markdown 区块引用是在段落开头使用 &gt; 符号 ，然后后面紧跟一个空格符号：</p>
+<h2 id="6-区块"><a href="#6-区块" class="headerlink" title="6.区块"></a>6.区块</h2><pre><code>&gt; hello
+&gt; &gt; world</code></pre><blockquote>
+<p>hello</p>
+<blockquote>
+<p>world</p>
+</blockquote>
+</blockquote>
+<h2 id="7-列表"><a href="#7-列表" class="headerlink" title="7.列表"></a>7.列表</h2><p>Markdown 支持有序列表和无序列表。</p>
+<h3 id="7-1无序列表"><a href="#7-1无序列表" class="headerlink" title="7.1无序列表"></a>7.1无序列表</h3><p>无序列表使用星号(*)、加号(+)或是减号(-)作为列表标记：</p>
+<pre><code>* 第一项
+* 第二项
+* 第三项
+
++ 第一项
++ 第二项
++ 第三项
+
+- 第一项
+- 第二项
+- 第三项</code></pre><ul>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ul>
+<ul>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ul>
+<ul>
+<li><p>第一项</p>
+</li>
+<li><p>第二项</p>
+</li>
+<li><p>第三项</p>
+<h3 id="7-2有序列表"><a href="#7-2有序列表" class="headerlink" title="7.2有序列表"></a>7.2有序列表</h3><p>有序列表使用数字并加上 . 号来表示，如：</p>
+<ol>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ol>
+</li>
+</ul>
+<ol>
+<li><p>第一项</p>
+</li>
+<li><p>第二项</p>
+</li>
+<li><p>第三项</p>
+<h3 id="7-3列表嵌套"><a href="#7-3列表嵌套" class="headerlink" title="7.3列表嵌套"></a>7.3列表嵌套</h3><p>列表嵌套只需在子列表中的选项添加四个空格即可：</p>
+<ol>
+<li>第一项：<ul>
+<li>第一项嵌套的第一个元素</li>
+<li>第一项嵌套的第二个元素</li>
+</ul>
+</li>
+<li>第二项：<ul>
+<li>第二项嵌套的第一个元素</li>
+<li>第二项嵌套的第二个元素</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>第一项：</p>
+<ul>
+<li>第一项嵌套的第一个元素</li>
+<li>第一项嵌套的第二个元素</li>
+</ul>
+</li>
+<li><p>第二项：</p>
+<ul>
+<li>第二项嵌套的第一个元素</li>
+<li>第二项嵌套的第二个元素</li>
+</ul>
+</li>
+</ol>
 ]]></content>
       <categories>
-        <category>非技术</category>
+        <category>教程</category>
       </categories>
       <tags>
-        <tag>数据结构</tag>
-        <tag>算法</tag>
-        <tag>古文</tag>
-        <tag>tags</tag>
+        <tag>Markdown</tag>
       </tags>
   </entry>
   <entry>
@@ -313,5 +1510,290 @@ class Solution {
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>JavaScript进阶笔记</title>
+    <url>/2020/02/18/JavaScript%E8%BF%9B%E9%98%B6%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>HTML快速入门笔记<br> <a id="more"></a></p>
+<h1 id="笔记内容："><a href="#笔记内容：" class="headerlink" title="笔记内容："></a>笔记内容：</h1><pre><code>1. JavaScript：
+    1. ECMAScript：
+    2. BOM：
+    3. DOM：
+        1. 事件</code></pre><h2 id="DOM简单学习：为了满足案例要求"><a href="#DOM简单学习：为了满足案例要求" class="headerlink" title="DOM简单学习：为了满足案例要求"></a>DOM简单学习：为了满足案例要求</h2><pre><code>* 功能：控制html文档的内容
+* 获取页面标签(元素)对象：Element
+    * document.getElementById(&quot;id值&quot;):通过元素的id获取元素对象
+
+* 操作Element对象：
+    1. 修改属性值：
+        1. 明确获取的对象是哪一个？
+        2. 查看API文档，找其中有哪些属性可以设置
+    2. 修改标签体内容：
+        * 属性：innerHTML
+        1. 获取元素对象
+        2. 使用innerHTML属性修改标签体内容</code></pre><h2 id="事件简单学习"><a href="#事件简单学习" class="headerlink" title="事件简单学习"></a>事件简单学习</h2><pre><code>* 功能： 某些组件被执行了某些操作后，触发某些代码的执行。
+    * 造句：  xxx被xxx,我就xxx
+        * 我方水晶被摧毁后，我就责备对友。
+        * 敌方水晶被摧毁后，我就夸奖自己。
+
+* 如何绑定事件
+    1. 直接在html标签上，指定事件的属性(操作)，属性值就是js代码
+        1. 事件：onclick--- 单击事件
+
+    2. 通过js获取元素对象，指定事件属性，设置一个函数
+
+    * 代码：
+        &lt;body&gt;
+            &lt;img id=&quot;light&quot; src=&quot;img/off.gif&quot;  onclick=&quot;fun();&quot;&gt;
+            &lt;img id=&quot;light2&quot; src=&quot;img/off.gif&quot;&gt;
+
+            &lt;script&gt;
+                function fun(){
+                    alert(&apos;我被点了&apos;);
+                    alert(&apos;我又被点了&apos;);
+                }
+
+                function fun2(){
+                    alert(&apos;咋老点我？&apos;);
+                }
+
+                //1.获取light2对象
+                var light2 = document.getElementById(&quot;light2&quot;);
+                //2.绑定事件
+                light2.onclick = fun2;
+
+
+            &lt;/script&gt;
+        &lt;/body&gt;
+
+* 案例1：电灯开关
+    &lt;!DOCTYPE html&gt;
+    &lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+        &lt;title&gt;电灯开关&lt;/title&gt;
+
+    &lt;/head&gt;
+    &lt;body&gt;
+
+    &lt;img id=&quot;light&quot; src=&quot;img/off.gif&quot;&gt;
+
+    &lt;script&gt;
+        /*
+            分析：
+                1.获取图片对象
+                2.绑定单击事件
+                3.每次点击切换图片
+                    * 规则：
+                        * 如果灯是开的 on,切换图片为 off
+                        * 如果灯是关的 off,切换图片为 on
+                    * 使用标记flag来完成
+
+         */
+
+        //1.获取图片对象
+        var light = document.getElementById(&quot;light&quot;);
+
+        var flag = false;//代表灯是灭的。 off图片
+
+        //2.绑定单击事件
+        light.onclick = function(){
+            if(flag){//判断如果灯是开的，则灭掉
+                light.src = &quot;img/off.gif&quot;;
+                flag = false;
+
+            }else{
+                //如果灯是灭的，则打开
+
+                light.src = &quot;img/on.gif&quot;;
+                flag = true;
+            }
+
+
+        }
+
+    &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;</code></pre><h1 id="BOM"><a href="#BOM" class="headerlink" title="BOM:"></a>BOM:</h1><pre><code>1. 概念：Browser Object Model 浏览器对象模型
+    * 将浏览器的各个组成部分封装成对象。
+
+2. 组成：
+    * Window：窗口对象
+    * Navigator：浏览器对象
+    * Screen：显示器屏幕对象
+    * History：历史记录对象
+    * Location：地址栏对象
+
+3. Window：窗口对象
+    1. 创建
+    2. 方法
+         1. 与弹出框有关的方法：
+            alert()    显示带有一段消息和一个确认按钮的警告框。
+            confirm()    显示带有一段消息以及确认按钮和取消按钮的对话框。
+                * 如果用户点击确定按钮，则方法返回true
+                * 如果用户点击取消按钮，则方法返回false
+            prompt()    显示可提示用户输入的对话框。
+                * 返回值：获取用户输入的值
+         2. 与打开关闭有关的方法：
+            close()    关闭浏览器窗口。
+                * 谁调用我 ，我关谁
+            open()    打开一个新的浏览器窗口
+                * 返回新的Window对象
+         3. 与定时器有关的方式
+            setTimeout()    在指定的毫秒数后调用函数或计算表达式。
+                * 参数：
+                    1. js代码或者方法对象
+                    2. 毫秒值
+                * 返回值：唯一标识，用于取消定时器
+            clearTimeout()    取消由 setTimeout() 方法设置的 timeout。
+
+            setInterval()    按照指定的周期（以毫秒计）来调用函数或计算表达式。
+            clearInterval()    取消由 setInterval() 设置的 timeout。
+
+    3. 属性：
+        1. 获取其他BOM对象：
+            history
+            location
+            Navigator
+            Screen:
+        2. 获取DOM对象
+            document
+    4. 特点
+        * Window对象不需要创建可以直接使用 window使用。 window.方法名();
+        * window引用可以省略。  方法名();
+
+
+4. Location：地址栏对象
+    1. 创建(获取)：
+        1. window.location
+        2. location
+
+    2. 方法：
+        * reload()    重新加载当前文档。刷新
+    3. 属性
+        * href    设置或返回完整的 URL。
+
+
+5. History：历史记录对象
+    1. 创建(获取)：
+        1. window.history
+        2. history
+
+    2. 方法：
+        * back()    加载 history 列表中的前一个 URL。
+        * forward()    加载 history 列表中的下一个 URL。
+        * go(参数)    加载 history 列表中的某个具体页面。
+            * 参数：
+                * 正数：前进几个历史记录
+                * 负数：后退几个历史记录
+    3. 属性：
+        * length    返回当前窗口历史列表中的 URL 数量。</code></pre><h2 id="DOM："><a href="#DOM：" class="headerlink" title="DOM："></a>DOM：</h2><pre><code>* 概念： Document Object Model 文档对象模型
+    * 将标记语言文档的各个组成部分，封装为对象。可以使用这些对象，对标记语言文档进行CRUD的动态操作
+
+* W3C DOM 标准被分为 3 个不同的部分：
+
+    * 核心 DOM - 针对任何结构化文档的标准模型
+        * Document：文档对象
+        * Element：元素对象
+        * Attribute：属性对象
+        * Text：文本对象
+        * Comment:注释对象
+
+        * Node：节点对象，其他5个的父对象
+    * XML DOM - 针对 XML 文档的标准模型
+    * HTML DOM - 针对 HTML 文档的标准模型
+
+
+
+
+
+* 核心DOM模型：
+    * Document：文档对象
+        1. 创建(获取)：在html dom模型中可以使用window对象来获取
+            1. window.document
+            2. document
+        2. 方法：
+            1. 获取Element对象：
+                1. getElementById()    ： 根据id属性值获取元素对象。id属性值一般唯一
+                2. getElementsByTagName()：根据元素名称获取元素对象们。返回值是一个数组
+                3. getElementsByClassName():根据Class属性值获取元素对象们。返回值是一个数组
+                4. getElementsByName(): 根据name属性值获取元素对象们。返回值是一个数组
+            2. 创建其他DOM对象：
+                createAttribute(name)
+                createComment()
+                createElement()
+                createTextNode()
+        3. 属性
+    * Element：元素对象
+        1. 获取/创建：通过document来获取和创建
+        2. 方法：
+            1. removeAttribute()：删除属性
+            2. setAttribute()：设置属性
+    * Node：节点对象，其他5个的父对象
+        * 特点：所有dom对象都可以被认为是一个节点
+        * 方法：
+            * CRUD dom树：
+                * appendChild()：向节点的子节点列表的结尾添加新的子节点。
+                * removeChild()    ：删除（并返回）当前节点的指定子节点。
+                * replaceChild()：用新节点替换一个子节点。
+        * 属性：
+            * parentNode 返回节点的父节点。
+
+
+* HTML DOM
+    1. 标签体的设置和获取：innerHTML
+    2. 使用html元素对象的属性
+    3. 控制元素样式
+        1. 使用元素的style属性来设置
+            如：
+                 //修改样式方式1
+                div1.style.border = &quot;1px solid red&quot;;
+                div1.style.width = &quot;200px&quot;;
+                //font-size--&gt; fontSize
+                div1.style.fontSize = &quot;20px&quot;;
+        2. 提前定义好类选择器的样式，通过元素的className属性来设置其class属性值。</code></pre><h2 id="事件监听机制："><a href="#事件监听机制：" class="headerlink" title="事件监听机制："></a>事件监听机制：</h2><pre><code>* 概念：某些组件被执行了某些操作后，触发某些代码的执行。    
+    * 事件：某些操作。如： 单击，双击，键盘按下了，鼠标移动了
+    * 事件源：组件。如： 按钮 文本输入框...
+    * 监听器：代码。
+    * 注册监听：将事件，事件源，监听器结合在一起。 当事件源上发生了某个事件，则触发执行某个监听器代码。
+
+
+* 常见的事件：
+    1. 点击事件：
+        1. onclick：单击事件
+        2. ondblclick：双击事件
+    2. 焦点事件
+        1. onblur：失去焦点
+        2. onfocus:元素获得焦点。
+
+    3. 加载事件：
+        1. onload：一张页面或一幅图像完成加载。
+
+    4. 鼠标事件：
+        1. onmousedown    鼠标按钮被按下。
+        2. onmouseup    鼠标按键被松开。
+        3. onmousemove    鼠标被移动。
+        4. onmouseover    鼠标移到某元素之上。
+        5. onmouseout    鼠标从某元素移开。
+
+
+    5. 键盘事件：
+        1. onkeydown    某个键盘按键被按下。    
+        2. onkeyup        某个键盘按键被松开。
+        3. onkeypress    某个键盘按键被按下并松开。
+
+    6. 选择和改变
+        1. onchange    域的内容被改变。
+        2. onselect    文本被选中。
+
+    7. 表单事件：
+        1. onsubmit    确认按钮被点击。
+        2. onreset    重置按钮被点击。</code></pre>]]></content>
+      <categories>
+        <category>JavaWeb</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>JavaScript</tag>
+      </tags>
   </entry>
 </search>

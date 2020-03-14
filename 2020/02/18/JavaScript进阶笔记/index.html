@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    leetcode 数学类 |  Aslan&#39;s blog
+    JavaScript进阶笔记 |  Aslan&#39;s blog
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -31,7 +31,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-leetcode数学类" class="article article-type-post" itemscope
+  <article id="post-JavaScript进阶笔记" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -39,7 +39,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  leetcode 数学类
+  JavaScript进阶笔记
 </h1>
   
 
@@ -48,12 +48,12 @@
 
     
     <div class="article-meta">
-      <a href="/2020/03/11/leetcode%E6%95%B0%E5%AD%A6%E7%B1%BB/" class="article-date">
-  <time datetime="2020-03-11T09:20:31.000Z" itemprop="datePublished">2020-03-11</time>
+      <a href="/2020/02/18/JavaScript%E8%BF%9B%E9%98%B6%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2020-02-18T09:20:31.000Z" itemprop="datePublished">2020-02-18</time>
 </a>
       
   <div class="article-category">
-    <a class="article-category-link" href="/categories/leetcode/">leetcode</a>
+    <a class="article-category-link" href="/categories/JavaWeb/">JavaWeb</a>
   </div>
 
       
@@ -63,7 +63,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">1k字</span>
+            <span class="post-count">1.9k字</span>
         </span>
     </span>
 
@@ -72,7 +72,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">4分钟</span>
+            <span class="post-count">7分钟</span>
         </span>
     </span>
 </div>
@@ -99,139 +99,280 @@
       
 
       
-      <p>leetcode里在数学标签下的价值比较大的题目<br> <a id="more"></a></p>
-<h1 id="1-素数"><a href="#1-素数" class="headerlink" title="1.素数"></a>1.素数</h1><h4 id="统计所有小于非负整数-n-的质数的数量"><a href="#统计所有小于非负整数-n-的质数的数量" class="headerlink" title="统计所有小于非负整数 n 的质数的数量"></a>统计所有小于非负整数 n 的质数的数量</h4><p>使用Sieve of Eratosthenes算法，埃拉托斯特尼筛法在每次找到一个素数时，将能被素数整除的数排除掉</p>
-<pre><code>class Solution {
-    public int countPrimes(int n) {
-        boolean[] isPrim = new boolean[n];
-    // 将数组都初始化为 true
-        Arrays.fill(isPrim, true);
-        for (int i = 2; i &lt; n; i++) 
-            if (isPrim[i]) 
-                // i 的倍数不可能是素数了
-                for (int j = 2 * i; j &lt; n; j += i) 
-                        isPrim[j] = false;
-        int count = 0;
-        for (int i = 2; i &lt; n; i++)
-            if (isPrim[i]) count++;
-        return count;
-    }
-}</code></pre><h1 id="2-七进制数"><a href="#2-七进制数" class="headerlink" title="2.七进制数"></a>2.七进制数</h1><h4 id="给定一个整数，将其转化为7进制，并以字符串形式输出。"><a href="#给定一个整数，将其转化为7进制，并以字符串形式输出。" class="headerlink" title="给定一个整数，将其转化为7进制，并以字符串形式输出。"></a>给定一个整数，将其转化为7进制，并以字符串形式输出。</h4><p>StringBuffer();就是构造一个StringBuffer对象。<br>sb.reverse()就是用来把stringbuffer里面的字符串翻转。<br>譬如你stringbuffer里面存放了abc,sb.reverse()====&gt;bca，sb.toString()就是返回该stringbuffer的字符串形式。</p>
-<pre><code>class Solution {
-    public String convertToBase7(int num) {
-        if(num==0) return &quot;0&quot;;
-        StringBuilder sb = new StringBuilder();
-        boolean isNegtive=false;
-        if(num&lt;0){
-            num=-num;
-            isNegtive=true;
-        }
-        if(num&gt;0){
-            while(num!=0){
-                sb.append(num%7);
-                num=num/7;
+      <p>HTML快速入门笔记<br> <a id="more"></a></p>
+<h1 id="笔记内容："><a href="#笔记内容：" class="headerlink" title="笔记内容："></a>笔记内容：</h1><pre><code>1. JavaScript：
+    1. ECMAScript：
+    2. BOM：
+    3. DOM：
+        1. 事件</code></pre><h2 id="DOM简单学习：为了满足案例要求"><a href="#DOM简单学习：为了满足案例要求" class="headerlink" title="DOM简单学习：为了满足案例要求"></a>DOM简单学习：为了满足案例要求</h2><pre><code>* 功能：控制html文档的内容
+* 获取页面标签(元素)对象：Element
+    * document.getElementById(&quot;id值&quot;):通过元素的id获取元素对象
+
+* 操作Element对象：
+    1. 修改属性值：
+        1. 明确获取的对象是哪一个？
+        2. 查看API文档，找其中有哪些属性可以设置
+    2. 修改标签体内容：
+        * 属性：innerHTML
+        1. 获取元素对象
+        2. 使用innerHTML属性修改标签体内容</code></pre><h2 id="事件简单学习"><a href="#事件简单学习" class="headerlink" title="事件简单学习"></a>事件简单学习</h2><pre><code>* 功能： 某些组件被执行了某些操作后，触发某些代码的执行。
+    * 造句：  xxx被xxx,我就xxx
+        * 我方水晶被摧毁后，我就责备对友。
+        * 敌方水晶被摧毁后，我就夸奖自己。
+
+* 如何绑定事件
+    1. 直接在html标签上，指定事件的属性(操作)，属性值就是js代码
+        1. 事件：onclick--- 单击事件
+
+    2. 通过js获取元素对象，指定事件属性，设置一个函数
+
+    * 代码：
+        &lt;body&gt;
+            &lt;img id=&quot;light&quot; src=&quot;img/off.gif&quot;  onclick=&quot;fun();&quot;&gt;
+            &lt;img id=&quot;light2&quot; src=&quot;img/off.gif&quot;&gt;
+
+            &lt;script&gt;
+                function fun(){
+                    alert(&apos;我被点了&apos;);
+                    alert(&apos;我又被点了&apos;);
+                }
+
+                function fun2(){
+                    alert(&apos;咋老点我？&apos;);
+                }
+
+                //1.获取light2对象
+                var light2 = document.getElementById(&quot;light2&quot;);
+                //2.绑定事件
+                light2.onclick = fun2;
+
+
+            &lt;/script&gt;
+        &lt;/body&gt;
+
+* 案例1：电灯开关
+    &lt;!DOCTYPE html&gt;
+    &lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+        &lt;title&gt;电灯开关&lt;/title&gt;
+
+    &lt;/head&gt;
+    &lt;body&gt;
+
+    &lt;img id=&quot;light&quot; src=&quot;img/off.gif&quot;&gt;
+
+    &lt;script&gt;
+        /*
+            分析：
+                1.获取图片对象
+                2.绑定单击事件
+                3.每次点击切换图片
+                    * 规则：
+                        * 如果灯是开的 on,切换图片为 off
+                        * 如果灯是关的 off,切换图片为 on
+                    * 使用标记flag来完成
+
+         */
+
+        //1.获取图片对象
+        var light = document.getElementById(&quot;light&quot;);
+
+        var flag = false;//代表灯是灭的。 off图片
+
+        //2.绑定单击事件
+        light.onclick = function(){
+            if(flag){//判断如果灯是开的，则灭掉
+                light.src = &quot;img/off.gif&quot;;
+                flag = false;
+
+            }else{
+                //如果灯是灭的，则打开
+
+                light.src = &quot;img/on.gif&quot;;
+                flag = true;
             }
-        }
-        String result=sb.reverse().toString();
-        return isNegtive==true?&quot;-&quot;+result:result;      
-    }
-}</code></pre><h1 id="3-特殊26进制"><a href="#3-特殊26进制" class="headerlink" title="3.特殊26进制"></a>3.特殊26进制</h1><h4 id="给定一个正整数，返回它在-Excel-表中相对应的列名称。"><a href="#给定一个正整数，返回它在-Excel-表中相对应的列名称。" class="headerlink" title="给定一个正整数，返回它在 Excel 表中相对应的列名称。"></a>给定一个正整数，返回它在 Excel 表中相对应的列名称。</h4><pre><code>例如，
 
-1 -&gt; A
-2 -&gt; B
-3 -&gt; C
-...
-26 -&gt; Z
-27 -&gt; AA
-28 -&gt; AB 
 
-class Solution {
-    public String convertToTitle(int n) {
-        StringBuilder stringBuilder = new StringBuilder();
-        while (n != 0) {
-            n --;
-            stringBuilder.append((char)(n % 26 + &apos;A&apos;));
-            n /= 26;
         }
-        return stringBuilder.reverse().toString();
-    }
-}</code></pre><h1 id="4-整数-n，返回-n-结果尾数中零的数量"><a href="#4-整数-n，返回-n-结果尾数中零的数量" class="headerlink" title="4.整数 n，返回 n! 结果尾数中零的数量"></a>4.整数 n，返回 n! 结果尾数中零的数量</h1><pre><code>class Solution {
-    public int trailingZeroes(int n) {
-        int count = 0;
-        while (n &gt; 0) {
-            count += n / 5;
-            n = n / 5;
-        }
-        return count;
-    }
-}</code></pre><h1 id="5-二进制求和"><a href="#5-二进制求和" class="headerlink" title="5.二进制求和"></a>5.二进制求和</h1><h4 id="给定两个二进制字符串，返回他们的和（用二进制表示）。"><a href="#给定两个二进制字符串，返回他们的和（用二进制表示）。" class="headerlink" title="给定两个二进制字符串，返回他们的和（用二进制表示）。"></a>给定两个二进制字符串，返回他们的和（用二进制表示）。</h4><h4 id="输入为非空字符串且只包含数字-1-和-0。"><a href="#输入为非空字符串且只包含数字-1-和-0。" class="headerlink" title="输入为非空字符串且只包含数字 1 和 0。"></a>输入为非空字符串且只包含数字 1 和 0。</h4><pre><code>class Solution {
-    public String addBinary(String a, String b) {
-        StringBuilder ans = new StringBuilder();
-        int ca = 0;
-        for(int i = a.length() - 1, j = b.length() - 1;i &gt;= 0 || j &gt;= 0; i--, j--) {
-            int sum = ca;
-            sum += i &gt;= 0 ? a.charAt(i) - &apos;0&apos; : 0;
-            sum += j &gt;= 0 ? b.charAt(j) - &apos;0&apos; : 0;
-            ans.append(sum % 2);
-            ca = sum / 2;
-        }
-        ans.append(ca == 1 ? ca : &quot;&quot;);
-        return ans.reverse().toString();
-    }
-}</code></pre><h1 id="6-字符串加法（模板）"><a href="#6-字符串加法（模板）" class="headerlink" title="6.字符串加法（模板）"></a>6.字符串加法（模板）</h1><h4 id="给定两个字符串形式的非负整数-num1-和num2-，计算它们的和。"><a href="#给定两个字符串形式的非负整数-num1-和num2-，计算它们的和。" class="headerlink" title="给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和。"></a>给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和。</h4><p>比较经典的字符串加法的题目</p>
-<pre><code>class Solution {
-    public String addStrings(String num1, String num2) {
-        int carry=0;
-        int x,y;
-        StringBuilder sb=new StringBuilder();
-        for(int i=num1.length()-1,j=num2.length()-1; i&gt;=0 || j&gt;=0; i--,j--){
-            int sum=carry;
-            x=i&lt;0?0:num1.charAt(i)-&apos;0&apos;;
-            y=j&lt;0?0:num2.charAt(j)-&apos;0&apos;;
-            sum+=x+y;
-            carry=sum/10;
-            sb.append(sum%10);
-        }
-        sb.append(carry==1?carry:&quot;&quot;);
-        return sb.reverse().toString();   
-    }
-}</code></pre><h1 id="7-最小移动次数使元素相等"><a href="#7-最小移动次数使元素相等" class="headerlink" title="7.最小移动次数使元素相等"></a>7.最小移动次数使元素相等</h1><h3 id="7-1-给定一个长度为-n-的非空整数数组，找到让数组所有元素相等的最小移动次数。每次移动可以使-n-1-个元素增加-1。"><a href="#7-1-给定一个长度为-n-的非空整数数组，找到让数组所有元素相等的最小移动次数。每次移动可以使-n-1-个元素增加-1。" class="headerlink" title="7.1 给定一个长度为 n 的非空整数数组，找到让数组所有元素相等的最小移动次数。每次移动可以使 n - 1 个元素增加 1。"></a>7.1 给定一个长度为 n 的非空整数数组，找到让数组所有元素相等的最小移动次数。每次移动可以使 n - 1 个元素增加 1。</h3><pre><code>class Solution {
-    public int minMoves(int[] nums) {
-        Arrays.sort(nums);
-        int count=0;
-        for(int i=0;i&lt;nums.length;i++){
-            count+=nums[i]-nums[0];
-        }
-    return count;
-    }
-}</code></pre><p>~ n-1个元素加一相当于一个元素减一 ~</p>
-<h3 id="7-2-给定一个非空整数数组，找到使所有数组元素相等所需的最小移动数，其中每次移动可将选定的一个元素加1或减1。-您可以假设数组的长度最多为10000。"><a href="#7-2-给定一个非空整数数组，找到使所有数组元素相等所需的最小移动数，其中每次移动可将选定的一个元素加1或减1。-您可以假设数组的长度最多为10000。" class="headerlink" title="7.2 给定一个非空整数数组，找到使所有数组元素相等所需的最小移动数，其中每次移动可将选定的一个元素加1或减1。 您可以假设数组的长度最多为10000。"></a>7.2 给定一个非空整数数组，找到使所有数组元素相等所需的最小移动数，其中每次移动可将选定的一个元素加1或减1。 您可以假设数组的长度最多为10000。</h3><p>例如:</p>
-<pre><code>class Solution {
-    public int minMoves2(int[] nums) {
-        Arrays.sort(nums);
-        int sum = 0;
-        for (int num : nums) {
-            sum += Math.abs(nums[nums.length / 2] - num);
-        }
-        return sum;
-    }
-}</code></pre><h1 id="8-多数元素"><a href="#8-多数元素" class="headerlink" title="8.多数元素"></a>8.多数元素</h1><h4 id="给定一个大小为-n-的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于-⌊-n-2-⌋-的元素。你可以假设数组是非空的，并且给定的数组总是存在多数元素。"><a href="#给定一个大小为-n-的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于-⌊-n-2-⌋-的元素。你可以假设数组是非空的，并且给定的数组总是存在多数元素。" class="headerlink" title="给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。你可以假设数组是非空的，并且给定的数组总是存在多数元素。"></a>给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。你可以假设数组是非空的，并且给定的数组总是存在多数元素。</h4><pre><code>class Solution {
-    public int majorityElement(int[] nums) {
-        Arrays.sort(nums);
-        int n=nums.length;
-        return nums[n/2];
-    }
-}</code></pre><h1 id="9-完全平方数"><a href="#9-完全平方数" class="headerlink" title="9.完全平方数"></a>9.完全平方数</h1><p>完全平方数可以通过累加从1往后的奇数找到，<br>1 = 1;<br>4 = 1 + 3;<br>9 = 1 + 3 + 5;<br>16 = 1 + 3 + 5 + 7;<br>…<br>计算过程只需要加减法，效率极高。  </p>
-<pre><code>class Solution {
-    public boolean isPerfectSquare(int num) {
-        int subNum = 1;
-        while (num &gt; 0) {
-            num -= subNum;
-            subNum += 2;
-        }
-        return num == 0;
-    }
-}</code></pre>
+
+    &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;</code></pre><h1 id="BOM"><a href="#BOM" class="headerlink" title="BOM:"></a>BOM:</h1><pre><code>1. 概念：Browser Object Model 浏览器对象模型
+    * 将浏览器的各个组成部分封装成对象。
+
+2. 组成：
+    * Window：窗口对象
+    * Navigator：浏览器对象
+    * Screen：显示器屏幕对象
+    * History：历史记录对象
+    * Location：地址栏对象
+
+3. Window：窗口对象
+    1. 创建
+    2. 方法
+         1. 与弹出框有关的方法：
+            alert()    显示带有一段消息和一个确认按钮的警告框。
+            confirm()    显示带有一段消息以及确认按钮和取消按钮的对话框。
+                * 如果用户点击确定按钮，则方法返回true
+                * 如果用户点击取消按钮，则方法返回false
+            prompt()    显示可提示用户输入的对话框。
+                * 返回值：获取用户输入的值
+         2. 与打开关闭有关的方法：
+            close()    关闭浏览器窗口。
+                * 谁调用我 ，我关谁
+            open()    打开一个新的浏览器窗口
+                * 返回新的Window对象
+         3. 与定时器有关的方式
+            setTimeout()    在指定的毫秒数后调用函数或计算表达式。
+                * 参数：
+                    1. js代码或者方法对象
+                    2. 毫秒值
+                * 返回值：唯一标识，用于取消定时器
+            clearTimeout()    取消由 setTimeout() 方法设置的 timeout。
+
+            setInterval()    按照指定的周期（以毫秒计）来调用函数或计算表达式。
+            clearInterval()    取消由 setInterval() 设置的 timeout。
+
+    3. 属性：
+        1. 获取其他BOM对象：
+            history
+            location
+            Navigator
+            Screen:
+        2. 获取DOM对象
+            document
+    4. 特点
+        * Window对象不需要创建可以直接使用 window使用。 window.方法名();
+        * window引用可以省略。  方法名();
+
+
+4. Location：地址栏对象
+    1. 创建(获取)：
+        1. window.location
+        2. location
+
+    2. 方法：
+        * reload()    重新加载当前文档。刷新
+    3. 属性
+        * href    设置或返回完整的 URL。
+
+
+5. History：历史记录对象
+    1. 创建(获取)：
+        1. window.history
+        2. history
+
+    2. 方法：
+        * back()    加载 history 列表中的前一个 URL。
+        * forward()    加载 history 列表中的下一个 URL。
+        * go(参数)    加载 history 列表中的某个具体页面。
+            * 参数：
+                * 正数：前进几个历史记录
+                * 负数：后退几个历史记录
+    3. 属性：
+        * length    返回当前窗口历史列表中的 URL 数量。</code></pre><h2 id="DOM："><a href="#DOM：" class="headerlink" title="DOM："></a>DOM：</h2><pre><code>* 概念： Document Object Model 文档对象模型
+    * 将标记语言文档的各个组成部分，封装为对象。可以使用这些对象，对标记语言文档进行CRUD的动态操作
+
+* W3C DOM 标准被分为 3 个不同的部分：
+
+    * 核心 DOM - 针对任何结构化文档的标准模型
+        * Document：文档对象
+        * Element：元素对象
+        * Attribute：属性对象
+        * Text：文本对象
+        * Comment:注释对象
+
+        * Node：节点对象，其他5个的父对象
+    * XML DOM - 针对 XML 文档的标准模型
+    * HTML DOM - 针对 HTML 文档的标准模型
+
+
+
+
+
+* 核心DOM模型：
+    * Document：文档对象
+        1. 创建(获取)：在html dom模型中可以使用window对象来获取
+            1. window.document
+            2. document
+        2. 方法：
+            1. 获取Element对象：
+                1. getElementById()    ： 根据id属性值获取元素对象。id属性值一般唯一
+                2. getElementsByTagName()：根据元素名称获取元素对象们。返回值是一个数组
+                3. getElementsByClassName():根据Class属性值获取元素对象们。返回值是一个数组
+                4. getElementsByName(): 根据name属性值获取元素对象们。返回值是一个数组
+            2. 创建其他DOM对象：
+                createAttribute(name)
+                createComment()
+                createElement()
+                createTextNode()
+        3. 属性
+    * Element：元素对象
+        1. 获取/创建：通过document来获取和创建
+        2. 方法：
+            1. removeAttribute()：删除属性
+            2. setAttribute()：设置属性
+    * Node：节点对象，其他5个的父对象
+        * 特点：所有dom对象都可以被认为是一个节点
+        * 方法：
+            * CRUD dom树：
+                * appendChild()：向节点的子节点列表的结尾添加新的子节点。
+                * removeChild()    ：删除（并返回）当前节点的指定子节点。
+                * replaceChild()：用新节点替换一个子节点。
+        * 属性：
+            * parentNode 返回节点的父节点。
+
+
+* HTML DOM
+    1. 标签体的设置和获取：innerHTML
+    2. 使用html元素对象的属性
+    3. 控制元素样式
+        1. 使用元素的style属性来设置
+            如：
+                 //修改样式方式1
+                div1.style.border = &quot;1px solid red&quot;;
+                div1.style.width = &quot;200px&quot;;
+                //font-size--&gt; fontSize
+                div1.style.fontSize = &quot;20px&quot;;
+        2. 提前定义好类选择器的样式，通过元素的className属性来设置其class属性值。</code></pre><h2 id="事件监听机制："><a href="#事件监听机制：" class="headerlink" title="事件监听机制："></a>事件监听机制：</h2><pre><code>* 概念：某些组件被执行了某些操作后，触发某些代码的执行。    
+    * 事件：某些操作。如： 单击，双击，键盘按下了，鼠标移动了
+    * 事件源：组件。如： 按钮 文本输入框...
+    * 监听器：代码。
+    * 注册监听：将事件，事件源，监听器结合在一起。 当事件源上发生了某个事件，则触发执行某个监听器代码。
+
+
+* 常见的事件：
+    1. 点击事件：
+        1. onclick：单击事件
+        2. ondblclick：双击事件
+    2. 焦点事件
+        1. onblur：失去焦点
+        2. onfocus:元素获得焦点。
+
+    3. 加载事件：
+        1. onload：一张页面或一幅图像完成加载。
+
+    4. 鼠标事件：
+        1. onmousedown    鼠标按钮被按下。
+        2. onmouseup    鼠标按键被松开。
+        3. onmousemove    鼠标被移动。
+        4. onmouseover    鼠标移到某元素之上。
+        5. onmouseout    鼠标从某元素移开。
+
+
+    5. 键盘事件：
+        1. onkeydown    某个键盘按键被按下。    
+        2. onkeyup        某个键盘按键被松开。
+        3. onkeypress    某个键盘按键被按下并松开。
+
+    6. 选择和改变
+        1. onchange    域的内容被改变。
+        2. onselect    文本被选中。
+
+    7. 表单事件：
+        1. onsubmit    确认按钮被点击。
+        2. onreset    重置按钮被点击。</code></pre>
       
       <!-- reward -->
       
@@ -300,14 +441,14 @@ class Solution {
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/03/11/leetcode%E6%95%B0%E5%AD%A6%E7%B1%BB/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/02/18/JavaScript%E8%BF%9B%E9%98%B6%E7%AC%94%E8%AE%B0/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li></ul>
 
 
     </footer>
@@ -318,20 +459,15 @@ class Solution {
   
   <nav class="article-nav">
     
-      <a href="/2020/03/11/XML%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/" class="article-nav-link">
+      <a href="/2020/03/10/hello-world/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            XML快速入门笔记
+            Hello World
           
         </div>
       </a>
     
-    
-      <a href="/2020/03/11/Markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" class="article-nav-link">
-        <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">MarkDown的基本语法</div>
-      </a>
     
   </nav>
 
