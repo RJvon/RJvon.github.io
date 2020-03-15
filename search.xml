@@ -1,728 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>BFS搜索</title>
-    <url>/2020/03/11/BFS%E6%90%9C%E7%B4%A2/</url>
-    <content><![CDATA[<p>广度优先搜索<br> <a id="more"></a></p>
-<h1 id="BFS搜索"><a href="#BFS搜索" class="headerlink" title="BFS搜索"></a>BFS搜索</h1><p>广度优先搜索一层一层遍历，每一层得到的所有新节点，要用队列存储起来以备下一层遍历的时候再遍历。</p>
-<p>而深度优先搜索在得到一个新节点时立即对新节点进行遍历：从节点 0 出发开始遍历，得到到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。</p>
-<p>从一个节点出发，使用 DFS 对一个图进行遍历时，能够遍历到的节点都是从初始节点可达的，DFS 常用来求解这种 可达性 问题。</p>
-<p>在程序实现 DFS 时需要考虑以下问题：</p>
-<p>栈：用栈来保存当前节点信息，当遍历新节点返回时能够继续遍历当前节点。可以使用递归栈。<br>标记：和 BFS 一样同样需要对已经遍历过的节点进行标记。</p>
-<h3 id="模板1"><a href="#模板1" class="headerlink" title="模板1"></a>模板1</h3><pre><code>void BFS()
-{
-    定义队列;
-    定义备忘录，用于记录已经访问的位置；
-
-    判断边界条件，是否能直接返回结果的。
-
-    将起始位置加入到队列中，同时更新备忘录。
-
-    while (队列不为空) {
-        获取当前队列中的元素个数。
-        for (元素个数) {
-            取出一个位置节点。
-            判断是否到达终点位置。
-            获取它对应的下一个所有的节点。
-            条件判断，过滤掉不符合条件的位置。
-            新位置重新加入队列。
-        }
-    }
-}</code></pre><h3 id="模板2"><a href="#模板2" class="headerlink" title="模板2"></a>模板2</h3><pre><code>void BFS()
-{
-    1.判断边界条件，是否能直接返回结果的。
-
-    2.定义队列。
-
-    3.定义备忘录。
-
-    4.将起始位置加入到队列中，同时更新备忘录。
-
-
-    5.BFS遍历
-    while (队列不为空) {
-        5.1 获取当前队列中的元素个数。
-        for (元素个数) {
-            5.2 取出一个位置节点。
-
-            5.3 判断是否到达终点位置。
-
-            5.4 获取它对应的下一个所有的节点。
-
-            5.5 条件判断，过滤掉不符合条件的位置。
-
-            5.6 新位置重新加入队列，并更新备忘录。
-        }
-    }
-}</code></pre><h1 id="1-矩阵"><a href="#1-矩阵" class="headerlink" title="1.矩阵"></a>1.矩阵</h1><p>leetcode 1091，题目描述：0 表示可以经过某个位置，求解从左上角到右下角的最短路径长度。</p>
+    <title>经典斐波那契数列问题</title>
+    <url>/2020/03/13/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%921/</url>
+    <content><![CDATA[<p>leetcode上的斐波那契数列问题<br> <a id="more"></a></p>
+<h2 id="打家劫舍问题"><a href="#打家劫舍问题" class="headerlink" title="打家劫舍问题"></a>打家劫舍问题</h2><p>你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。</p>
+<p>给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。</p>
 <pre><code>class Solution {
-    public int shortestPathBinaryMatrix(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        // 当矩阵第一个元素为1或者最后一个元素为1时，直接返回-1
-        if(grid[0][0]==1 || grid[grid.length-1][grid[0].length-1]==1) return -1;
-        grid[0][0] = 1;
-        // 创建队列用于保存每一格可以走的步
-        Queue&lt;int[]&gt; q=new LinkedList&lt;&gt;();
-        q.add(new int[]{0, 0});
-        // 队列长度,c要和队列做对比,知道何时到达队列长度
-        int len = q.size();
-        int c = 0;
-        // 定义八个方向
-        int[][] dir = {{1, 0}, {1, 1}, {1,-1}, {0, 1}, {0, -1}, {-1, 0},{-1, -1}, {-1, 1}};
-        // 定义最短路径长度
-        int path = 1;
-        while(!q.isEmpty()){
-            int[] data = q.poll();
-            // x、y代表当前的坐标（x，y）
-            int x = data[0];
-            int y = data[1];
-            // 如果走到最后一格，返回
-            if(x == m - 1 &amp;&amp; y == n - 1) return path;
-            // 此处填充队列，将可走的步添加进队列
-            for(int[] d : dir){
-                // x1，y1代表当前坐标移动后的坐标（x1，y1）
-                int x1 = x + d[0];
-                int y1 = y + d[1];
-                if(x1 &gt;= 0 &amp;&amp; y1 &gt;= 0 &amp;&amp; x1 &lt; m &amp;&amp; y1 &lt; n &amp;&amp; grid[x1][y1] == 0){
-                    q.add(new int[]{x1, y1});
-                    grid[x1][y1] = 1;
-                }
+        public int rob(int[] nums) {
+            if (nums.length == 0) {
+                return 0;
+            } else if (nums.length == 1) {
+                return nums[0];
             }
-            c++;
-            if(c == len){
-                c = 0;
-                path++;
-                len = q.size();
+            int[] ans = new int[nums.length];
+            ans[0] = nums[0];
+            ans[1] = Math.max(nums[0], nums[1]);
+            for (int i = 2; i &lt; nums.length; i++) {
+                ans[i] = Math.max(nums[i] + ans[i - 2], ans[i - 1]);
             }
+            return ans[ans.length - 1];
         }
-        return -1;
-    }
-}</code></pre><h1 id="2-单词接龙"><a href="#2-单词接龙" class="headerlink" title="2.单词接龙"></a>2.单词接龙</h1><p>leetcode127，题目描述：找出一条从 beginWord 到 endWord 的最短路径，每次移动规定为改变一个字符，并且改变之后的字符串必须在 wordList 中。</p>
-<pre><code>class Solution {
-    public int ladderLength(String beginWord, String endWord, List&lt;String&gt; wordList) {
-        if (!wordList.contains(endWord)) {
-            return 0;
-        }
-
-        int len = beginWord.length();
-        // 将字符替换模板“a*b”作为key，所有符合模板的字符串作为value创建哈希表，以此为边建立无向图
-        Map&lt;String, List&lt;String&gt;&gt; patternMap = generatePatternMap(wordList, len);
-
-        Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
-        Set&lt;String&gt; visited = new HashSet&lt;&gt;();
-
-        queue.add(beginWord);
-        visited.add(beginWord);
-
-        int res = 1;
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i &lt; size; i++) {
-                String word = queue.poll();
-
-                if (word.equals(endWord)) {
-                    return res;
-                }
-
-                for (int j = 0; j &lt; len; j++) {
-                    String pattern = word.substring(0, j) + &quot;*&quot; + word.substring(j + 1, len);
-                    List&lt;String&gt; nextWords = patternMap.getOrDefault(pattern, new ArrayList&lt;&gt;());
-                    for (String nextWord : nextWords) {
-                        if (!visited.contains(nextWord)) {
-                            queue.add(nextWord);
-                            visited.add(nextWord);
-                        }
-                    }
-                }
-            }
-            res++;
-        }
-        return 0;
-    }
-
-
-    public Map&lt;String, List&lt;String&gt;&gt; generatePatternMap(List&lt;String&gt; wordList, int len) {
-        Map&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;&gt;();
-        for (String word : wordList) {
-            for (int i = 0; i &lt; len; i++) {
-                String pattern = word.substring(0, i) + &quot;*&quot; + word.substring(i + 1, len);
-                map.putIfAbsent(pattern, new ArrayList&lt;&gt;());
-                map.get(pattern).add(word);
-            }
-        }
-        return map;
-    }
 }</code></pre>]]></content>
       <categories>
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>数据结构</tag>
         <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CSS基础笔记</title>
-    <url>/2020/03/11/CSS%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p>CSS基础入门笔记<br> <a id="more"></a></p>
-<h2 id="HTML标签：表单标签"><a href="#HTML标签：表单标签" class="headerlink" title="HTML标签：表单标签"></a>HTML标签：表单标签</h2><pre><code>* 表单：
-    * 概念：用于采集用户输入的数据的。用于和服务器进行交互。
-    * form：用于定义表单的。可以定义一个范围，范围代表采集用户数据的范围
-        * 属性：
-            * action：指定提交数据的URL
-            * method:指定提交方式
-                * 分类：一共7种，2种比较常用
-                   * get：
-                        1. 请求参数会在地址栏中显示。会封装到请求行中(HTTP协议后讲解)。
-                        2. 请求参数大小是有限制的。
-                        3. 不太安全。
-                   * post：
-                        2. 请求参数不会再地址栏中显示。会封装在请求体中(HTTP协议后讲解)
-                        2. 请求参数的大小没有限制。
-                        3. 较为安全。
-
-        * 表单项中的数据要想被提交：必须指定其name属性
-
-
-    * 表单项标签：
-        * input：可以通过type属性值，改变元素展示的样式
-            * type属性：
-                * text：文本输入框，默认值
-                    * placeholder：指定输入框的提示信息，当输入框的内容发生变化，会自动清空提示信息    
-                * password：密码输入框
-                * radio:单选框
-                    * 注意：
-                        1. 要想让多个单选框实现单选的效果，则多个单选框的name属性值必须一样。
-                        2. 一般会给每一个单选框提供value属性，指定其被选中后提交的值
-                        3. checked属性，可以指定默认值
-                * checkbox：复选框
-                    * 注意：
-                        1. 一般会给每一个单选框提供value属性，指定其被选中后提交的值
-                        2. checked属性，可以指定默认值
-
-                * file：文件选择框
-                * hidden：隐藏域，用于提交一些信息。
-                * 按钮：
-                    * submit：提交按钮。可以提交表单
-                    * button：普通按钮
-                    * image：图片提交按钮
-                        * src属性指定图片的路径    
-
-           * label：指定输入项的文字描述信息
-               * 注意：
-                   * label的for属性一般会和 input 的 id属性值 对应。如果对应了，则点击label区域，会让input输入框获取焦点。
-        * select: 下拉列表
-            * 子元素：option，指定列表项
-
-        * textarea：文本域
-            * cols：指定列数，每一行有多少个字符
-            * rows：默认多少行。</code></pre><h2 id="CSS：页面美化和布局控制"><a href="#CSS：页面美化和布局控制" class="headerlink" title="CSS：页面美化和布局控制"></a>CSS：页面美化和布局控制</h2><pre><code>1. 概念： Cascading Style Sheets 层叠样式表
-    * 层叠：多个样式可以作用在同一个html的元素上，同时生效
-
-2. 好处：
-    1. 功能强大
-    2. 将内容展示和样式控制分离
-        * 降低耦合度。解耦
-        * 让分工协作更容易
-        * 提高开发效率
-
-
-3. CSS的使用：CSS与html结合方式
-    1. 内联样式
-         * 在标签内使用style属性指定css代码
-         * 如：&lt;div style=&quot;color:red;&quot;&gt;hello css&lt;/div&gt;
-    2. 内部样式
-        * 在head标签内，定义style标签，style标签的标签体内容就是css代码
-        * 如：
-            &lt;style&gt;
-                div{
-                    color:blue;
-                }
-
-            &lt;/style&gt;
-            &lt;div&gt;hello css&lt;/div&gt;
-    3. 外部样式
-        1. 定义css资源文件。
-        2. 在head标签内，定义link标签，引入外部的资源文件
-        * 如：
-            * a.css文件：
-                div{
-                    color:green;
-                }
-            &lt;link rel=&quot;stylesheet&quot; href=&quot;css/a.css&quot;&gt;
-            &lt;div&gt;hello css&lt;/div&gt;
-            &lt;div&gt;hello css&lt;/div&gt;
-
-    * 注意：
-        * 1,2,3种方式 css作用范围越来越大
-        * 1方式不常用，后期常用2,3
-        * 3种格式可以写为：
-            &lt;style&gt;
-                @import &quot;css/a.css&quot;;
-            &lt;/style&gt;
-
-4. css语法：
-    * 格式：
-        选择器 {
-            属性名1:属性值1;
-            属性名2:属性值2;
-            ...
-        }
-    * 选择器:筛选具有相似特征的元素
-    * 注意：
-        * 每一对属性需要使用；隔开，最后一对属性可以不加；
-
-
-5. 选择器：筛选具有相似特征的元素
-    * 分类：
-        1. 基础选择器
-            1. id选择器：选择具体的id属性值的元素.建议在一个html页面中id值唯一
-                * 语法：#id属性值{}
-            2. 元素选择器：选择具有相同标签名称的元素
-                * 语法： 标签名称{}
-                * 注意：id选择器优先级高于元素选择器
-            3. 类选择器：选择具有相同的class属性值的元素。
-                * 语法：.class属性值{}
-                * 注意：类选择器选择器优先级高于元素选择器
-        2. 扩展选择器：
-            1. 选择所有元素：
-                * 语法： *{}
-            2. 并集选择器：
-                * 选择器1,选择器2{}
-
-            3. 子选择器：筛选选择器1元素下的选择器2元素
-                * 语法：  选择器1 选择器2{}
-            4. 父选择器：筛选选择器2的父元素选择器1
-                * 语法：  选择器1 &gt; 选择器2{}
-
-            5. 属性选择器：选择元素名称，属性名=属性值的元素
-                * 语法：  元素名称[属性名=&quot;属性值&quot;]{}
-
-            6. 伪类选择器：选择一些元素具有的状态
-                * 语法： 元素:状态{}
-                * 如： &lt;a&gt;
-                    * 状态：
-                        * link：初始化的状态
-                        * visited：被访问过的状态
-                        * active：正在访问状态
-                        * hover：鼠标悬浮状态
-6. 属性
-    1. 字体、文本
-        * font-size：字体大小
-        * color：文本颜色
-        * text-align：对其方式
-        * line-height：行高 
-    2. 背景
-        * background：
-    3. 边框
-        * border：设置边框，符合属性
-    4. 尺寸
-        * width：宽度
-        * height：高度
-    5. 盒子模型：控制布局
-        * margin：外边距
-        * padding：内边距
-            * 默认情况下内边距会影响整个盒子的大小
-            * box-sizing: border-box;  设置盒子的属性，让width和height就是最终盒子的大小
-
-        * float：浮动
-            * left
-            * right</code></pre><h2 id="案例："><a href="#案例：" class="headerlink" title="案例："></a>案例：</h2><pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;注册页面&lt;/title&gt;
-&lt;style&gt;
-    *{
-        margin: 0px;
-        padding: 0px;
-        box-sizing: border-box;
-    }
-    body{
-        background: url(&quot;img/register_bg.png&quot;) no-repeat center;
-        padding-top: 25px;
-    }
-
-    .rg_layout{
-        width: 900px;
-        height: 500px;
-        border: 8px solid #EEEEEE;
-        background-color: white;
-        /*让div水平居中*/
-        margin: auto;
-    }
-
-    .rg_left{
-        /*border: 1px solid red;*/
-        float: left;
-        margin: 15px;
-    }
-    .rg_left &gt; p:first-child{
-        color:#FFD026;
-        font-size: 20px;
-    }
-
-    .rg_left &gt; p:last-child{
-        color:#A6A6A6;
-        font-size: 20px;
-
-    }
-
-
-    .rg_center{
-        float: left;
-       /* border: 1px solid red;*/
-
-    }
-
-    .rg_right{
-        /*border: 1px solid red;*/
-        float: right;
-        margin: 15px;
-    }
-
-    .rg_right &gt; p:first-child{
-        font-size: 15px;
-
-    }
-    .rg_right p a {
-        color:pink;
-    }
-
-    .td_left{
-        width: 100px;
-        text-align: right;
-        height: 45px;
-    }
-    .td_right{
-        padding-left: 50px ;
-    }
-
-    #username,#password,#email,#name,#tel,#birthday,#checkcode{
-        width: 251px;
-        height: 32px;
-        border: 1px solid #A6A6A6 ;
-        /*设置边框圆角*/
-        border-radius: 5px;
-        padding-left: 10px;
-    }
-    #checkcode{
-        width: 110px;
-    }
-
-    #img_check{
-        height: 32px;
-        vertical-align: middle;
-    }
-
-    #btn_sub{
-        width: 150px;
-        height: 40px;
-        background-color: #FFD026;
-        border: 1px solid #FFD026 ;
-    }
-
-&lt;/style&gt;
-
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;div class=&quot;rg_layout&quot;&gt;
-    &lt;div class=&quot;rg_left&quot;&gt;
-        &lt;p&gt;新用户注册&lt;/p&gt;
-        &lt;p&gt;USER REGISTER&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div class=&quot;rg_center&quot;&gt;
-        &lt;div class=&quot;rg_form&quot;&gt;
-            &lt;!--定义表单 form--&gt;
-            &lt;form action=&quot;#&quot; method=&quot;post&quot;&gt;
-                &lt;table&gt;
-                    &lt;tr&gt;
-                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;username&quot;&gt;用户名&lt;/label&gt;&lt;/td&gt;
-                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;username&quot; id=&quot;username&quot; placeholder=&quot;请输入用户名&quot;&gt;&lt;/td&gt;
-                    &lt;/tr&gt;
-
-                    &lt;tr&gt;
-                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;password&quot;&gt;密码&lt;/label&gt;&lt;/td&gt;
-                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;password&quot; name=&quot;password&quot; id=&quot;password&quot; placeholder=&quot;请输入密码&quot;&gt;&lt;/td&gt;
-                    &lt;/tr&gt;
-
-                    &lt;tr&gt;
-                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;&lt;/td&gt;
-                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;email&quot; name=&quot;email&quot; id=&quot;email&quot; placeholder=&quot;请输入邮箱&quot;&gt;&lt;/td&gt;
-                    &lt;/tr&gt;
-
-                    &lt;tr&gt;
-                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;name&quot;&gt;姓名&lt;/label&gt;&lt;/td&gt;
-                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot; placeholder=&quot;请输入姓名&quot;&gt;&lt;/td&gt;
-                    &lt;/tr&gt;
-
-                    &lt;tr&gt;
-                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;tel&quot;&gt;手机号&lt;/label&gt;&lt;/td&gt;
-                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;tel&quot; id=&quot;tel&quot; placeholder=&quot;请输入手机号&quot;&gt;&lt;/td&gt;
-                    &lt;/tr&gt;
-
-                    &lt;tr&gt;
-                        &lt;td class=&quot;td_left&quot;&gt;&lt;label&gt;性别&lt;/label&gt;&lt;/td&gt;
-                        &lt;td class=&quot;td_right&quot;&gt;
-                            &lt;input type=&quot;radio&quot; name=&quot;gender&quot; value=&quot;male&quot;&gt; 男
-                            &lt;input type=&quot;radio&quot; name=&quot;gender&quot; value=&quot;female&quot;&gt; 女
-                        &lt;/td&gt;
-                    &lt;/tr&gt;
-
-                    &lt;tr&gt;
-                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;birthday&quot;&gt;出生日期&lt;/label&gt;&lt;/td&gt;
-                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;date&quot; name=&quot;birthday&quot; id=&quot;birthday&quot; placeholder=&quot;请输入出生日期&quot;&gt;&lt;/td&gt;
-                    &lt;/tr&gt;
-
-                    &lt;tr&gt;
-                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;checkcode&quot; &gt;验证码&lt;/label&gt;&lt;/td&gt;
-                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;checkcode&quot; id=&quot;checkcode&quot; placeholder=&quot;请输入验证码&quot;&gt;
-                            &lt;img id=&quot;img_check&quot; src=&quot;img/verify_code.jpg&quot;&gt;
-                        &lt;/td&gt;
-                    &lt;/tr&gt;
-
-
-                    &lt;tr&gt;
-                        &lt;td colspan=&quot;2&quot; align=&quot;center&quot;&gt;&lt;input type=&quot;submit&quot; id=&quot;btn_sub&quot; value=&quot;注册&quot;&gt;&lt;/td&gt;
-                    &lt;/tr&gt;
-                &lt;/table&gt;
-
-            &lt;/form&gt;
-
-
-        &lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div class=&quot;rg_right&quot;&gt;
-        &lt;p&gt;已有账号?&lt;a href=&quot;#&quot;&gt;立即登录&lt;/a&gt;&lt;/p&gt;
-    &lt;/div&gt;
-
-
-&lt;/div&gt;
-
-
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>]]></content>
-      <categories>
-        <category>JavaWeb</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-        <tag>CSS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HTML快速入门笔记</title>
-    <url>/2020/03/11/HTML%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p>HTML快速入门笔记<br> <a id="more"></a></p>
-<h2 id="web概念概述"><a href="#web概念概述" class="headerlink" title="web概念概述"></a>web概念概述</h2><pre><code>* JavaWeb：
-    * 使用Java语言开发基于互联网的项目
-
-* 软件架构：
-    1. C/S: Client/Server 客户端/服务器端
-        * 在用户本地有一个客户端程序，在远程有一个服务器端程序
-        * 如：QQ，迅雷...
-        * 优点：
-            1. 用户体验好
-        * 缺点：
-            1. 开发、安装，部署，维护 麻烦
-    2. B/S: Browser/Server 浏览器/服务器端
-        * 只需要一个浏览器，用户通过不同的网址(URL)，客户访问不同的服务器端程序
-        * 优点：
-            1. 开发、安装，部署，维护 简单
-        * 缺点：
-            1. 如果应用过大，用户的体验可能会受到影响
-            2. 对硬件要求过高
-
-* B/S架构详解
-    * 资源分类：
-        1. 静态资源：
-            * 使用静态网页开发技术发布的资源。
-            * 特点：
-                * 所有用户访问，得到的结果是一样的。
-                * 如：文本，图片，音频、视频, HTML,CSS,JavaScript
-                * 如果用户请求的是静态资源，那么服务器会直接将静态资源发送给浏览器。浏览器中内置了静态资源的解析引擎，可以展示静态资源
-        2. 动态资源：
-            * 使用动态网页及时发布的资源。
-            * 特点：
-                * 所有用户访问，得到的结果可能不一样。
-                * 如：jsp/servlet,php,asp...
-                * 如果用户请求的是动态资源，那么服务器会执行动态资源，转换为静态资源，再发送给浏览器
-
-
-
-    * 静态资源：
-        * HTML：用于搭建基础网页，展示页面的内容
-        * CSS：用于美化页面，布局页面
-        * JavaScript：控制页面的元素，让页面有一些动态的效果</code></pre><h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><pre><code>1. 概念：是最基础的网页开发语言
-    * Hyper Text Markup Language 超文本标记语言
-        * 超文本:
-            * 超文本是用超链接的方法，将各种不同空间的文字信息组织在一起的网状文本.
-        * 标记语言:
-            * 由标签构成的语言。&lt;标签名称&gt; 如 html，xml
-            * 标记语言不是编程语言
-
-2. 快速入门：
-    * 语法：
-        1. html文档后缀名 .html 或者 .htm
-        2. 标签分为
-            1. 围堵标签：有开始标签和结束标签。如 &lt;html&gt; &lt;/html&gt;
-            2. 自闭和标签：开始标签和结束标签在一起。如 &lt;br/&gt;
-
-        3. 标签可以嵌套：
-            需要正确嵌套，不能你中有我，我中有你
-            错误：&lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt;
-            正确：&lt;a&gt;&lt;b&gt;&lt;/b&gt;&lt;/a&gt;
-
-        4. 在开始标签中可以定义属性。属性是由键值对构成，值需要用引号(单双都可)引起来
-        5. html的标签不区分大小写，但是建议使用小写。
-
-    * 代码：
-        &lt;html&gt;
-
-            &lt;head&gt;
-                &lt;title&gt;title&lt;/title&gt;
-            &lt;/head&gt;
-
-            &lt;body&gt;
-                &lt;FONT color=&apos;red&apos;&gt;Hello World&lt;/font&gt;&lt;br/&gt;
-
-                &lt;font color=&apos;green&apos;&gt;Hello World&lt;/font&gt;
-
-            &lt;/body&gt;
-
-        &lt;/html&gt;
-
-3. 标签学习：
-    1. 文件标签：构成html最基本的标签
-        * html:html文档的根标签
-        * head：头标签。用于指定html文档的一些属性。引入外部的资源
-        * title：标题标签。
-        * body：体标签
-        * &lt;!DOCTYPE html&gt;：html5中定义该文档是html文档
-    2. 文本标签：和文本有关的标签
-        * 注释：&lt;!-- 注释内容 --&gt;
-        * &lt;h1&gt; to &lt;h6&gt;：标题标签
-            * h1~h6:字体大小逐渐递减
-        * &lt;p&gt;：段落标签
-        * &lt;br&gt;：换行标签
-        * &lt;hr&gt;：展示一条水平线
-            * 属性：
-                * color：颜色
-                * width：宽度
-                * size：高度
-                * align：对其方式
-                    * center：居中
-                    * left：左对齐
-                    * right：右对齐
-        * &lt;b&gt;：字体加粗
-        * &lt;i&gt;：字体斜体
-        * &lt;font&gt;:字体标签
-        * &lt;center&gt;:文本居中
-            * 属性：
-                * color：颜色
-                * size：大小
-                * face：字体
-
-        * 属性定义：
-            * color：
-                1. 英文单词：red,green,blue
-                2. rgb(值1，值2，值3)：值的范围：0~255  如  rgb(0,0,255)
-                3. #值1值2值3：值的范围：00~FF之间。如： #FF00FF
-            * width：
-                1. 数值：width=&apos;20&apos; ,数值的单位，默认是 px(像素)
-                2. 数值%：占比相对于父元素的比例
-
-    3. 图片标签：
-        * img：展示图片
-            * 属性：
-                * src：指定图片的位置
-
-        * 代码：
-             &lt;!--展示一张图片 img--&gt;
-
-            &lt;img src=&quot;image/jingxuan_2.jpg&quot; align=&quot;right&quot; alt=&quot;古镇&quot; width=&quot;500&quot; height=&quot;500&quot;/&gt;
-
-            &lt;!--
-                相对路径
-                    * 以.开头的路径
-                        * ./：代表当前目录  ./image/1.jpg
-                        * ../:代表上一级目录
-             --&gt;
-
-            &lt;img src=&quot;./image/jiangwai_1.jpg&quot;&gt;
-
-            &lt;img src=&quot;../image/jiangwai_1.jpg&quot;&gt;
-    4. 列表标签：
-        * 有序列表：
-            * ol:
-            * li:
-        * 无序列表：
-            * ul:
-            * li:
-    5. 链接标签：
-        * a:定义一个超链接
-            * 属性：
-                * href：指定访问资源的URL(统一资源定位符)
-                * target：指定打开资源的方式
-                    * _self:默认值，在当前页面打开
-                    * _blank：在空白页面打开
-
-        * 代码：
-             &lt;!--超链接  a--&gt;
-
-            &lt;a href=&quot;http://www.itcast.cn&quot;&gt;点我&lt;/a&gt;
-            &lt;br&gt;
-
-            &lt;a href=&quot;http://www.itcast.cn&quot; target=&quot;_self&quot;&gt;点我&lt;/a&gt;
-            &lt;br&gt;
-            &lt;a href=&quot;http://www.itcast.cn&quot; target=&quot;_blank&quot;&gt;点我&lt;/a&gt;
-
-            &lt;br&gt;
-
-            &lt;a href=&quot;./5_列表标签.html&quot;&gt;列表标签&lt;/a&gt;&lt;br&gt;
-            &lt;a href=&quot;mailto:itcast@itcast.cn&quot;&gt;联系我们&lt;/a&gt;
-
-            &lt;br&gt;
-            &lt;a href=&quot;http://www.itcast.cn&quot;&gt;&lt;img src=&quot;image/jiangwai_1.jpg&quot;&gt;&lt;/a&gt;
-    6. div和span：
-        * div:每一个div占满一整行。块级标签
-        * span：文本信息在一行展示，行内标签 内联标签
-
-    7. 语义化标签：html5中为了提高程序的可读性，提供了一些标签。
-        1. &lt;header&gt;：页眉
-        2. &lt;footer&gt;：页脚
-
-
-    8. 表格标签：
-        * table：定义表格
-            * width：宽度
-            * border：边框
-            * cellpadding：定义内容和单元格的距离
-            * cellspacing：定义单元格之间的距离。如果指定为0，则单元格的线会合为一条、
-            * bgcolor：背景色
-            * align：对齐方式
-        * tr：定义行
-            * bgcolor：背景色
-            * align：对齐方式
-        * td：定义单元格
-            * colspan：合并列
-            * rowspan：合并行
-        * th：定义表头单元格
-        * &lt;caption&gt;：表格标题
-        * &lt;thead&gt;：表示表格的头部分
-        * &lt;tbody&gt;：表示表格的体部分
-        * &lt;tfoot&gt;：表示表格的脚部分</code></pre>]]></content>
-      <categories>
-        <category>JavaWeb</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-        <tag>HTML</tag>
+        <tag>动态规划</tag>
       </tags>
   </entry>
   <entry>
@@ -855,9 +160,1340 @@ ___粗斜体文本___</code></pre><p><em>斜体文本</em><br><em>斜体文本</
       </tags>
   </entry>
   <entry>
+    <title>leetcode二叉树 递归&lt;二&gt;</title>
+    <url>/2020/03/04/%E4%BA%8C%E5%8F%89%E6%A0%912/</url>
+    <content><![CDATA[<p>leetcode二叉树 递归思想<br> <a id="more"></a></p>
+<p><a href="https://leetcode.com/problems/path-sum/description/" target="_blank" rel="noopener">Leetcode</a>网站 </p>
+<ol start="104">
+<li><p>树的高度 Maximum Depth of Binary Tree (Easy)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public int maxDepth(TreeNode root) &#123;  </span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;  </span><br><span class="line">    return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;  </span><br><span class="line">&#125;&#96;Balanced Binary Tree (Easy)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>平衡树左右子树高度差都小于等于 1,是否为平衡树 Balanced Binary Tree (Easy)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">private boolean result &#x3D; true;</span><br><span class="line"></span><br><span class="line">public boolean isBalanced(TreeNode root) &#123;</span><br><span class="line">    maxDepth(root);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public int maxDepth(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int l &#x3D; maxDepth(root.left);</span><br><span class="line">    int r &#x3D; maxDepth(root.right);</span><br><span class="line">    if (Math.abs(l - r) &gt; 1) result &#x3D; false;</span><br><span class="line">    return 1 + Math.max(l, r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>两节点的最长路径 Diameter of Binary Tree (Easy)</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Input:</span><br><span class="line"></span><br><span class="line">         1</span><br><span class="line">        &#x2F; \</span><br><span class="line">       2  3</span><br><span class="line">      &#x2F; \</span><br><span class="line">     4   5</span><br><span class="line"></span><br><span class="line">Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].</span><br><span class="line">private int max &#x3D; 0;</span><br><span class="line"></span><br><span class="line">public int diameterOfBinaryTree(TreeNode root) &#123;</span><br><span class="line">    depth(root);</span><br><span class="line">    return max;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int depth(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int leftDepth &#x3D; depth(root.left);</span><br><span class="line">    int rightDepth &#x3D; depth(root.right);</span><br><span class="line">    max &#x3D; Math.max(max, leftDepth + rightDepth);</span><br><span class="line">    return Math.max(leftDepth, rightDepth) + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="226">
+<li>翻转一棵树 Invert Binary Tree (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public TreeNode invertTree(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return null;</span><br><span class="line">    TreeNode left &#x3D; root.left;  &#x2F;&#x2F; 后面的操作会改变 left 指针，因此先保存下来</span><br><span class="line">    root.left &#x3D; invertTree(root.right);</span><br><span class="line">    root.right &#x3D; invertTree(left);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="617">
+<li>归并树 Merge Two Binary Trees (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Input:</span><br><span class="line">       Tree 1                     Tree 2</span><br><span class="line">          1                         2</span><br><span class="line">         &#x2F; \                       &#x2F; \</span><br><span class="line">        3   2                     1   3</span><br><span class="line">       &#x2F;                           \   \</span><br><span class="line">      5                             4   7</span><br><span class="line"></span><br><span class="line">Output:</span><br><span class="line">         3</span><br><span class="line">        &#x2F; \</span><br><span class="line">       4   5</span><br><span class="line">      &#x2F; \   \</span><br><span class="line">     5   4   7</span><br><span class="line">public TreeNode mergeTrees(TreeNode t1, TreeNode t2) &#123;</span><br><span class="line">    if (t1 &#x3D;&#x3D; null &amp;&amp; t2 &#x3D;&#x3D; null) return null;</span><br><span class="line">    if (t1 &#x3D;&#x3D; null) return t2;</span><br><span class="line">    if (t2 &#x3D;&#x3D; null) return t1;</span><br><span class="line">    TreeNode root &#x3D; new TreeNode(t1.val + t2.val);</span><br><span class="line">    root.left &#x3D; mergeTrees(t1.left, t2.left);</span><br><span class="line">    root.right &#x3D; mergeTrees(t1.right, t2.right);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="112">
+<li>路径和是否等于一个数Path Sum (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Given the below binary tree and sum &#x3D; 22,</span><br><span class="line"></span><br><span class="line">              5</span><br><span class="line">             &#x2F; \</span><br><span class="line">            4   8</span><br><span class="line">           &#x2F;   &#x2F; \</span><br><span class="line">          11  13  4</span><br><span class="line">         &#x2F;  \      \</span><br><span class="line">        7    2      1</span><br><span class="line"></span><br><span class="line">return true, as there exist a root-to-leaf path 5-&gt;4-&gt;11-&gt;2 which sum is 22.</span><br></pre></td></tr></table></figure>
+
+<p>​        路径和定义为从 root 到 leaf 的所有节点的和。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public boolean hasPathSum(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return false;</span><br><span class="line">    if (root.left &#x3D;&#x3D; null &amp;&amp; root.right &#x3D;&#x3D; null &amp;&amp; root.val &#x3D;&#x3D; sum) return true;</span><br><span class="line">    return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="437">
+<li>统计路径和等于一个数的路径数量 Path Sum III (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root &#x3D; [10,5,-3,3,2,null,11,3,-2,null,1], sum &#x3D; 8</span><br><span class="line"></span><br><span class="line">      10</span><br><span class="line">     &#x2F;  \</span><br><span class="line">    5   -3</span><br><span class="line">   &#x2F; \    \</span><br><span class="line">  3   2   11</span><br><span class="line"> &#x2F; \   \</span><br><span class="line">3  -2   1</span><br><span class="line"></span><br><span class="line">Return 3. The paths that sum to 8 are:</span><br><span class="line"></span><br><span class="line">1.  5 -&gt; 3</span><br><span class="line">2.  5 -&gt; 2 -&gt; 1</span><br><span class="line">3. -3 -&gt; 11</span><br></pre></td></tr></table></figure>
+
+<p>​        路径不一定以 root 开头，也不一定以 leaf 结尾，但是必须连续。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public int pathSum(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int ret &#x3D; pathSumStartWithRoot(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int pathSumStartWithRoot(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int ret &#x3D; 0;</span><br><span class="line">    if (root.val &#x3D;&#x3D; sum) ret++;</span><br><span class="line">    ret +&#x3D; pathSumStartWithRoot(root.left, sum - root.val) + pathSumStartWithRoot(root.right, sum - root.val);</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode二叉树 递归&lt;一&gt;</title>
+    <url>/2020/03/02/%E4%BA%8C%E5%8F%89%E6%A0%91/</url>
+    <content><![CDATA[<p>leetcode二叉树 递归思想<br> <a id="more"></a></p>
+<p><a href="https://leetcode.com/problems/path-sum/description/" target="_blank" rel="noopener">Leetcode</a>网站 </p>
+<ol start="104">
+<li><p>树的高度 Maximum Depth of Binary Tree (Easy)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public int maxDepth(TreeNode root) &#123;  </span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;  </span><br><span class="line">    return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;  </span><br><span class="line">&#125;&#96;Balanced Binary Tree (Easy)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>平衡树左右子树高度差都小于等于 1,是否为平衡树 Balanced Binary Tree (Easy)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">private boolean result &#x3D; true;</span><br><span class="line"></span><br><span class="line">public boolean isBalanced(TreeNode root) &#123;</span><br><span class="line">    maxDepth(root);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public int maxDepth(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int l &#x3D; maxDepth(root.left);</span><br><span class="line">    int r &#x3D; maxDepth(root.right);</span><br><span class="line">    if (Math.abs(l - r) &gt; 1) result &#x3D; false;</span><br><span class="line">    return 1 + Math.max(l, r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>两节点的最长路径 Diameter of Binary Tree (Easy)</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Input:</span><br><span class="line"></span><br><span class="line">         1</span><br><span class="line">        &#x2F; \</span><br><span class="line">       2  3</span><br><span class="line">      &#x2F; \</span><br><span class="line">     4   5</span><br><span class="line"></span><br><span class="line">Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].</span><br><span class="line">private int max &#x3D; 0;</span><br><span class="line"></span><br><span class="line">public int diameterOfBinaryTree(TreeNode root) &#123;</span><br><span class="line">    depth(root);</span><br><span class="line">    return max;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int depth(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int leftDepth &#x3D; depth(root.left);</span><br><span class="line">    int rightDepth &#x3D; depth(root.right);</span><br><span class="line">    max &#x3D; Math.max(max, leftDepth + rightDepth);</span><br><span class="line">    return Math.max(leftDepth, rightDepth) + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="226">
+<li>翻转一棵树 Invert Binary Tree (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public TreeNode invertTree(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return null;</span><br><span class="line">    TreeNode left &#x3D; root.left;  &#x2F;&#x2F; 后面的操作会改变 left 指针，因此先保存下来</span><br><span class="line">    root.left &#x3D; invertTree(root.right);</span><br><span class="line">    root.right &#x3D; invertTree(left);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="617">
+<li>归并树 Merge Two Binary Trees (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Input:</span><br><span class="line">       Tree 1                     Tree 2</span><br><span class="line">          1                         2</span><br><span class="line">         &#x2F; \                       &#x2F; \</span><br><span class="line">        3   2                     1   3</span><br><span class="line">       &#x2F;                           \   \</span><br><span class="line">      5                             4   7</span><br><span class="line"></span><br><span class="line">Output:</span><br><span class="line">         3</span><br><span class="line">        &#x2F; \</span><br><span class="line">       4   5</span><br><span class="line">      &#x2F; \   \</span><br><span class="line">     5   4   7</span><br><span class="line">public TreeNode mergeTrees(TreeNode t1, TreeNode t2) &#123;</span><br><span class="line">    if (t1 &#x3D;&#x3D; null &amp;&amp; t2 &#x3D;&#x3D; null) return null;</span><br><span class="line">    if (t1 &#x3D;&#x3D; null) return t2;</span><br><span class="line">    if (t2 &#x3D;&#x3D; null) return t1;</span><br><span class="line">    TreeNode root &#x3D; new TreeNode(t1.val + t2.val);</span><br><span class="line">    root.left &#x3D; mergeTrees(t1.left, t2.left);</span><br><span class="line">    root.right &#x3D; mergeTrees(t1.right, t2.right);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="112">
+<li>路径和是否等于一个数Path Sum (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Given the below binary tree and sum &#x3D; 22,</span><br><span class="line"></span><br><span class="line">              5</span><br><span class="line">             &#x2F; \</span><br><span class="line">            4   8</span><br><span class="line">           &#x2F;   &#x2F; \</span><br><span class="line">          11  13  4</span><br><span class="line">         &#x2F;  \      \</span><br><span class="line">        7    2      1</span><br><span class="line"></span><br><span class="line">return true, as there exist a root-to-leaf path 5-&gt;4-&gt;11-&gt;2 which sum is 22.</span><br></pre></td></tr></table></figure>
+
+<p>​        路径和定义为从 root 到 leaf 的所有节点的和。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public boolean hasPathSum(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return false;</span><br><span class="line">    if (root.left &#x3D;&#x3D; null &amp;&amp; root.right &#x3D;&#x3D; null &amp;&amp; root.val &#x3D;&#x3D; sum) return true;</span><br><span class="line">    return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="437">
+<li>统计路径和等于一个数的路径数量 Path Sum III (Easy)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root &#x3D; [10,5,-3,3,2,null,11,3,-2,null,1], sum &#x3D; 8</span><br><span class="line"></span><br><span class="line">      10</span><br><span class="line">     &#x2F;  \</span><br><span class="line">    5   -3</span><br><span class="line">   &#x2F; \    \</span><br><span class="line">  3   2   11</span><br><span class="line"> &#x2F; \   \</span><br><span class="line">3  -2   1</span><br><span class="line"></span><br><span class="line">Return 3. The paths that sum to 8 are:</span><br><span class="line"></span><br><span class="line">1.  5 -&gt; 3</span><br><span class="line">2.  5 -&gt; 2 -&gt; 1</span><br><span class="line">3. -3 -&gt; 11</span><br></pre></td></tr></table></figure>
+
+<p>​        路径不一定以 root 开头，也不一定以 leaf 结尾，但是必须连续。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public int pathSum(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int ret &#x3D; pathSumStartWithRoot(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int pathSumStartWithRoot(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int ret &#x3D; 0;</span><br><span class="line">    if (root.val &#x3D;&#x3D; sum) ret++;</span><br><span class="line">    ret +&#x3D; pathSumStartWithRoot(root.left, sum - root.val) + pathSumStartWithRoot(root.right, sum - root.val);</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode滑动窗口</title>
+    <url>/2020/02/27/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E4%B8%93%E9%A2%98/</url>
+    <content><![CDATA[<p>leetcode滑动窗口专题<br> <a id="more"></a></p>
+<h1 id="滑动窗口算法"><a href="#滑动窗口算法" class="headerlink" title="滑动窗口算法"></a>滑动窗口算法</h1><h2 id="1-滑动窗口算法简介"><a href="#1-滑动窗口算法简介" class="headerlink" title="1.滑动窗口算法简介"></a>1.滑动窗口算法简介</h2><p>滑动窗口是一种双指针解题方法,大多数应用于字符串的子串问题。很多情况下要借助于HashSet和HashMap。</p>
+<pre><code>//HashMap、HashSet解题时使用的常用方法
+HashMap&lt;Character,Integer&gt; map=new HashMap&lt;&gt;();
+//将字符串p的字符存到map中
+for (Character c : p.toCharArray()) 
+    map.put(c, map.getOrDefault(c, 0) + 1);
+    //map.getOrDefault(key,defaultValue)方法，如果map中有key,则使用key对应的值，没有的话就使用defaultValue
+map.get(key);//获取key对应的值
+
+HashSet&lt;Character&gt; set=new HashSet&lt;&gt;();
+    set.add();
+    set.remove();</code></pre><h2 id="2-滑动窗口解题思路"><a href="#2-滑动窗口解题思路" class="headerlink" title="2.滑动窗口解题思路"></a>2.滑动窗口解题思路</h2><p>1、我们在字符串 S 中使⽤双指针中的左右指针技巧，初始化 left = right =0，把索引闭区间 [left, right] 称为⼀个「窗⼝」。<br>2、我们先不断地增加 right 指针扩⼤窗⼝ [left, right]，直到窗⼝中的字符串符合要求（包含了 T 中的所有字符）。<br>3、此时，我们停⽌增加 right，转⽽不断增加 left 指针缩⼩窗⼝ [left,right]，直到窗⼝中的字符串不再符合要求（不包含 T 中的所有字符了）。同时，每次增加 left，我们都要更新⼀轮结果。<br>4、重复第 2 和第 3 步，直到 right 到达字符串 S 的尽头。</p>
+<h2 id="3-滑动窗口解题模板"><a href="#3-滑动窗口解题模板" class="headerlink" title="3.滑动窗口解题模板"></a>3.滑动窗口解题模板</h2><pre><code>int left=0;
+int right=0;
+    while(right&lt;s.length()){
+        window.add(s.charAt(right));
+        right++;
+        while(valid){
+            window.remove(s.charAt(left));
+            left++;
+        }
+    }
+//valid是指window已经符合要求</code></pre><p>leetcode中使用到滑动窗口这一技巧的题目有：（3）无重复字符的最长子串</p>
+<h2 id="4-解题示例"><a href="#4-解题示例" class="headerlink" title="4.解题示例"></a>4.解题示例</h2><h3 id="4-1无重复字符的最长子串（leetcode-3-）"><a href="#4-1无重复字符的最长子串（leetcode-3-）" class="headerlink" title="4.1无重复字符的最长子串（leetcode 3 ）"></a>4.1无重复字符的最长子串（leetcode 3 ）</h3><p>题目描述：给定一个字符串，请你找出其中不含有重复字符的 最长子串的长度。<br>最开始解题时采用的解法：</p>
+<pre><code>class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        HashSet&lt;Character&gt; set=new HashSet&lt;&gt;();
+        int ans=0;
+        int i=0;
+        int j=0;
+        int n=s.length();
+        while(i&lt;n &amp; j&lt;n){
+            if(!set.contains(s.charAt(j))){
+                set.add(s.charAt(j++));
+                ans = Math.max(ans, j - i);
+            }else{
+                set.remove(s.charAt(i++));
+            }        
+        }
+        return ans;
+    }
+}</code></pre><p>套用模板的写法：</p>
+<pre><code>class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        HashSet&lt;Character&gt; window=new HashSet&lt;&gt;();
+        int n=s.length();
+        if(s==&quot; &quot;) return 1;
+        int left=0;
+        int right=0;
+        int max=0;
+        int len=0;
+        while(right&lt;s.length()){
+            window.add(s.charAt(right));
+            right++;
+            max=Math.max(max,right-left);
+            while(right&lt;s.length() &amp;&amp; window.contains(s.charAt(right))){
+                window.remove(s.charAt(left));
+                left++;
+            }
+        }
+        return max;
+    }
+}</code></pre><h3 id="4-2长度最小的子数组（leetcode-209-）"><a href="#4-2长度最小的子数组（leetcode-209-）" class="headerlink" title="4.2长度最小的子数组（leetcode 209 ）"></a>4.2长度最小的子数组（leetcode 209 ）</h3><p>题目描述：给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的连续子数组。如果不存在符合条件的连续子数组，返回 0。<br>第一次做的写法：</p>
+<pre><code>class Solution {
+    public int minSubArrayLen(int s, int[] nums) {
+        int sum=0;
+        int right=0;
+        int len=Integer.MAX_VALUE;
+        int left=0;
+        while(right&lt;nums.length){
+            if(sum+nums[right]&lt;s){
+                sum=sum+nums[right++];
+            }else{
+                len=Math.min(len,right-left+1);
+                sum=sum-nums[left];
+                left++; 
+            }
+        }
+        return len==Integer.MAX_VALUE?0:len;
+
+    }
+}</code></pre><p>套用模板的写法：</p>
+<pre><code>//时间复杂度O(2n)(O(n)),空间复杂度O(1);
+class Solution {
+    public int minSubArrayLen(int s, int[] nums) {
+        int n=nums.length;
+        int left=0;
+        int right=0;
+        int sum=0;
+        int min=Integer.MAX_VALUE;
+        while(right&lt;n){
+            sum+=nums[right];
+            right++;
+            while(sum&gt;=s){
+                min=Math.min(min,right-left);
+                sum-=nums[left];
+                left++;
+            }    
+        }
+        return min==Integer.MAX_VALUE?0:min;
+    }
+}</code></pre><h3 id="4-3字母异位词（leetcode-438-）"><a href="#4-3字母异位词（leetcode-438-）" class="headerlink" title="4.3字母异位词（leetcode 438 ）"></a>4.3字母异位词（leetcode 438 ）</h3><p>题目描述：给定一个字符串 s 和一个非空字符串 p，找到 s 中所有是 p 的字母异位词的子串，返回这些子串的起始索引。字符串只包含小写英文字母，并且字符串 s 和 p 的长度都不超过 20100。   </p>
+<pre><code>class Solution {
+    public List&lt;Integer&gt; findAnagrams(String s, String p) {
+        List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+        HashMap&lt;Character, Integer&gt; map = new HashMap&lt;&gt;();
+        for (Character c : p.toCharArray()) map.put(c, map.getOrDefault(c, 0) + 1);
+        HashMap&lt;Character, Integer&gt; window = new HashMap&lt;&gt;();
+        int left = 0; 
+        int right = 0; 
+        int valid = p.length(); 
+        while (right &lt; s.length()) {
+            if (map.containsKey(s.charAt(right))) {
+                window.put(s.charAt(right), window.getOrDefault(s.charAt(right), 0) + 1);
+                if (window.get(s.charAt(right)) &lt;= map.get(s.charAt(right))) {
+                    valid--;
+                }
+            }
+            while (valid == 0) {
+                if (right - left + 1 == p.length()) res.add(left);
+                if (map.containsKey(s.charAt(left))) {
+                    window.put(s.charAt(left), window.get(s.charAt(left)) - 1);
+                    if (window.get(s.charAt(left)) &lt; map.get(s.charAt(left))) {
+                        valid++;
+                    }
+                }
+                left++;
+            }
+            right++;
+        }
+        return res;
+    }
+}</code></pre><h3 id="4-4最小覆盖子串（leetcode-438-）"><a href="#4-4最小覆盖子串（leetcode-438-）" class="headerlink" title="4.4最小覆盖子串（leetcode 438 ）"></a>4.4最小覆盖子串（leetcode 438 ）</h3><p>题目描述：给你一个字符串 S、一个字符串 T，请在字符串 S 里面找出：包含 T 所有字母的最小子串。  </p>
+<pre><code>class Solution {
+    public String minWindow(String s, String t) {
+        int left=0;
+        int right=0;
+        int start=0;
+        int minlen=Integer.MAX_VALUE;
+        HashMap&lt;Character,Integer&gt; needs=new HashMap&lt;&gt;();
+        HashMap&lt;Character,Integer&gt; window=new HashMap&lt;&gt;();
+        //for(Character cha:t.toCharArray()) needs.put(cha,getOrDefault(cha,0)+1);
+        for (Character c : t.toCharArray()) needs.put(c, needs.getOrDefault(c, 0) + 1);
+        int match=0;
+        while(right&lt;s.length()){
+            char c1=s.charAt(right);
+            if(needs.containsKey(c1)){
+                window.put(c1,window.getOrDefault(c1,0)+1);
+                if(window.get(c1).compareTo(needs.get(c1))==0)
+                    match++;
+            }
+            right++;
+            while(match==needs.size()){
+                if(right-left&lt;minlen){
+                    start=left;
+                    minlen=right-left;
+                }
+                char c2=s.charAt(left);
+                if(needs.containsKey(c2)){
+                    window.put(c2,window.get(c2)-1);
+                    if(window.get(c2)&lt;needs.get(c2))
+                        match--;
+                }
+                left++;
+            }
+        }
+        return minlen==Integer.MAX_VALUE?&quot;&quot;:s.substring(start,minlen+start);
+    }
+}</code></pre>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BFS搜索</title>
+    <url>/2020/02/23/BFS%E6%90%9C%E7%B4%A2/</url>
+    <content><![CDATA[<p>广度优先搜索<br> <a id="more"></a></p>
+<h1 id="BFS搜索"><a href="#BFS搜索" class="headerlink" title="BFS搜索"></a>BFS搜索</h1><p>广度优先搜索一层一层遍历，每一层得到的所有新节点，要用队列存储起来以备下一层遍历的时候再遍历。</p>
+<p>而深度优先搜索在得到一个新节点时立即对新节点进行遍历：从节点 0 出发开始遍历，得到到新节点 6 时，立马对新节点 6 进行遍历，得到新节点 4；如此反复以这种方式遍历新节点，直到没有新节点了，此时返回。返回到根节点 0 的情况是，继续对根节点 0 进行遍历，得到新节点 2，然后继续以上步骤。</p>
+<p>从一个节点出发，使用 DFS 对一个图进行遍历时，能够遍历到的节点都是从初始节点可达的，DFS 常用来求解这种 可达性 问题。</p>
+<p>在程序实现 DFS 时需要考虑以下问题：</p>
+<p>栈：用栈来保存当前节点信息，当遍历新节点返回时能够继续遍历当前节点。可以使用递归栈。<br>标记：和 BFS 一样同样需要对已经遍历过的节点进行标记。</p>
+<h3 id="模板1"><a href="#模板1" class="headerlink" title="模板1"></a>模板1</h3><pre><code>void BFS()
+{
+    定义队列;
+    定义备忘录，用于记录已经访问的位置；
+
+    判断边界条件，是否能直接返回结果的。
+
+    将起始位置加入到队列中，同时更新备忘录。
+
+    while (队列不为空) {
+        获取当前队列中的元素个数。
+        for (元素个数) {
+            取出一个位置节点。
+            判断是否到达终点位置。
+            获取它对应的下一个所有的节点。
+            条件判断，过滤掉不符合条件的位置。
+            新位置重新加入队列。
+        }
+    }
+}</code></pre><h3 id="模板2"><a href="#模板2" class="headerlink" title="模板2"></a>模板2</h3><pre><code>void BFS()
+{
+    1.判断边界条件，是否能直接返回结果的。
+
+    2.定义队列。
+
+    3.定义备忘录。
+
+    4.将起始位置加入到队列中，同时更新备忘录。</code></pre><p>​<br>        5.BFS遍历<br>        while (队列不为空) {<br>            5.1 获取当前队列中的元素个数。<br>            for (元素个数) {<br>                5.2 取出一个位置节点。</p>
+<pre><code>            5.3 判断是否到达终点位置。
+
+            5.4 获取它对应的下一个所有的节点。
+
+            5.5 条件判断，过滤掉不符合条件的位置。
+
+            5.6 新位置重新加入队列，并更新备忘录。
+        }
+    }
+}</code></pre><h1 id="1-矩阵"><a href="#1-矩阵" class="headerlink" title="1.矩阵"></a>1.矩阵</h1><p>leetcode 1091，题目描述：0 表示可以经过某个位置，求解从左上角到右下角的最短路径长度。</p>
+<pre><code>class Solution {
+    public int shortestPathBinaryMatrix(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        // 当矩阵第一个元素为1或者最后一个元素为1时，直接返回-1
+        if(grid[0][0]==1 || grid[grid.length-1][grid[0].length-1]==1) return -1;
+        grid[0][0] = 1;
+        // 创建队列用于保存每一格可以走的步
+        Queue&lt;int[]&gt; q=new LinkedList&lt;&gt;();
+        q.add(new int[]{0, 0});
+        // 队列长度,c要和队列做对比,知道何时到达队列长度
+        int len = q.size();
+        int c = 0;
+        // 定义八个方向
+        int[][] dir = {{1, 0}, {1, 1}, {1,-1}, {0, 1}, {0, -1}, {-1, 0},{-1, -1}, {-1, 1}};
+        // 定义最短路径长度
+        int path = 1;
+        while(!q.isEmpty()){
+            int[] data = q.poll();
+            // x、y代表当前的坐标（x，y）
+            int x = data[0];
+            int y = data[1];
+            // 如果走到最后一格，返回
+            if(x == m - 1 &amp;&amp; y == n - 1) return path;
+            // 此处填充队列，将可走的步添加进队列
+            for(int[] d : dir){
+                // x1，y1代表当前坐标移动后的坐标（x1，y1）
+                int x1 = x + d[0];
+                int y1 = y + d[1];
+                if(x1 &gt;= 0 &amp;&amp; y1 &gt;= 0 &amp;&amp; x1 &lt; m &amp;&amp; y1 &lt; n &amp;&amp; grid[x1][y1] == 0){
+                    q.add(new int[]{x1, y1});
+                    grid[x1][y1] = 1;
+                }
+            }
+            c++;
+            if(c == len){
+                c = 0;
+                path++;
+                len = q.size();
+            }
+        }
+        return -1;
+    }
+}</code></pre><h1 id="2-单词接龙"><a href="#2-单词接龙" class="headerlink" title="2.单词接龙"></a>2.单词接龙</h1><p>leetcode127，题目描述：找出一条从 beginWord 到 endWord 的最短路径，每次移动规定为改变一个字符，并且改变之后的字符串必须在 wordList 中。</p>
+<pre><code>class Solution {
+    public int ladderLength(String beginWord, String endWord, List&lt;String&gt; wordList) {
+        if (!wordList.contains(endWord)) {
+            return 0;
+        }
+
+        int len = beginWord.length();
+        // 将字符替换模板“a*b”作为key，所有符合模板的字符串作为value创建哈希表，以此为边建立无向图
+        Map&lt;String, List&lt;String&gt;&gt; patternMap = generatePatternMap(wordList, len);
+
+        Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
+        Set&lt;String&gt; visited = new HashSet&lt;&gt;();
+
+        queue.add(beginWord);
+        visited.add(beginWord);
+
+        int res = 1;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i &lt; size; i++) {
+                String word = queue.poll();
+
+                if (word.equals(endWord)) {
+                    return res;
+                }
+
+                for (int j = 0; j &lt; len; j++) {
+                    String pattern = word.substring(0, j) + &quot;*&quot; + word.substring(j + 1, len);
+                    List&lt;String&gt; nextWords = patternMap.getOrDefault(pattern, new ArrayList&lt;&gt;());
+                    for (String nextWord : nextWords) {
+                        if (!visited.contains(nextWord)) {
+                            queue.add(nextWord);
+                            visited.add(nextWord);
+                        }
+                    }
+                }
+            }
+            res++;
+        }
+        return 0;
+    }</code></pre><p>​<br>        public Map&lt;String, List<String>&gt; generatePatternMap(List<String> wordList, int len) {<br>            Map&lt;String, List<String>&gt; map = new HashMap&lt;&gt;();<br>            for (String word : wordList) {<br>                for (int i = 0; i &lt; len; i++) {<br>                    String pattern = word.substring(0, i) + “*” + word.substring(i + 1, len);<br>                    map.putIfAbsent(pattern, new ArrayList&lt;&gt;());<br>                    map.get(pattern).add(word);<br>                }<br>            }<br>            return map;<br>        }<br>    }</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaWeb资料下载</title>
+    <url>/2020/02/23/%E8%B5%84%E6%96%99%E4%B8%8B%E8%BD%BD/</url>
+    <content><![CDATA[<p>JavaWeb资料下载<br> <a id="more"></a><br><strong>点击查看 <a href="https://pan.baidu.com/s/1gl8PcFW_BEXepVbqZ854VA" target="_blank" rel="noopener">JavaWeb资料</a></strong><br><strong>提取码: 2be4</strong><br><strong>视频可转到<a href="https://www.bilibili.com/" target="_blank" rel="noopener">bilibili</a>搜索</strong></p>
+]]></content>
+      <categories>
+        <category>JavaWeb</category>
+      </categories>
+      <tags>
+        <tag>资料下载</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode 数学类</title>
+    <url>/2020/02/20/leetcode%E6%95%B0%E5%AD%A6%E7%B1%BB/</url>
+    <content><![CDATA[<p>leetcode里在数学标签下的价值比较大的题目<br> <a id="more"></a></p>
+<h1 id="1-素数"><a href="#1-素数" class="headerlink" title="1.素数"></a>1.素数</h1><h4 id="统计所有小于非负整数-n-的质数的数量"><a href="#统计所有小于非负整数-n-的质数的数量" class="headerlink" title="统计所有小于非负整数 n 的质数的数量"></a>统计所有小于非负整数 n 的质数的数量</h4><p>使用Sieve of Eratosthenes算法，埃拉托斯特尼筛法在每次找到一个素数时，将能被素数整除的数排除掉</p>
+<pre><code>class Solution {
+    public int countPrimes(int n) {
+        boolean[] isPrim = new boolean[n];
+    // 将数组都初始化为 true
+        Arrays.fill(isPrim, true);
+        for (int i = 2; i &lt; n; i++) 
+            if (isPrim[i]) 
+                // i 的倍数不可能是素数了
+                for (int j = 2 * i; j &lt; n; j += i) 
+                        isPrim[j] = false;
+        int count = 0;
+        for (int i = 2; i &lt; n; i++)
+            if (isPrim[i]) count++;
+        return count;
+    }
+}</code></pre><h1 id="2-七进制数"><a href="#2-七进制数" class="headerlink" title="2.七进制数"></a>2.七进制数</h1><h4 id="给定一个整数，将其转化为7进制，并以字符串形式输出。"><a href="#给定一个整数，将其转化为7进制，并以字符串形式输出。" class="headerlink" title="给定一个整数，将其转化为7进制，并以字符串形式输出。"></a>给定一个整数，将其转化为7进制，并以字符串形式输出。</h4><p>StringBuffer();就是构造一个StringBuffer对象。<br>sb.reverse()就是用来把stringbuffer里面的字符串翻转。<br>譬如你stringbuffer里面存放了abc,sb.reverse()====&gt;bca，sb.toString()就是返回该stringbuffer的字符串形式。</p>
+<pre><code>class Solution {
+    public String convertToBase7(int num) {
+        if(num==0) return &quot;0&quot;;
+        StringBuilder sb = new StringBuilder();
+        boolean isNegtive=false;
+        if(num&lt;0){
+            num=-num;
+            isNegtive=true;
+        }
+        if(num&gt;0){
+            while(num!=0){
+                sb.append(num%7);
+                num=num/7;
+            }
+        }
+        String result=sb.reverse().toString();
+        return isNegtive==true?&quot;-&quot;+result:result;      
+    }
+}</code></pre><h1 id="3-特殊26进制"><a href="#3-特殊26进制" class="headerlink" title="3.特殊26进制"></a>3.特殊26进制</h1><h4 id="给定一个正整数，返回它在-Excel-表中相对应的列名称。"><a href="#给定一个正整数，返回它在-Excel-表中相对应的列名称。" class="headerlink" title="给定一个正整数，返回它在 Excel 表中相对应的列名称。"></a>给定一个正整数，返回它在 Excel 表中相对应的列名称。</h4><pre><code>例如，
+
+1 -&gt; A
+2 -&gt; B
+3 -&gt; C
+...
+26 -&gt; Z
+27 -&gt; AA
+28 -&gt; AB 
+
+class Solution {
+    public String convertToTitle(int n) {
+        StringBuilder stringBuilder = new StringBuilder();
+        while (n != 0) {
+            n --;
+            stringBuilder.append((char)(n % 26 + &apos;A&apos;));
+            n /= 26;
+        }
+        return stringBuilder.reverse().toString();
+    }
+}</code></pre><h1 id="4-整数-n，返回-n-结果尾数中零的数量"><a href="#4-整数-n，返回-n-结果尾数中零的数量" class="headerlink" title="4.整数 n，返回 n! 结果尾数中零的数量"></a>4.整数 n，返回 n! 结果尾数中零的数量</h1><pre><code>class Solution {
+    public int trailingZeroes(int n) {
+        int count = 0;
+        while (n &gt; 0) {
+            count += n / 5;
+            n = n / 5;
+        }
+        return count;
+    }
+}</code></pre><h1 id="5-二进制求和"><a href="#5-二进制求和" class="headerlink" title="5.二进制求和"></a>5.二进制求和</h1><h4 id="给定两个二进制字符串，返回他们的和（用二进制表示）。"><a href="#给定两个二进制字符串，返回他们的和（用二进制表示）。" class="headerlink" title="给定两个二进制字符串，返回他们的和（用二进制表示）。"></a>给定两个二进制字符串，返回他们的和（用二进制表示）。</h4><h4 id="输入为非空字符串且只包含数字-1-和-0。"><a href="#输入为非空字符串且只包含数字-1-和-0。" class="headerlink" title="输入为非空字符串且只包含数字 1 和 0。"></a>输入为非空字符串且只包含数字 1 和 0。</h4><pre><code>class Solution {
+    public String addBinary(String a, String b) {
+        StringBuilder ans = new StringBuilder();
+        int ca = 0;
+        for(int i = a.length() - 1, j = b.length() - 1;i &gt;= 0 || j &gt;= 0; i--, j--) {
+            int sum = ca;
+            sum += i &gt;= 0 ? a.charAt(i) - &apos;0&apos; : 0;
+            sum += j &gt;= 0 ? b.charAt(j) - &apos;0&apos; : 0;
+            ans.append(sum % 2);
+            ca = sum / 2;
+        }
+        ans.append(ca == 1 ? ca : &quot;&quot;);
+        return ans.reverse().toString();
+    }
+}</code></pre><h1 id="6-字符串加法（模板）"><a href="#6-字符串加法（模板）" class="headerlink" title="6.字符串加法（模板）"></a>6.字符串加法（模板）</h1><h4 id="给定两个字符串形式的非负整数-num1-和num2-，计算它们的和。"><a href="#给定两个字符串形式的非负整数-num1-和num2-，计算它们的和。" class="headerlink" title="给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和。"></a>给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和。</h4><p>比较经典的字符串加法的题目</p>
+<pre><code>class Solution {
+    public String addStrings(String num1, String num2) {
+        int carry=0;
+        int x,y;
+        StringBuilder sb=new StringBuilder();
+        for(int i=num1.length()-1,j=num2.length()-1; i&gt;=0 || j&gt;=0; i--,j--){
+            int sum=carry;
+            x=i&lt;0?0:num1.charAt(i)-&apos;0&apos;;
+            y=j&lt;0?0:num2.charAt(j)-&apos;0&apos;;
+            sum+=x+y;
+            carry=sum/10;
+            sb.append(sum%10);
+        }
+        sb.append(carry==1?carry:&quot;&quot;);
+        return sb.reverse().toString();   
+    }
+}</code></pre><h1 id="7-最小移动次数使元素相等"><a href="#7-最小移动次数使元素相等" class="headerlink" title="7.最小移动次数使元素相等"></a>7.最小移动次数使元素相等</h1><h3 id="7-1-给定一个长度为-n-的非空整数数组，找到让数组所有元素相等的最小移动次数。每次移动可以使-n-1-个元素增加-1。"><a href="#7-1-给定一个长度为-n-的非空整数数组，找到让数组所有元素相等的最小移动次数。每次移动可以使-n-1-个元素增加-1。" class="headerlink" title="7.1 给定一个长度为 n 的非空整数数组，找到让数组所有元素相等的最小移动次数。每次移动可以使 n - 1 个元素增加 1。"></a>7.1 给定一个长度为 n 的非空整数数组，找到让数组所有元素相等的最小移动次数。每次移动可以使 n - 1 个元素增加 1。</h3><pre><code>class Solution {
+    public int minMoves(int[] nums) {
+        Arrays.sort(nums);
+        int count=0;
+        for(int i=0;i&lt;nums.length;i++){
+            count+=nums[i]-nums[0];
+        }
+    return count;
+    }
+}</code></pre><p>~ n-1个元素加一相当于一个元素减一 ~</p>
+<h3 id="7-2-给定一个非空整数数组，找到使所有数组元素相等所需的最小移动数，其中每次移动可将选定的一个元素加1或减1。-您可以假设数组的长度最多为10000。"><a href="#7-2-给定一个非空整数数组，找到使所有数组元素相等所需的最小移动数，其中每次移动可将选定的一个元素加1或减1。-您可以假设数组的长度最多为10000。" class="headerlink" title="7.2 给定一个非空整数数组，找到使所有数组元素相等所需的最小移动数，其中每次移动可将选定的一个元素加1或减1。 您可以假设数组的长度最多为10000。"></a>7.2 给定一个非空整数数组，找到使所有数组元素相等所需的最小移动数，其中每次移动可将选定的一个元素加1或减1。 您可以假设数组的长度最多为10000。</h3><p>例如:</p>
+<pre><code>class Solution {
+    public int minMoves2(int[] nums) {
+        Arrays.sort(nums);
+        int sum = 0;
+        for (int num : nums) {
+            sum += Math.abs(nums[nums.length / 2] - num);
+        }
+        return sum;
+    }
+}</code></pre><h1 id="8-多数元素"><a href="#8-多数元素" class="headerlink" title="8.多数元素"></a>8.多数元素</h1><h4 id="给定一个大小为-n-的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于-⌊-n-2-⌋-的元素。你可以假设数组是非空的，并且给定的数组总是存在多数元素。"><a href="#给定一个大小为-n-的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于-⌊-n-2-⌋-的元素。你可以假设数组是非空的，并且给定的数组总是存在多数元素。" class="headerlink" title="给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。你可以假设数组是非空的，并且给定的数组总是存在多数元素。"></a>给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。你可以假设数组是非空的，并且给定的数组总是存在多数元素。</h4><pre><code>class Solution {
+    public int majorityElement(int[] nums) {
+        Arrays.sort(nums);
+        int n=nums.length;
+        return nums[n/2];
+    }
+}</code></pre><h1 id="9-完全平方数"><a href="#9-完全平方数" class="headerlink" title="9.完全平方数"></a>9.完全平方数</h1><p>完全平方数可以通过累加从1往后的奇数找到，<br>1 = 1;<br>4 = 1 + 3;<br>9 = 1 + 3 + 5;<br>16 = 1 + 3 + 5 + 7;<br>…<br>计算过程只需要加减法，效率极高。  </p>
+<pre><code>class Solution {
+    public boolean isPerfectSquare(int num) {
+        int subNum = 1;
+        while (num &gt; 0) {
+            num -= subNum;
+            subNum += 2;
+        }
+        return num == 0;
+    }
+}</code></pre>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Tomcat&amp;Servlet笔记</title>
+    <url>/2020/02/17/Tomcat/</url>
+    <content><![CDATA[<p>Tomcat &amp; Servlet快速入门笔记<br> <a id="more"></a></p>
+<h1 id="笔记内容"><a href="#笔记内容" class="headerlink" title="笔记内容"></a>笔记内容</h1><ol>
+<li>web相关概念回顾</li>
+<li>web服务器软件：Tomcat</li>
+<li>Servlet入门学习</li>
+</ol>
+<h2 id="web相关概念回顾"><a href="#web相关概念回顾" class="headerlink" title="web相关概念回顾"></a>web相关概念回顾</h2><ol>
+<li><p>软件架构</p>
+<ol>
+<li>C/S：客户端/服务器端</li>
+<li>B/S：浏览器/服务器端</li>
+</ol>
+</li>
+<li><p>资源分类</p>
+<ol>
+<li>静态资源：所有用户访问后，得到的结果都是一样的，称为静态资源.静态资源可以直接被浏览器解析<ul>
+<li>如： html,css,JavaScript</li>
+</ul>
+</li>
+<li>动态资源:每个用户访问相同资源后，得到的结果可能不一样。称为动态资源。动态资源被访问后，需要先转换为静态资源，在返回给浏览器<ul>
+<li>如：servlet/jsp,php,asp….</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>网络通信三要素</p>
+<ol>
+<li>IP：电子设备(计算机)在网络中的唯一标识。</li>
+<li>端口：应用程序在计算机中的唯一标识。 0~65536</li>
+<li>传输协议：规定了数据传输的规则<ol>
+<li>基础协议：<ol>
+<li>tcp:安全协议，三次握手。 速度稍慢</li>
+<li>udp：不安全协议。 速度快</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="web服务器软件："><a href="#web服务器软件：" class="headerlink" title="web服务器软件："></a>web服务器软件：</h2><ul>
+<li><p>服务器：安装了服务器软件的计算机</p>
+</li>
+<li><p>服务器软件：接收用户的请求，处理请求，做出响应</p>
+</li>
+<li><p>web服务器软件：接收用户的请求，处理请求，做出响应。</p>
+<ul>
+<li>在web服务器软件中，可以部署web项目，让用户通过浏览器来访问这些项目</li>
+<li>web容器</li>
+</ul>
+</li>
+<li><p>常见的java相关的web服务器软件：</p>
+<ul>
+<li>webLogic：oracle公司，大型的JavaEE服务器，支持所有的JavaEE规范，收费的。</li>
+<li>webSphere：IBM公司，大型的JavaEE服务器，支持所有的JavaEE规范，收费的。</li>
+<li>JBOSS：JBOSS公司的，大型的JavaEE服务器，支持所有的JavaEE规范，收费的。</li>
+<li>Tomcat：Apache基金组织，中小型的JavaEE服务器，仅仅支持少量的JavaEE规范servlet/jsp。开源的，免费的。</li>
+</ul>
+</li>
+<li><p>JavaEE：Java语言在企业级开发中使用的技术规范的总和，一共规定了13项大的规范</p>
+</li>
+<li><p>Tomcat：web服务器软件</p>
+<ol>
+<li><p>下载：<a href="http://tomcat.apache.org/" target="_blank" rel="noopener">http://tomcat.apache.org/</a></p>
+</li>
+<li><p>安装：解压压缩包即可。</p>
+<ul>
+<li>注意：安装目录建议不要有中文和空格</li>
+</ul>
+</li>
+<li><p>卸载：删除目录就行了</p>
+</li>
+<li><p>启动：</p>
+<ul>
+<li><p>bin/startup.bat ,双击运行该文件即可</p>
+</li>
+<li><p>访问：浏览器输入：<a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> 回车访问自己</p>
+<pre><code>http://别人的ip:8080 访问别人</code></pre></li>
+<li><p>可能遇到的问题：</p>
+<ol>
+<li><p>黑窗口一闪而过：</p>
+<ul>
+<li>原因： 没有正确配置JAVA_HOME环境变量</li>
+<li>解决方案：正确配置JAVA_HOME环境变量</li>
+</ul>
+</li>
+<li><p>启动报错：</p>
+<ol>
+<li>暴力：找到占用的端口号，并且找到对应的进程，杀死该进程<ul>
+<li>netstat -ano</li>
+</ul>
+</li>
+<li>温柔：修改自身的端口号<ul>
+<li>conf/server.xml</li>
+<li><Connector port="8888" protocol="HTTP/1.1"
+ connectionTimeout="20000"
+ redirectPort="8445" /></li>
+<li>一般会将tomcat的默认端口号修改为80。80端口号是http协议的默认端口号。<ul>
+<li>好处：在访问时，就不用输入端口号</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>关闭：</p>
+<ol>
+<li>正常关闭：<ul>
+<li>bin/shutdown.bat</li>
+<li>ctrl+c</li>
+</ul>
+</li>
+<li>强制关闭：<ul>
+<li>点击启动窗口的×</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>配置:</p>
+<ul>
+<li><p>部署项目的方式：</p>
+<ol>
+<li><p>直接将项目放到webapps目录下即可。</p>
+<ul>
+<li>/hello：项目的访问路径–&gt;虚拟目录</li>
+<li>简化部署：将项目打成一个war包，再将war包放置到webapps目录下。<ul>
+<li>war包会自动解压缩</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>配置conf/server.xml文件<br> 在<Host>标签体中配置</p>
+ <Context docBase="D:\hello" path="/hehe" />
+ * docBase:项目存放的路径
+ * path：虚拟目录
+</li>
+<li><p>在conf\Catalina\localhost创建任意名称的xml文件。在文件中编写</p>
+ <Context docBase="D:\hello" />
+ * 虚拟目录：xml文件的名称
+</li>
+</ol>
+</li>
+<li><p>静态项目和动态项目：</p>
+<ul>
+<li>目录结构<ul>
+<li>java动态项目的目录结构：<br>  – 项目的根目录<pre><code>-- WEB-INF目录：
+    -- web.xml：web项目的核心配置文件
+    -- classes目录：放置字节码文件的目录
+    -- lib目录：放置依赖的jar包</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p>​        * 将Tomcat集成到IDEA中，并且创建JavaEE的项目，部署项目。</p>
+<h2 id="Servlet：-server-applet"><a href="#Servlet：-server-applet" class="headerlink" title="Servlet：  server applet"></a>Servlet：  server applet</h2><ul>
+<li><p>概念：运行在服务器端的小程序</p>
+<ul>
+<li>Servlet就是一个接口，定义了Java类被浏览器访问到(tomcat识别)的规则。</li>
+<li>将来我们自定义一个类，实现Servlet接口，复写方法。</li>
+</ul>
+</li>
+<li><p>快速入门：</p>
+<ol>
+<li><p>创建JavaEE项目</p>
+</li>
+<li><p>定义一个类，实现Servlet接口</p>
+<ul>
+<li>public class ServletDemo1 implements Servlet</li>
+</ul>
+</li>
+<li><p>实现接口中的抽象方法</p>
+</li>
+<li><p>配置Servlet<br>  在web.xml中配置：</p>
+ <!--配置Servlet -->
+ <servlet>
+     <servlet-name>demo1</servlet-name>
+     <servlet-class>cn.itcast.web.servlet.ServletDemo1</servlet-class>
+ </servlet>
+
+ <servlet-mapping>
+     <servlet-name>demo1</servlet-name>
+     <url-pattern>/demo1</url-pattern>
+</servlet-mapping>
+</li>
+</ol>
+</li>
+<li><p>执行原理：</p>
+<ol>
+<li>当服务器接受到客户端浏览器的请求后，会解析请求URL路径，获取访问的Servlet的资源路径</li>
+<li>查找web.xml文件，是否有对应的<url-pattern>标签体内容。</li>
+<li>如果有，则在找到对应的<servlet-class>全类名</li>
+<li>tomcat会将字节码文件加载进内存，并且创建其对象</li>
+<li>调用其方法</li>
+</ol>
+</li>
+<li><p>Servlet中的生命周期方法：</p>
+<ol>
+<li><p>被创建：执行init方法，只执行一次</p>
+<ul>
+<li><p>Servlet什么时候被创建？</p>
+<ul>
+<li>默认情况下，第一次被访问时，Servlet被创建</li>
+<li>可以配置执行Servlet的创建时机。<ul>
+<li>在<servlet>标签下配置<ol>
+<li>第一次被访问时，创建<ul>
+<li><load-on-startup>的值为负数</li>
+</ul>
+</li>
+<li>在服务器启动时，创建<ul>
+<li><load-on-startup>的值为0或正整数</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Servlet的init方法，只执行一次，说明一个Servlet在内存中只存在一个对象，Servlet是单例的</p>
+<ul>
+<li>多个用户同时访问时，可能存在线程安全问题。</li>
+<li>解决：尽量不要在Servlet中定义成员变量。即使定义了成员变量，也不要对修改值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>提供服务：执行service方法，执行多次</p>
+<ul>
+<li>每次访问Servlet时，Service方法都会被调用一次。</li>
+</ul>
+</li>
+<li><p>被销毁：执行destroy方法，只执行一次</p>
+<ul>
+<li>Servlet被销毁时执行。服务器关闭时，Servlet被销毁</li>
+<li>只有服务器正常关闭时，才会执行destroy方法。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>destroy方法在Servlet被销毁之前执行，一般用于释放资源</li>
+</ul>
+</li>
+<li><p>Servlet3.0：</p>
+<ul>
+<li><p>好处：</p>
+<ul>
+<li>支持注解配置。可以不需要web.xml了。</li>
+</ul>
+</li>
+<li><p>步骤：</p>
+<ol>
+<li>创建JavaEE项目，选择Servlet的版本3.0以上，可以不创建web.xml</li>
+<li>定义一个类，实现Servlet接口</li>
+<li>复写方法</li>
+<li>在类上使用@WebServlet注解，进行配置<ul>
+<li>@WebServlet(“资源路径”)</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> WebServlet &#123;</span><br><span class="line">    <span class="function">String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;<span class="comment">//相当于&lt;Servlet-name&gt;</span></span><br><span class="line"></span><br><span class="line">    String[] value() <span class="keyword">default</span> &#123;&#125;;<span class="comment">//代表urlPatterns()属性配置</span></span><br><span class="line"></span><br><span class="line">    String[] urlPatterns() <span class="keyword">default</span> &#123;&#125;;<span class="comment">//相当于&lt;url-pattern&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">loadOnStartup</span><span class="params">()</span> <span class="keyword">default</span> -1</span>;<span class="comment">//相当于&lt;load-on-startup&gt;</span></span><br><span class="line"></span><br><span class="line">    WebInitParam[] initParams() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">asyncSupported</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">smallIcon</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">largeIcon</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">description</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">displayName</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="IDEA与tomcat的相关配置"><a href="#IDEA与tomcat的相关配置" class="headerlink" title="IDEA与tomcat的相关配置"></a>IDEA与tomcat的相关配置</h2><ol>
+<li><p>IDEA会为每一个tomcat部署的项目单独建立一份配置文件</p>
+<ul>
+<li>查看控制台的log：Using CATALINA_BASE:   “C:\Users\fqy.IntelliJIdea2018.1\system\tomcat_itcast”</li>
+</ul>
+</li>
+<li><p>工作空间项目    和     tomcat部署的web项目</p>
+<ul>
+<li>tomcat真正访问的是“tomcat部署的web项目”，”tomcat部署的web项目”对应着”工作空间项目” 的web目录下的所有资源</li>
+<li>WEB-INF目录下的资源不能被浏览器直接访问。</li>
+</ul>
+</li>
+<li><p>断点调试：使用”小虫子”启动 dubug 启动</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>JavaWeb</category>
+      </categories>
+      <tags>
+        <tag>后端</tag>
+        <tag>Tomcat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>XML快速入门笔记</title>
+    <url>/2020/02/16/XML%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>XML快速入门笔记<br> <a id="more"></a></p>
+<h1 id="笔记内容"><a href="#笔记内容" class="headerlink" title="笔记内容"></a>笔记内容</h1><pre><code>1. XML
+    1. 概念
+    2. 语法
+    3. 解析</code></pre><h2 id="XML："><a href="#XML：" class="headerlink" title="XML："></a>XML：</h2><pre><code>1. 概念：Extensible Markup Language 可扩展标记语言
+    * 可扩展：标签都是自定义的。 &lt;user&gt;  &lt;student&gt;
+
+    * 功能
+        * 存储数据
+            1. 配置文件
+            2. 在网络中传输
+    * xml与html的区别
+        1. xml标签都是自定义的，html标签是预定义。
+        2. xml的语法严格，html语法松散
+        3. xml是存储数据的，html是展示数据
+
+2. 语法：
+    * 基本语法：
+        1. xml文档的后缀名 .xml
+        2. xml第一行必须定义为文档声明
+        3. xml文档中有且仅有一个根标签
+        4. 属性值必须使用引号(单双都可)引起来
+        5. 标签必须正确关闭
+        6. xml标签名称区分大小写
+    * 快速入门：
+        &lt;?xml version=&apos;1.0&apos; ?&gt;
+        &lt;users&gt;
+            &lt;user id=&apos;1&apos;&gt;
+                &lt;name&gt;zhangsan&lt;/name&gt;
+                &lt;age&gt;23&lt;/age&gt;
+                &lt;gender&gt;male&lt;/gender&gt;
+                &lt;br/&gt;
+            &lt;/user&gt;
+
+            &lt;user id=&apos;2&apos;&gt;
+                &lt;name&gt;lisi&lt;/name&gt;
+                &lt;age&gt;24&lt;/age&gt;
+                &lt;gender&gt;female&lt;/gender&gt;
+            &lt;/user&gt;
+        &lt;/users&gt;
+
+    * 组成部分：
+        1. 文档声明
+            1. 格式：&lt;?xml 属性列表 ?&gt;
+            2. 属性列表：
+                * version：版本号，必须的属性
+                * encoding：编码方式。告知解析引擎当前文档使用的字符集，默认值：ISO-8859-1
+                * standalone：是否独立
+                    * 取值：
+                        * yes：不依赖其他文件
+                        * no：依赖其他文件
+        2. 指令(了解)：结合css的
+            * &lt;?xml-stylesheet type=&quot;text/css&quot; href=&quot;a.css&quot; ?&gt;
+        3. 标签：标签名称自定义的
+            * 规则：
+                * 名称可以包含字母、数字以及其他的字符 
+                * 名称不能以数字或者标点符号开始 
+                * 名称不能以字母 xml（或者 XML、Xml 等等）开始 
+                * 名称不能包含空格 
+
+        4. 属性：
+            id属性值唯一
+        5. 文本：
+            * CDATA区：在该区域中的数据会被原样展示
+                * 格式：  &lt;![CDATA[ 数据 ]]&gt;</code></pre><p>​<br>        * 约束：规定xml文档的书写规则<br>            * 作为框架的使用者(程序员)：<br>                1. 能够在xml中引入约束文档<br>                2. 能够简单的读懂约束文档</p>
+<pre><code>* 分类：
+    1. DTD:一种简单的约束技术
+    2. Schema:一种复杂的约束技术
+
+
+* DTD：
+    * 引入dtd文档到xml文档中
+        * 内部dtd：将约束规则定义在xml文档中
+        * 外部dtd：将约束的规则定义在外部的dtd文件中
+            * 本地：&lt;!DOCTYPE 根标签名 SYSTEM &quot;dtd文件的位置&quot;&gt;
+            * 网络：&lt;!DOCTYPE 根标签名 PUBLIC &quot;dtd文件名字&quot; &quot;dtd文件的位置URL&quot;&gt;
+
+
+* Schema:
+    * 引入：
+        1.填写xml文档的根元素
+        2.引入xsi前缀.  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+        3.引入xsd文件命名空间.  xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;
+        4.为每一个xsd约束声明一个前缀,作为标识  xmlns=&quot;http://www.itcast.cn/xml&quot; 
+
+    &lt;students   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+        xmlns=&quot;http://www.itcast.cn/xml&quot;
+        xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;&gt;</code></pre><p>​    </p>
+<pre><code>3. 解析：操作xml文档，将文档中的数据读取到内存中
+    * 操作xml文档
+        1. 解析(读取)：将文档中的数据读取到内存中
+        2. 写入：将内存中的数据保存到xml文档中。持久化的存储
+
+    * 解析xml的方式：
+        1. DOM：将标记语言文档一次性加载进内存，在内存中形成一颗dom树
+            * 优点：操作方便，可以对文档进行CRUD的所有操作
+            * 缺点：占内存
+        2. SAX：逐行读取，基于事件驱动的。
+            * 优点：不占内存。
+            * 缺点：只能读取，不能增删改</code></pre><p>​<br>        * xml常见的解析器：<br>            1. JAXP：sun公司提供的解析器，支持dom和sax两种思想<br>            2. DOM4J：一款非常优秀的解析器<br>            3. Jsoup：jsoup 是一款Java 的HTML解析器，可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。<br>            4. PULL：Android操作系统内置的解析器，sax方式的。</p>
+<pre><code>* Jsoup：jsoup 是一款Java 的HTML解析器，可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。
+    * 快速入门：
+        * 步骤：
+            1. 导入jar包
+            2. 获取Document对象
+            3. 获取对应的标签Element对象
+            4. 获取数据
+
+    * 代码：
+         //2.1获取student.xml的path
+        String path = JsoupDemo1.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath();
+        //2.2解析xml文档，加载文档进内存，获取dom树---&gt;Document
+        Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;);
+        //3.获取元素对象 Element
+        Elements elements = document.getElementsByTag(&quot;name&quot;);
+
+        System.out.println(elements.size());
+        //3.1获取第一个name的Element对象
+        Element element = elements.get(0);
+        //3.2获取数据
+        String name = element.text();
+        System.out.println(name);
+
+* 对象的使用：
+    1. Jsoup：工具类，可以解析html或xml文档，返回Document
+        * parse：解析html或xml文档，返回Document
+            * parse​(File in, String charsetName)：解析xml或html文件的。
+            * parse​(String html)：解析xml或html字符串
+            * parse​(URL url, int timeoutMillis)：通过网络路径获取指定的html或xml的文档对象
+    2. Document：文档对象。代表内存中的dom树
+        * 获取Element对象
+            * getElementById​(String id)：根据id属性值获取唯一的element对象
+            * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合
+            * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合
+            * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合
+    3. Elements：元素Element对象的集合。可以当做 ArrayList&lt;Element&gt;来使用
+    4. Element：元素对象
+        1. 获取子元素对象
+            * getElementById​(String id)：根据id属性值获取唯一的element对象
+            * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合
+            * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合
+            * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合
+
+        2. 获取属性值
+            * String attr(String key)：根据属性名称获取属性值
+        3. 获取文本内容
+            * String text():获取文本内容
+            * String html():获取标签体的所有内容(包括字标签的字符串内容)
+    5. Node：节点对象
+        * 是Document和Element的父类</code></pre><p>​<br>        * 快捷查询方式：<br>            1. selector:选择器<br>                * 使用的方法：Elements    select​(String cssQuery)<br>                    * 语法：参考Selector类中定义的语法<br>            2. XPath：XPath即为XML路径语言，它是一种用来确定XML（标准通用标记语言的子集）文档中某部分位置的语言<br>                * 使用Jsoup的Xpath需要额外导入jar包。<br>                * 查询w3cshool参考手册，使用xpath的语法完成查询<br>                * 代码：<br>                    //1.获取student.xml的path<br>                    String path = JsoupDemo6.class.getClassLoader().getResource(“student.xml”).getPath();<br>                    //2.获取Document对象<br>                    Document document = Jsoup.parse(new File(path), “utf-8”);</p>
+<pre><code>//3.根据document对象，创建JXDocument对象
+JXDocument jxDocument = new JXDocument(document);
+
+//4.结合xpath语法查询
+//4.1查询所有student标签
+List&lt;JXNode&gt; jxNodes = jxDocument.selN(&quot;//student&quot;);
+for (JXNode jxNode : jxNodes) {
+    System.out.println(jxNode);
+}
+
+System.out.println(&quot;--------------------&quot;);
+
+//4.2查询所有student标签下的name标签
+List&lt;JXNode&gt; jxNodes2 = jxDocument.selN(&quot;//student/name&quot;);
+for (JXNode jxNode : jxNodes2) {
+    System.out.println(jxNode);
+}
+
+System.out.println(&quot;--------------------&quot;);
+
+//4.3查询student标签下带有id属性的name标签
+List&lt;JXNode&gt; jxNodes3 = jxDocument.selN(&quot;//student/name[@id]&quot;);
+for (JXNode jxNode : jxNodes3) {
+    System.out.println(jxNode);
+}
+System.out.println(&quot;--------------------&quot;);
+//4.4查询student标签下带有id属性的name标签 并且id属性值为itcast
+
+List&lt;JXNode&gt; jxNodes4 = jxDocument.selN(&quot;//student/name[@id=&apos;itcast&apos;]&quot;);
+for (JXNode jxNode : jxNodes4) {
+    System.out.println(jxNode);
+}</code></pre>]]></content>
+      <categories>
+        <category>JavaWeb</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>XML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript进阶笔记</title>
+    <url>/2020/02/13/JavaScript%E8%BF%9B%E9%98%B6%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>JavaScript进阶笔记<br> <a id="more"></a></p>
+<h1 id="笔记内容："><a href="#笔记内容：" class="headerlink" title="笔记内容："></a>笔记内容：</h1><pre><code>1. JavaScript：
+    1. ECMAScript：
+    2. BOM：
+    3. DOM：
+        1. 事件</code></pre><h2 id="DOM简单学习：为了满足案例要求"><a href="#DOM简单学习：为了满足案例要求" class="headerlink" title="DOM简单学习：为了满足案例要求"></a>DOM简单学习：为了满足案例要求</h2><pre><code>* 功能：控制html文档的内容
+* 获取页面标签(元素)对象：Element
+    * document.getElementById(&quot;id值&quot;):通过元素的id获取元素对象
+
+* 操作Element对象：
+    1. 修改属性值：
+        1. 明确获取的对象是哪一个？
+        2. 查看API文档，找其中有哪些属性可以设置
+    2. 修改标签体内容：
+        * 属性：innerHTML
+        1. 获取元素对象
+        2. 使用innerHTML属性修改标签体内容</code></pre><h2 id="事件简单学习"><a href="#事件简单学习" class="headerlink" title="事件简单学习"></a>事件简单学习</h2><pre><code>* 功能： 某些组件被执行了某些操作后，触发某些代码的执行。
+    * 造句：  xxx被xxx,我就xxx
+        * 我方水晶被摧毁后，我就责备对友。
+        * 敌方水晶被摧毁后，我就夸奖自己。
+
+* 如何绑定事件
+    1. 直接在html标签上，指定事件的属性(操作)，属性值就是js代码
+        1. 事件：onclick--- 单击事件
+
+    2. 通过js获取元素对象，指定事件属性，设置一个函数
+
+    * 代码：
+        &lt;body&gt;
+            &lt;img id=&quot;light&quot; src=&quot;img/off.gif&quot;  onclick=&quot;fun();&quot;&gt;
+            &lt;img id=&quot;light2&quot; src=&quot;img/off.gif&quot;&gt;
+
+            &lt;script&gt;
+                function fun(){
+                    alert(&apos;我被点了&apos;);
+                    alert(&apos;我又被点了&apos;);
+                }
+
+                function fun2(){
+                    alert(&apos;咋老点我？&apos;);
+                }
+
+                //1.获取light2对象
+                var light2 = document.getElementById(&quot;light2&quot;);
+                //2.绑定事件
+                light2.onclick = fun2;</code></pre><p>​<br>​                </script><br>​            </body><br>​<br>    * 案例1：电灯开关<br>        <!DOCTYPE html><br>        <html lang="en"><br>        <head><br>            <meta charset="UTF-8"><br>            <title>电灯开关</title>
+  <meta name="generator" content="hexo-theme-yilia-plus"></p>
+<pre><code>&lt;/head&gt;
+&lt;body&gt;
+
+&lt;img id=&quot;light&quot; src=&quot;img/off.gif&quot;&gt;
+
+&lt;script&gt;
+    /*
+        分析：
+            1.获取图片对象
+            2.绑定单击事件
+            3.每次点击切换图片
+                * 规则：
+                    * 如果灯是开的 on,切换图片为 off
+                    * 如果灯是关的 off,切换图片为 on
+                * 使用标记flag来完成
+
+     */
+
+    //1.获取图片对象
+    var light = document.getElementById(&quot;light&quot;);
+
+    var flag = false;//代表灯是灭的。 off图片
+
+    //2.绑定单击事件
+    light.onclick = function(){
+        if(flag){//判断如果灯是开的，则灭掉
+            light.src = &quot;img/off.gif&quot;;
+            flag = false;
+
+        }else{
+            //如果灯是灭的，则打开
+
+            light.src = &quot;img/on.gif&quot;;
+            flag = true;
+        }</code></pre><p>​<br>​            }<br>​<br>        </script><br>        </body><br>        </html></p>
+<h1 id="BOM"><a href="#BOM" class="headerlink" title="BOM:"></a>BOM:</h1><pre><code>1. 概念：Browser Object Model 浏览器对象模型
+    * 将浏览器的各个组成部分封装成对象。
+
+2. 组成：
+    * Window：窗口对象
+    * Navigator：浏览器对象
+    * Screen：显示器屏幕对象
+    * History：历史记录对象
+    * Location：地址栏对象
+
+3. Window：窗口对象
+    1. 创建
+    2. 方法
+         1. 与弹出框有关的方法：
+            alert()    显示带有一段消息和一个确认按钮的警告框。
+            confirm()    显示带有一段消息以及确认按钮和取消按钮的对话框。
+                * 如果用户点击确定按钮，则方法返回true
+                * 如果用户点击取消按钮，则方法返回false
+            prompt()    显示可提示用户输入的对话框。
+                * 返回值：获取用户输入的值
+         2. 与打开关闭有关的方法：
+            close()    关闭浏览器窗口。
+                * 谁调用我 ，我关谁
+            open()    打开一个新的浏览器窗口
+                * 返回新的Window对象
+         3. 与定时器有关的方式
+            setTimeout()    在指定的毫秒数后调用函数或计算表达式。
+                * 参数：
+                    1. js代码或者方法对象
+                    2. 毫秒值
+                * 返回值：唯一标识，用于取消定时器
+            clearTimeout()    取消由 setTimeout() 方法设置的 timeout。
+
+            setInterval()    按照指定的周期（以毫秒计）来调用函数或计算表达式。
+            clearInterval()    取消由 setInterval() 设置的 timeout。
+
+    3. 属性：
+        1. 获取其他BOM对象：
+            history
+            location
+            Navigator
+            Screen:
+        2. 获取DOM对象
+            document
+    4. 特点
+        * Window对象不需要创建可以直接使用 window使用。 window.方法名();
+        * window引用可以省略。  方法名();
+
+
+4. Location：地址栏对象
+    1. 创建(获取)：
+        1. window.location
+        2. location
+
+    2. 方法：
+        * reload()    重新加载当前文档。刷新
+    3. 属性
+        * href    设置或返回完整的 URL。
+
+
+5. History：历史记录对象
+    1. 创建(获取)：
+        1. window.history
+        2. history
+
+    2. 方法：
+        * back()    加载 history 列表中的前一个 URL。
+        * forward()    加载 history 列表中的下一个 URL。
+        * go(参数)    加载 history 列表中的某个具体页面。
+            * 参数：
+                * 正数：前进几个历史记录
+                * 负数：后退几个历史记录
+    3. 属性：
+        * length    返回当前窗口历史列表中的 URL 数量。</code></pre><h2 id="DOM："><a href="#DOM：" class="headerlink" title="DOM："></a>DOM：</h2><pre><code>* 概念： Document Object Model 文档对象模型
+    * 将标记语言文档的各个组成部分，封装为对象。可以使用这些对象，对标记语言文档进行CRUD的动态操作
+
+* W3C DOM 标准被分为 3 个不同的部分：
+
+    * 核心 DOM - 针对任何结构化文档的标准模型
+        * Document：文档对象
+        * Element：元素对象
+        * Attribute：属性对象
+        * Text：文本对象
+        * Comment:注释对象
+
+        * Node：节点对象，其他5个的父对象
+    * XML DOM - 针对 XML 文档的标准模型
+    * HTML DOM - 针对 HTML 文档的标准模型
+
+
+
+
+
+* 核心DOM模型：
+    * Document：文档对象
+        1. 创建(获取)：在html dom模型中可以使用window对象来获取
+            1. window.document
+            2. document
+        2. 方法：
+            1. 获取Element对象：
+                1. getElementById()    ： 根据id属性值获取元素对象。id属性值一般唯一
+                2. getElementsByTagName()：根据元素名称获取元素对象们。返回值是一个数组
+                3. getElementsByClassName():根据Class属性值获取元素对象们。返回值是一个数组
+                4. getElementsByName(): 根据name属性值获取元素对象们。返回值是一个数组
+            2. 创建其他DOM对象：
+                createAttribute(name)
+                createComment()
+                createElement()
+                createTextNode()
+        3. 属性
+    * Element：元素对象
+        1. 获取/创建：通过document来获取和创建
+        2. 方法：
+            1. removeAttribute()：删除属性
+            2. setAttribute()：设置属性
+    * Node：节点对象，其他5个的父对象
+        * 特点：所有dom对象都可以被认为是一个节点
+        * 方法：
+            * CRUD dom树：
+                * appendChild()：向节点的子节点列表的结尾添加新的子节点。
+                * removeChild()    ：删除（并返回）当前节点的指定子节点。
+                * replaceChild()：用新节点替换一个子节点。
+        * 属性：
+            * parentNode 返回节点的父节点。
+
+
+* HTML DOM
+    1. 标签体的设置和获取：innerHTML
+    2. 使用html元素对象的属性
+    3. 控制元素样式
+        1. 使用元素的style属性来设置
+            如：
+                 //修改样式方式1
+                div1.style.border = &quot;1px solid red&quot;;
+                div1.style.width = &quot;200px&quot;;
+                //font-size--&gt; fontSize
+                div1.style.fontSize = &quot;20px&quot;;
+        2. 提前定义好类选择器的样式，通过元素的className属性来设置其class属性值。</code></pre><h2 id="事件监听机制："><a href="#事件监听机制：" class="headerlink" title="事件监听机制："></a>事件监听机制：</h2><pre><code>* 概念：某些组件被执行了某些操作后，触发某些代码的执行。    
+    * 事件：某些操作。如： 单击，双击，键盘按下了，鼠标移动了
+    * 事件源：组件。如： 按钮 文本输入框...
+    * 监听器：代码。
+    * 注册监听：将事件，事件源，监听器结合在一起。 当事件源上发生了某个事件，则触发执行某个监听器代码。
+
+
+* 常见的事件：
+    1. 点击事件：
+        1. onclick：单击事件
+        2. ondblclick：双击事件
+    2. 焦点事件
+        1. onblur：失去焦点
+        2. onfocus:元素获得焦点。
+
+    3. 加载事件：
+        1. onload：一张页面或一幅图像完成加载。
+
+    4. 鼠标事件：
+        1. onmousedown    鼠标按钮被按下。
+        2. onmouseup    鼠标按键被松开。
+        3. onmousemove    鼠标被移动。
+        4. onmouseover    鼠标移到某元素之上。
+        5. onmouseout    鼠标从某元素移开。</code></pre><p>​<br>​        5. 键盘事件：<br>​            1. onkeydown    某个键盘按键被按下。<br>​            2. onkeyup        某个键盘按键被松开。<br>​            3. onkeypress    某个键盘按键被按下并松开。<br>​<br>        6. 选择和改变<br>            1. onchange    域的内容被改变。<br>            2. onselect    文本被选中。</p>
+<pre><code>7. 表单事件：
+    1. onsubmit    确认按钮被点击。
+    2. onreset    重置按钮被点击。</code></pre>]]></content>
+      <categories>
+        <category>JavaWeb</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript基础笔记</title>
-    <url>/2020/03/11/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p>JavaScript基础入门笔记<br> <a id="more"></a></p>
+    <url>/2020/02/12/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>JavaScript基础笔记</p>
+ <a id="more"></a>
+
 <h2 id="JavaScript："><a href="#JavaScript：" class="headerlink" title="JavaScript："></a>JavaScript：</h2><pre><code>* 概念：    一门客户端脚本语言
     * 运行在客户端浏览器中的。每一个浏览器都有JavaScript的解析引擎
     * 脚本语言：不需要编译，直接就可以被浏览器解析执行了
@@ -1122,1091 +1758,527 @@ ___粗斜体文本___</code></pre><p><em>斜体文本</em><br><em>斜体文本</
       </tags>
   </entry>
   <entry>
-    <title>Tomcat&amp;Servlet笔记</title>
-    <url>/2020/03/11/Tomcat/</url>
-    <content><![CDATA[<p>Tomcat &amp; Servlet快速入门笔记<br> <a id="more"></a></p>
-<h1 id="笔记内容"><a href="#笔记内容" class="headerlink" title="笔记内容"></a>笔记内容</h1><ol>
-<li>web相关概念回顾</li>
-<li>web服务器软件：Tomcat</li>
-<li>Servlet入门学习</li>
-</ol>
-<h2 id="web相关概念回顾"><a href="#web相关概念回顾" class="headerlink" title="web相关概念回顾"></a>web相关概念回顾</h2><ol>
-<li><p>软件架构</p>
-<ol>
-<li>C/S：客户端/服务器端</li>
-<li>B/S：浏览器/服务器端</li>
-</ol>
-</li>
-<li><p>资源分类</p>
-<ol>
-<li>静态资源：所有用户访问后，得到的结果都是一样的，称为静态资源.静态资源可以直接被浏览器解析<ul>
-<li>如： html,css,JavaScript</li>
-</ul>
-</li>
-<li>动态资源:每个用户访问相同资源后，得到的结果可能不一样。称为动态资源。动态资源被访问后，需要先转换为静态资源，在返回给浏览器<ul>
-<li>如：servlet/jsp,php,asp….</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><p>网络通信三要素</p>
-<ol>
-<li>IP：电子设备(计算机)在网络中的唯一标识。</li>
-<li>端口：应用程序在计算机中的唯一标识。 0~65536</li>
-<li>传输协议：规定了数据传输的规则<ol>
-<li>基础协议：<ol>
-<li>tcp:安全协议，三次握手。 速度稍慢</li>
-<li>udp：不安全协议。 速度快</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="web服务器软件："><a href="#web服务器软件：" class="headerlink" title="web服务器软件："></a>web服务器软件：</h2><ul>
-<li><p>服务器：安装了服务器软件的计算机</p>
-</li>
-<li><p>服务器软件：接收用户的请求，处理请求，做出响应</p>
-</li>
-<li><p>web服务器软件：接收用户的请求，处理请求，做出响应。</p>
-<ul>
-<li>在web服务器软件中，可以部署web项目，让用户通过浏览器来访问这些项目</li>
-<li>web容器</li>
-</ul>
-</li>
-<li><p>常见的java相关的web服务器软件：</p>
-<ul>
-<li>webLogic：oracle公司，大型的JavaEE服务器，支持所有的JavaEE规范，收费的。</li>
-<li>webSphere：IBM公司，大型的JavaEE服务器，支持所有的JavaEE规范，收费的。</li>
-<li>JBOSS：JBOSS公司的，大型的JavaEE服务器，支持所有的JavaEE规范，收费的。</li>
-<li>Tomcat：Apache基金组织，中小型的JavaEE服务器，仅仅支持少量的JavaEE规范servlet/jsp。开源的，免费的。</li>
-</ul>
-</li>
-<li><p>JavaEE：Java语言在企业级开发中使用的技术规范的总和，一共规定了13项大的规范</p>
-</li>
-<li><p>Tomcat：web服务器软件</p>
-<ol>
-<li><p>下载：<a href="http://tomcat.apache.org/" target="_blank" rel="noopener">http://tomcat.apache.org/</a></p>
-</li>
-<li><p>安装：解压压缩包即可。</p>
-<ul>
-<li>注意：安装目录建议不要有中文和空格</li>
-</ul>
-</li>
-<li><p>卸载：删除目录就行了</p>
-</li>
-<li><p>启动：</p>
-<ul>
-<li><p>bin/startup.bat ,双击运行该文件即可</p>
-</li>
-<li><p>访问：浏览器输入：<a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> 回车访问自己</p>
-<pre><code>http://别人的ip:8080 访问别人</code></pre></li>
-<li><p>可能遇到的问题：</p>
-<ol>
-<li><p>黑窗口一闪而过：</p>
-<ul>
-<li>原因： 没有正确配置JAVA_HOME环境变量</li>
-<li>解决方案：正确配置JAVA_HOME环境变量</li>
-</ul>
-</li>
-<li><p>启动报错：</p>
-<ol>
-<li>暴力：找到占用的端口号，并且找到对应的进程，杀死该进程<ul>
-<li>netstat -ano</li>
-</ul>
-</li>
-<li>温柔：修改自身的端口号<ul>
-<li>conf/server.xml</li>
-<li><Connector port="8888" protocol="HTTP/1.1"
- connectionTimeout="20000"
- redirectPort="8445" /></li>
-<li>一般会将tomcat的默认端口号修改为80。80端口号是http协议的默认端口号。<ul>
-<li>好处：在访问时，就不用输入端口号</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><p>关闭：</p>
-<ol>
-<li>正常关闭：<ul>
-<li>bin/shutdown.bat</li>
-<li>ctrl+c</li>
-</ul>
-</li>
-<li>强制关闭：<ul>
-<li>点击启动窗口的×</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><p>配置:</p>
-<ul>
-<li><p>部署项目的方式：</p>
-<ol>
-<li><p>直接将项目放到webapps目录下即可。</p>
-<ul>
-<li>/hello：项目的访问路径–&gt;虚拟目录</li>
-<li>简化部署：将项目打成一个war包，再将war包放置到webapps目录下。<ul>
-<li>war包会自动解压缩</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>配置conf/server.xml文件<br> 在<Host>标签体中配置</p>
- <Context docBase="D:\hello" path="/hehe" />
- * docBase:项目存放的路径
- * path：虚拟目录
-</li>
-<li><p>在conf\Catalina\localhost创建任意名称的xml文件。在文件中编写</p>
- <Context docBase="D:\hello" />
- * 虚拟目录：xml文件的名称
-</li>
-</ol>
-</li>
-<li><p>静态项目和动态项目：</p>
-<ul>
-<li>目录结构<ul>
-<li>java动态项目的目录结构：<br>  – 项目的根目录<pre><code>-- WEB-INF目录：
-    -- web.xml：web项目的核心配置文件
-    -- classes目录：放置字节码文件的目录
-    -- lib目录：放置依赖的jar包</code></pre></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-<p>​        * 将Tomcat集成到IDEA中，并且创建JavaEE的项目，部署项目。</p>
-<h2 id="Servlet：-server-applet"><a href="#Servlet：-server-applet" class="headerlink" title="Servlet：  server applet"></a>Servlet：  server applet</h2><ul>
-<li><p>概念：运行在服务器端的小程序</p>
-<ul>
-<li>Servlet就是一个接口，定义了Java类被浏览器访问到(tomcat识别)的规则。</li>
-<li>将来我们自定义一个类，实现Servlet接口，复写方法。</li>
-</ul>
-</li>
-<li><p>快速入门：</p>
-<ol>
-<li><p>创建JavaEE项目</p>
-</li>
-<li><p>定义一个类，实现Servlet接口</p>
-<ul>
-<li>public class ServletDemo1 implements Servlet</li>
-</ul>
-</li>
-<li><p>实现接口中的抽象方法</p>
-</li>
-<li><p>配置Servlet<br>  在web.xml中配置：</p>
- <!--配置Servlet -->
- <servlet>
-     <servlet-name>demo1</servlet-name>
-     <servlet-class>cn.itcast.web.servlet.ServletDemo1</servlet-class>
- </servlet>
+    <title>CSS基础笔记</title>
+    <url>/2020/02/07/CSS%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>CSS基础入门笔记<br> <a id="more"></a></p>
+<h2 id="HTML标签：表单标签"><a href="#HTML标签：表单标签" class="headerlink" title="HTML标签：表单标签"></a>HTML标签：表单标签</h2><pre><code>* 表单：
+    * 概念：用于采集用户输入的数据的。用于和服务器进行交互。
+    * form：用于定义表单的。可以定义一个范围，范围代表采集用户数据的范围
+        * 属性：
+            * action：指定提交数据的URL
+            * method:指定提交方式
+                * 分类：一共7种，2种比较常用
+                   * get：
+                        1. 请求参数会在地址栏中显示。会封装到请求行中(HTTP协议后讲解)。
+                        2. 请求参数大小是有限制的。
+                        3. 不太安全。
+                   * post：
+                        2. 请求参数不会再地址栏中显示。会封装在请求体中(HTTP协议后讲解)
+                        2. 请求参数的大小没有限制。
+                        3. 较为安全。
 
- <servlet-mapping>
-     <servlet-name>demo1</servlet-name>
-     <url-pattern>/demo1</url-pattern>
-</servlet-mapping>
-</li>
-</ol>
-</li>
-<li><p>执行原理：</p>
-<ol>
-<li>当服务器接受到客户端浏览器的请求后，会解析请求URL路径，获取访问的Servlet的资源路径</li>
-<li>查找web.xml文件，是否有对应的<url-pattern>标签体内容。</li>
-<li>如果有，则在找到对应的<servlet-class>全类名</li>
-<li>tomcat会将字节码文件加载进内存，并且创建其对象</li>
-<li>调用其方法</li>
-</ol>
-</li>
-<li><p>Servlet中的生命周期方法：</p>
-<ol>
-<li><p>被创建：执行init方法，只执行一次</p>
-<ul>
-<li><p>Servlet什么时候被创建？</p>
-<ul>
-<li>默认情况下，第一次被访问时，Servlet被创建</li>
-<li>可以配置执行Servlet的创建时机。<ul>
-<li>在<servlet>标签下配置<ol>
-<li>第一次被访问时，创建<ul>
-<li><load-on-startup>的值为负数</li>
-</ul>
-</li>
-<li>在服务器启动时，创建<ul>
-<li><load-on-startup>的值为0或正整数</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Servlet的init方法，只执行一次，说明一个Servlet在内存中只存在一个对象，Servlet是单例的</p>
-<ul>
-<li>多个用户同时访问时，可能存在线程安全问题。</li>
-<li>解决：尽量不要在Servlet中定义成员变量。即使定义了成员变量，也不要对修改值</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>提供服务：执行service方法，执行多次</p>
-<ul>
-<li>每次访问Servlet时，Service方法都会被调用一次。</li>
-</ul>
-</li>
-<li><p>被销毁：执行destroy方法，只执行一次</p>
-<ul>
-<li>Servlet被销毁时执行。服务器关闭时，Servlet被销毁</li>
-<li>只有服务器正常关闭时，才会执行destroy方法。</li>
-<li>destroy方法在Servlet被销毁之前执行，一般用于释放资源</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><p>Servlet3.0：</p>
-<ul>
-<li><p>好处：</p>
-<ul>
-<li>支持注解配置。可以不需要web.xml了。</li>
-</ul>
-</li>
-<li><p>步骤：</p>
-<ol>
-<li>创建JavaEE项目，选择Servlet的版本3.0以上，可以不创建web.xml</li>
-<li>定义一个类，实现Servlet接口</li>
-<li>复写方法</li>
-<li>在类上使用@WebServlet注解，进行配置<ul>
-<li>@WebServlet(“资源路径”)</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> WebServlet &#123;</span><br><span class="line">    <span class="function">String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;<span class="comment">//相当于&lt;Servlet-name&gt;</span></span><br><span class="line"></span><br><span class="line">    String[] value() <span class="keyword">default</span> &#123;&#125;;<span class="comment">//代表urlPatterns()属性配置</span></span><br><span class="line"></span><br><span class="line">    String[] urlPatterns() <span class="keyword">default</span> &#123;&#125;;<span class="comment">//相当于&lt;url-pattern&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">loadOnStartup</span><span class="params">()</span> <span class="keyword">default</span> -1</span>;<span class="comment">//相当于&lt;load-on-startup&gt;</span></span><br><span class="line"></span><br><span class="line">    WebInitParam[] initParams() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">asyncSupported</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">smallIcon</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">largeIcon</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">description</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">displayName</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        * 表单项中的数据要想被提交：必须指定其name属性</code></pre><p>​<br>        * 表单项标签：<br>            * input：可以通过type属性值，改变元素展示的样式<br>                * type属性：<br>                    * text：文本输入框，默认值<br>                        * placeholder：指定输入框的提示信息，当输入框的内容发生变化，会自动清空提示信息<br>                    * password：密码输入框<br>                    * radio:单选框<br>                        * 注意：<br>                            1. 要想让多个单选框实现单选的效果，则多个单选框的name属性值必须一样。<br>                            2. 一般会给每一个单选框提供value属性，指定其被选中后提交的值<br>                            3. checked属性，可以指定默认值<br>                    * checkbox：复选框<br>                        * 注意：<br>                            1. 一般会给每一个单选框提供value属性，指定其被选中后提交的值<br>                            2. checked属性，可以指定默认值</p>
+<pre><code>        * file：文件选择框
+        * hidden：隐藏域，用于提交一些信息。
+        * 按钮：
+            * submit：提交按钮。可以提交表单
+            * button：普通按钮
+            * image：图片提交按钮
+                * src属性指定图片的路径    
+
+   * label：指定输入项的文字描述信息
+       * 注意：
+           * label的for属性一般会和 input 的 id属性值 对应。如果对应了，则点击label区域，会让input输入框获取焦点。
+* select: 下拉列表
+    * 子元素：option，指定列表项
+
+* textarea：文本域
+    * cols：指定列数，每一行有多少个字符
+    * rows：默认多少行。</code></pre><h2 id="CSS：页面美化和布局控制"><a href="#CSS：页面美化和布局控制" class="headerlink" title="CSS：页面美化和布局控制"></a>CSS：页面美化和布局控制</h2><pre><code>1. 概念： Cascading Style Sheets 层叠样式表
+    * 层叠：多个样式可以作用在同一个html的元素上，同时生效
+
+2. 好处：
+    1. 功能强大
+    2. 将内容展示和样式控制分离
+        * 降低耦合度。解耦
+        * 让分工协作更容易
+        * 提高开发效率
 
 
+3. CSS的使用：CSS与html结合方式
+    1. 内联样式
+         * 在标签内使用style属性指定css代码
+         * 如：&lt;div style=&quot;color:red;&quot;&gt;hello css&lt;/div&gt;
+    2. 内部样式
+        * 在head标签内，定义style标签，style标签的标签体内容就是css代码
+        * 如：
+            &lt;style&gt;
+                div{
+                    color:blue;
+                }
 
-<h2 id="IDEA与tomcat的相关配置"><a href="#IDEA与tomcat的相关配置" class="headerlink" title="IDEA与tomcat的相关配置"></a>IDEA与tomcat的相关配置</h2><ol>
-<li><p>IDEA会为每一个tomcat部署的项目单独建立一份配置文件</p>
-<ul>
-<li>查看控制台的log：Using CATALINA_BASE:   “C:\Users\fqy.IntelliJIdea2018.1\system\tomcat_itcast”</li>
-</ul>
-</li>
-<li><p>工作空间项目    和     tomcat部署的web项目</p>
-<ul>
-<li>tomcat真正访问的是“tomcat部署的web项目”，”tomcat部署的web项目”对应着”工作空间项目” 的web目录下的所有资源</li>
-<li>WEB-INF目录下的资源不能被浏览器直接访问。</li>
-</ul>
-</li>
-<li><p>断点调试：使用”小虫子”启动 dubug 启动</p>
-</li>
-</ol>
+            &lt;/style&gt;
+            &lt;div&gt;hello css&lt;/div&gt;
+    3. 外部样式
+        1. 定义css资源文件。
+        2. 在head标签内，定义link标签，引入外部的资源文件
+        * 如：
+            * a.css文件：
+                div{
+                    color:green;
+                }
+            &lt;link rel=&quot;stylesheet&quot; href=&quot;css/a.css&quot;&gt;
+            &lt;div&gt;hello css&lt;/div&gt;
+            &lt;div&gt;hello css&lt;/div&gt;
+
+    * 注意：
+        * 1,2,3种方式 css作用范围越来越大
+        * 1方式不常用，后期常用2,3
+        * 3种格式可以写为：
+            &lt;style&gt;
+                @import &quot;css/a.css&quot;;
+            &lt;/style&gt;
+
+4. css语法：
+    * 格式：
+        选择器 {
+            属性名1:属性值1;
+            属性名2:属性值2;
+            ...
+        }
+    * 选择器:筛选具有相似特征的元素
+    * 注意：
+        * 每一对属性需要使用；隔开，最后一对属性可以不加；
+
+
+5. 选择器：筛选具有相似特征的元素
+    * 分类：
+        1. 基础选择器
+            1. id选择器：选择具体的id属性值的元素.建议在一个html页面中id值唯一
+                * 语法：#id属性值{}
+            2. 元素选择器：选择具有相同标签名称的元素
+                * 语法： 标签名称{}
+                * 注意：id选择器优先级高于元素选择器
+            3. 类选择器：选择具有相同的class属性值的元素。
+                * 语法：.class属性值{}
+                * 注意：类选择器选择器优先级高于元素选择器
+        2. 扩展选择器：
+            1. 选择所有元素：
+                * 语法： *{}
+            2. 并集选择器：
+                * 选择器1,选择器2{}
+
+            3. 子选择器：筛选选择器1元素下的选择器2元素
+                * 语法：  选择器1 选择器2{}
+            4. 父选择器：筛选选择器2的父元素选择器1
+                * 语法：  选择器1 &gt; 选择器2{}
+
+            5. 属性选择器：选择元素名称，属性名=属性值的元素
+                * 语法：  元素名称[属性名=&quot;属性值&quot;]{}
+
+            6. 伪类选择器：选择一些元素具有的状态
+                * 语法： 元素:状态{}
+                * 如： &lt;a&gt;
+                    * 状态：
+                        * link：初始化的状态
+                        * visited：被访问过的状态
+                        * active：正在访问状态
+                        * hover：鼠标悬浮状态
+6. 属性
+    1. 字体、文本
+        * font-size：字体大小
+        * color：文本颜色
+        * text-align：对其方式
+        * line-height：行高 
+    2. 背景
+        * background：
+    3. 边框
+        * border：设置边框，符合属性
+    4. 尺寸
+        * width：宽度
+        * height：高度
+    5. 盒子模型：控制布局
+        * margin：外边距
+        * padding：内边距
+            * 默认情况下内边距会影响整个盒子的大小
+            * box-sizing: border-box;  设置盒子的属性，让width和height就是最终盒子的大小
+
+        * float：浮动
+            * left
+            * right</code></pre><h2 id="案例："><a href="#案例：" class="headerlink" title="案例："></a>案例：</h2><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;注册页面&lt;/title&gt;
+&lt;style&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+    }
+    body{
+        background: url(&quot;img/register_bg.png&quot;) no-repeat center;
+        padding-top: 25px;
+    }
+
+    .rg_layout{
+        width: 900px;
+        height: 500px;
+        border: 8px solid #EEEEEE;
+        background-color: white;
+        /*让div水平居中*/
+        margin: auto;
+    }
+
+    .rg_left{
+        /*border: 1px solid red;*/
+        float: left;
+        margin: 15px;
+    }
+    .rg_left &gt; p:first-child{
+        color:#FFD026;
+        font-size: 20px;
+    }
+
+    .rg_left &gt; p:last-child{
+        color:#A6A6A6;
+        font-size: 20px;
+
+    }</code></pre><p>​<br>            .rg_center{<br>                float: left;<br>               /* border: 1px solid red;*/</p>
+<pre><code>    }
+
+    .rg_right{
+        /*border: 1px solid red;*/
+        float: right;
+        margin: 15px;
+    }
+
+    .rg_right &gt; p:first-child{
+        font-size: 15px;
+
+    }
+    .rg_right p a {
+        color:pink;
+    }
+
+    .td_left{
+        width: 100px;
+        text-align: right;
+        height: 45px;
+    }
+    .td_right{
+        padding-left: 50px ;
+    }
+
+    #username,#password,#email,#name,#tel,#birthday,#checkcode{
+        width: 251px;
+        height: 32px;
+        border: 1px solid #A6A6A6 ;
+        /*设置边框圆角*/
+        border-radius: 5px;
+        padding-left: 10px;
+    }
+    #checkcode{
+        width: 110px;
+    }
+
+    #img_check{
+        height: 32px;
+        vertical-align: middle;
+    }
+
+    #btn_sub{
+        width: 150px;
+        height: 40px;
+        background-color: #FFD026;
+        border: 1px solid #FFD026 ;
+    }
+
+&lt;/style&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class=&quot;rg_layout&quot;&gt;
+    &lt;div class=&quot;rg_left&quot;&gt;
+        &lt;p&gt;新用户注册&lt;/p&gt;
+        &lt;p&gt;USER REGISTER&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div class=&quot;rg_center&quot;&gt;
+        &lt;div class=&quot;rg_form&quot;&gt;
+            &lt;!--定义表单 form--&gt;
+            &lt;form action=&quot;#&quot; method=&quot;post&quot;&gt;
+                &lt;table&gt;
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;username&quot;&gt;用户名&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;username&quot; id=&quot;username&quot; placeholder=&quot;请输入用户名&quot;&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;password&quot;&gt;密码&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;password&quot; name=&quot;password&quot; id=&quot;password&quot; placeholder=&quot;请输入密码&quot;&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;email&quot; name=&quot;email&quot; id=&quot;email&quot; placeholder=&quot;请输入邮箱&quot;&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;name&quot;&gt;姓名&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot; placeholder=&quot;请输入姓名&quot;&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;tel&quot;&gt;手机号&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;tel&quot; id=&quot;tel&quot; placeholder=&quot;请输入手机号&quot;&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label&gt;性别&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;
+                            &lt;input type=&quot;radio&quot; name=&quot;gender&quot; value=&quot;male&quot;&gt; 男
+                            &lt;input type=&quot;radio&quot; name=&quot;gender&quot; value=&quot;female&quot;&gt; 女
+                        &lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;birthday&quot;&gt;出生日期&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;date&quot; name=&quot;birthday&quot; id=&quot;birthday&quot; placeholder=&quot;请输入出生日期&quot;&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;
+                        &lt;td class=&quot;td_left&quot;&gt;&lt;label for=&quot;checkcode&quot; &gt;验证码&lt;/label&gt;&lt;/td&gt;
+                        &lt;td class=&quot;td_right&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;checkcode&quot; id=&quot;checkcode&quot; placeholder=&quot;请输入验证码&quot;&gt;
+                            &lt;img id=&quot;img_check&quot; src=&quot;img/verify_code.jpg&quot;&gt;
+                        &lt;/td&gt;
+                    &lt;/tr&gt;</code></pre><p>​<br>                            <tr><br>                                <td colspan="2" align="center"><input type="submit" id="btn_sub" value="注册"></td><br>                            </tr><br>                        </table></p>
+<pre><code>&lt;/form&gt;</code></pre><p>​<br>                </div></p>
+<pre><code>&lt;/div&gt;
+
+&lt;div class=&quot;rg_right&quot;&gt;
+    &lt;p&gt;已有账号?&lt;a href=&quot;#&quot;&gt;立即登录&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;</code></pre><p>​<br>        </div></p>
+<p>​<br>        </body><br>        </html></p>
 ]]></content>
-      <categories>
-        <category>JavaWeb</category>
-      </categories>
-      <tags>
-        <tag>后端</tag>
-        <tag>Tomcat</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>XML快速入门笔记</title>
-    <url>/2020/03/11/XML%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p>XML快速入门笔记<br> <a id="more"></a></p>
-<h1 id="笔记内容"><a href="#笔记内容" class="headerlink" title="笔记内容"></a>笔记内容</h1><pre><code>1. XML
-    1. 概念
-    2. 语法
-    3. 解析</code></pre><h2 id="XML："><a href="#XML：" class="headerlink" title="XML："></a>XML：</h2><pre><code>1. 概念：Extensible Markup Language 可扩展标记语言
-    * 可扩展：标签都是自定义的。 &lt;user&gt;  &lt;student&gt;
-
-    * 功能
-        * 存储数据
-            1. 配置文件
-            2. 在网络中传输
-    * xml与html的区别
-        1. xml标签都是自定义的，html标签是预定义。
-        2. xml的语法严格，html语法松散
-        3. xml是存储数据的，html是展示数据
-
-2. 语法：
-    * 基本语法：
-        1. xml文档的后缀名 .xml
-        2. xml第一行必须定义为文档声明
-        3. xml文档中有且仅有一个根标签
-        4. 属性值必须使用引号(单双都可)引起来
-        5. 标签必须正确关闭
-        6. xml标签名称区分大小写
-    * 快速入门：
-        &lt;?xml version=&apos;1.0&apos; ?&gt;
-        &lt;users&gt;
-            &lt;user id=&apos;1&apos;&gt;
-                &lt;name&gt;zhangsan&lt;/name&gt;
-                &lt;age&gt;23&lt;/age&gt;
-                &lt;gender&gt;male&lt;/gender&gt;
-                &lt;br/&gt;
-            &lt;/user&gt;
-
-            &lt;user id=&apos;2&apos;&gt;
-                &lt;name&gt;lisi&lt;/name&gt;
-                &lt;age&gt;24&lt;/age&gt;
-                &lt;gender&gt;female&lt;/gender&gt;
-            &lt;/user&gt;
-        &lt;/users&gt;
-
-    * 组成部分：
-        1. 文档声明
-            1. 格式：&lt;?xml 属性列表 ?&gt;
-            2. 属性列表：
-                * version：版本号，必须的属性
-                * encoding：编码方式。告知解析引擎当前文档使用的字符集，默认值：ISO-8859-1
-                * standalone：是否独立
-                    * 取值：
-                        * yes：不依赖其他文件
-                        * no：依赖其他文件
-        2. 指令(了解)：结合css的
-            * &lt;?xml-stylesheet type=&quot;text/css&quot; href=&quot;a.css&quot; ?&gt;
-        3. 标签：标签名称自定义的
-            * 规则：
-                * 名称可以包含字母、数字以及其他的字符 
-                * 名称不能以数字或者标点符号开始 
-                * 名称不能以字母 xml（或者 XML、Xml 等等）开始 
-                * 名称不能包含空格 
-
-        4. 属性：
-            id属性值唯一
-        5. 文本：
-            * CDATA区：在该区域中的数据会被原样展示
-                * 格式：  &lt;![CDATA[ 数据 ]]&gt;
-
-
-    * 约束：规定xml文档的书写规则
-        * 作为框架的使用者(程序员)：
-            1. 能够在xml中引入约束文档
-            2. 能够简单的读懂约束文档
-
-        * 分类：
-            1. DTD:一种简单的约束技术
-            2. Schema:一种复杂的约束技术
-
-
-        * DTD：
-            * 引入dtd文档到xml文档中
-                * 内部dtd：将约束规则定义在xml文档中
-                * 外部dtd：将约束的规则定义在外部的dtd文件中
-                    * 本地：&lt;!DOCTYPE 根标签名 SYSTEM &quot;dtd文件的位置&quot;&gt;
-                    * 网络：&lt;!DOCTYPE 根标签名 PUBLIC &quot;dtd文件名字&quot; &quot;dtd文件的位置URL&quot;&gt;
-
-
-        * Schema:
-            * 引入：
-                1.填写xml文档的根元素
-                2.引入xsi前缀.  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-                3.引入xsd文件命名空间.  xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;
-                4.为每一个xsd约束声明一个前缀,作为标识  xmlns=&quot;http://www.itcast.cn/xml&quot; 
-
-            &lt;students   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-                xmlns=&quot;http://www.itcast.cn/xml&quot;
-                xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;&gt;
-
-
-
-3. 解析：操作xml文档，将文档中的数据读取到内存中
-    * 操作xml文档
-        1. 解析(读取)：将文档中的数据读取到内存中
-        2. 写入：将内存中的数据保存到xml文档中。持久化的存储
-
-    * 解析xml的方式：
-        1. DOM：将标记语言文档一次性加载进内存，在内存中形成一颗dom树
-            * 优点：操作方便，可以对文档进行CRUD的所有操作
-            * 缺点：占内存
-        2. SAX：逐行读取，基于事件驱动的。
-            * 优点：不占内存。
-            * 缺点：只能读取，不能增删改
-
-
-
-    * xml常见的解析器：
-        1. JAXP：sun公司提供的解析器，支持dom和sax两种思想
-        2. DOM4J：一款非常优秀的解析器
-        3. Jsoup：jsoup 是一款Java 的HTML解析器，可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。
-        4. PULL：Android操作系统内置的解析器，sax方式的。
-
-
-    * Jsoup：jsoup 是一款Java 的HTML解析器，可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。
-        * 快速入门：
-            * 步骤：
-                1. 导入jar包
-                2. 获取Document对象
-                3. 获取对应的标签Element对象
-                4. 获取数据
-
-        * 代码：
-             //2.1获取student.xml的path
-            String path = JsoupDemo1.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath();
-            //2.2解析xml文档，加载文档进内存，获取dom树---&gt;Document
-            Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;);
-            //3.获取元素对象 Element
-            Elements elements = document.getElementsByTag(&quot;name&quot;);
-
-            System.out.println(elements.size());
-            //3.1获取第一个name的Element对象
-            Element element = elements.get(0);
-            //3.2获取数据
-            String name = element.text();
-            System.out.println(name);
-
-    * 对象的使用：
-        1. Jsoup：工具类，可以解析html或xml文档，返回Document
-            * parse：解析html或xml文档，返回Document
-                * parse​(File in, String charsetName)：解析xml或html文件的。
-                * parse​(String html)：解析xml或html字符串
-                * parse​(URL url, int timeoutMillis)：通过网络路径获取指定的html或xml的文档对象
-        2. Document：文档对象。代表内存中的dom树
-            * 获取Element对象
-                * getElementById​(String id)：根据id属性值获取唯一的element对象
-                * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合
-                * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合
-                * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合
-        3. Elements：元素Element对象的集合。可以当做 ArrayList&lt;Element&gt;来使用
-        4. Element：元素对象
-            1. 获取子元素对象
-                * getElementById​(String id)：根据id属性值获取唯一的element对象
-                * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合
-                * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合
-                * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合
-
-            2. 获取属性值
-                * String attr(String key)：根据属性名称获取属性值
-            3. 获取文本内容
-                * String text():获取文本内容
-                * String html():获取标签体的所有内容(包括字标签的字符串内容)
-        5. Node：节点对象
-            * 是Document和Element的父类
-
-
-    * 快捷查询方式：
-        1. selector:选择器
-            * 使用的方法：Elements    select​(String cssQuery)
-                * 语法：参考Selector类中定义的语法
-        2. XPath：XPath即为XML路径语言，它是一种用来确定XML（标准通用标记语言的子集）文档中某部分位置的语言
-            * 使用Jsoup的Xpath需要额外导入jar包。
-            * 查询w3cshool参考手册，使用xpath的语法完成查询
-            * 代码：
-                //1.获取student.xml的path
-                String path = JsoupDemo6.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath();
-                //2.获取Document对象
-                Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;);
-
-                //3.根据document对象，创建JXDocument对象
-                JXDocument jxDocument = new JXDocument(document);
-
-                //4.结合xpath语法查询
-                //4.1查询所有student标签
-                List&lt;JXNode&gt; jxNodes = jxDocument.selN(&quot;//student&quot;);
-                for (JXNode jxNode : jxNodes) {
-                    System.out.println(jxNode);
-                }
-
-                System.out.println(&quot;--------------------&quot;);
-
-                //4.2查询所有student标签下的name标签
-                List&lt;JXNode&gt; jxNodes2 = jxDocument.selN(&quot;//student/name&quot;);
-                for (JXNode jxNode : jxNodes2) {
-                    System.out.println(jxNode);
-                }
-
-                System.out.println(&quot;--------------------&quot;);
-
-                //4.3查询student标签下带有id属性的name标签
-                List&lt;JXNode&gt; jxNodes3 = jxDocument.selN(&quot;//student/name[@id]&quot;);
-                for (JXNode jxNode : jxNodes3) {
-                    System.out.println(jxNode);
-                }
-                System.out.println(&quot;--------------------&quot;);
-                //4.4查询student标签下带有id属性的name标签 并且id属性值为itcast
-
-                List&lt;JXNode&gt; jxNodes4 = jxDocument.selN(&quot;//student/name[@id=&apos;itcast&apos;]&quot;);
-                for (JXNode jxNode : jxNodes4) {
-                    System.out.println(jxNode);
-                }</code></pre>]]></content>
       <categories>
         <category>JavaWeb</category>
       </categories>
       <tags>
         <tag>前端</tag>
-        <tag>XML</tag>
+        <tag>CSS</tag>
       </tags>
   </entry>
   <entry>
-    <title>leetcode 数学类</title>
-    <url>/2020/03/11/leetcode%E6%95%B0%E5%AD%A6%E7%B1%BB/</url>
-    <content><![CDATA[<p>leetcode里在数学标签下的价值比较大的题目<br> <a id="more"></a></p>
-<h1 id="1-素数"><a href="#1-素数" class="headerlink" title="1.素数"></a>1.素数</h1><h4 id="统计所有小于非负整数-n-的质数的数量"><a href="#统计所有小于非负整数-n-的质数的数量" class="headerlink" title="统计所有小于非负整数 n 的质数的数量"></a>统计所有小于非负整数 n 的质数的数量</h4><p>使用Sieve of Eratosthenes算法，埃拉托斯特尼筛法在每次找到一个素数时，将能被素数整除的数排除掉</p>
-<pre><code>class Solution {
-    public int countPrimes(int n) {
-        boolean[] isPrim = new boolean[n];
-    // 将数组都初始化为 true
-        Arrays.fill(isPrim, true);
-        for (int i = 2; i &lt; n; i++) 
-            if (isPrim[i]) 
-                // i 的倍数不可能是素数了
-                for (int j = 2 * i; j &lt; n; j += i) 
-                        isPrim[j] = false;
-        int count = 0;
-        for (int i = 2; i &lt; n; i++)
-            if (isPrim[i]) count++;
-        return count;
-    }
-}</code></pre><h1 id="2-七进制数"><a href="#2-七进制数" class="headerlink" title="2.七进制数"></a>2.七进制数</h1><h4 id="给定一个整数，将其转化为7进制，并以字符串形式输出。"><a href="#给定一个整数，将其转化为7进制，并以字符串形式输出。" class="headerlink" title="给定一个整数，将其转化为7进制，并以字符串形式输出。"></a>给定一个整数，将其转化为7进制，并以字符串形式输出。</h4><p>StringBuffer();就是构造一个StringBuffer对象。<br>sb.reverse()就是用来把stringbuffer里面的字符串翻转。<br>譬如你stringbuffer里面存放了abc,sb.reverse()====&gt;bca，sb.toString()就是返回该stringbuffer的字符串形式。</p>
-<pre><code>class Solution {
-    public String convertToBase7(int num) {
-        if(num==0) return &quot;0&quot;;
-        StringBuilder sb = new StringBuilder();
-        boolean isNegtive=false;
-        if(num&lt;0){
-            num=-num;
-            isNegtive=true;
-        }
-        if(num&gt;0){
-            while(num!=0){
-                sb.append(num%7);
-                num=num/7;
-            }
-        }
-        String result=sb.reverse().toString();
-        return isNegtive==true?&quot;-&quot;+result:result;      
-    }
-}</code></pre><h1 id="3-特殊26进制"><a href="#3-特殊26进制" class="headerlink" title="3.特殊26进制"></a>3.特殊26进制</h1><h4 id="给定一个正整数，返回它在-Excel-表中相对应的列名称。"><a href="#给定一个正整数，返回它在-Excel-表中相对应的列名称。" class="headerlink" title="给定一个正整数，返回它在 Excel 表中相对应的列名称。"></a>给定一个正整数，返回它在 Excel 表中相对应的列名称。</h4><pre><code>例如，
-
-1 -&gt; A
-2 -&gt; B
-3 -&gt; C
-...
-26 -&gt; Z
-27 -&gt; AA
-28 -&gt; AB 
-
-class Solution {
-    public String convertToTitle(int n) {
-        StringBuilder stringBuilder = new StringBuilder();
-        while (n != 0) {
-            n --;
-            stringBuilder.append((char)(n % 26 + &apos;A&apos;));
-            n /= 26;
-        }
-        return stringBuilder.reverse().toString();
-    }
-}</code></pre><h1 id="4-整数-n，返回-n-结果尾数中零的数量"><a href="#4-整数-n，返回-n-结果尾数中零的数量" class="headerlink" title="4.整数 n，返回 n! 结果尾数中零的数量"></a>4.整数 n，返回 n! 结果尾数中零的数量</h1><pre><code>class Solution {
-    public int trailingZeroes(int n) {
-        int count = 0;
-        while (n &gt; 0) {
-            count += n / 5;
-            n = n / 5;
-        }
-        return count;
-    }
-}</code></pre><h1 id="5-二进制求和"><a href="#5-二进制求和" class="headerlink" title="5.二进制求和"></a>5.二进制求和</h1><h4 id="给定两个二进制字符串，返回他们的和（用二进制表示）。"><a href="#给定两个二进制字符串，返回他们的和（用二进制表示）。" class="headerlink" title="给定两个二进制字符串，返回他们的和（用二进制表示）。"></a>给定两个二进制字符串，返回他们的和（用二进制表示）。</h4><h4 id="输入为非空字符串且只包含数字-1-和-0。"><a href="#输入为非空字符串且只包含数字-1-和-0。" class="headerlink" title="输入为非空字符串且只包含数字 1 和 0。"></a>输入为非空字符串且只包含数字 1 和 0。</h4><pre><code>class Solution {
-    public String addBinary(String a, String b) {
-        StringBuilder ans = new StringBuilder();
-        int ca = 0;
-        for(int i = a.length() - 1, j = b.length() - 1;i &gt;= 0 || j &gt;= 0; i--, j--) {
-            int sum = ca;
-            sum += i &gt;= 0 ? a.charAt(i) - &apos;0&apos; : 0;
-            sum += j &gt;= 0 ? b.charAt(j) - &apos;0&apos; : 0;
-            ans.append(sum % 2);
-            ca = sum / 2;
-        }
-        ans.append(ca == 1 ? ca : &quot;&quot;);
-        return ans.reverse().toString();
-    }
-}</code></pre><h1 id="6-字符串加法（模板）"><a href="#6-字符串加法（模板）" class="headerlink" title="6.字符串加法（模板）"></a>6.字符串加法（模板）</h1><h4 id="给定两个字符串形式的非负整数-num1-和num2-，计算它们的和。"><a href="#给定两个字符串形式的非负整数-num1-和num2-，计算它们的和。" class="headerlink" title="给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和。"></a>给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和。</h4><p>比较经典的字符串加法的题目</p>
-<pre><code>class Solution {
-    public String addStrings(String num1, String num2) {
-        int carry=0;
-        int x,y;
-        StringBuilder sb=new StringBuilder();
-        for(int i=num1.length()-1,j=num2.length()-1; i&gt;=0 || j&gt;=0; i--,j--){
-            int sum=carry;
-            x=i&lt;0?0:num1.charAt(i)-&apos;0&apos;;
-            y=j&lt;0?0:num2.charAt(j)-&apos;0&apos;;
-            sum+=x+y;
-            carry=sum/10;
-            sb.append(sum%10);
-        }
-        sb.append(carry==1?carry:&quot;&quot;);
-        return sb.reverse().toString();   
-    }
-}</code></pre><h1 id="7-最小移动次数使元素相等"><a href="#7-最小移动次数使元素相等" class="headerlink" title="7.最小移动次数使元素相等"></a>7.最小移动次数使元素相等</h1><h3 id="7-1-给定一个长度为-n-的非空整数数组，找到让数组所有元素相等的最小移动次数。每次移动可以使-n-1-个元素增加-1。"><a href="#7-1-给定一个长度为-n-的非空整数数组，找到让数组所有元素相等的最小移动次数。每次移动可以使-n-1-个元素增加-1。" class="headerlink" title="7.1 给定一个长度为 n 的非空整数数组，找到让数组所有元素相等的最小移动次数。每次移动可以使 n - 1 个元素增加 1。"></a>7.1 给定一个长度为 n 的非空整数数组，找到让数组所有元素相等的最小移动次数。每次移动可以使 n - 1 个元素增加 1。</h3><pre><code>class Solution {
-    public int minMoves(int[] nums) {
-        Arrays.sort(nums);
-        int count=0;
-        for(int i=0;i&lt;nums.length;i++){
-            count+=nums[i]-nums[0];
-        }
-    return count;
-    }
-}</code></pre><p>~ n-1个元素加一相当于一个元素减一 ~</p>
-<h3 id="7-2-给定一个非空整数数组，找到使所有数组元素相等所需的最小移动数，其中每次移动可将选定的一个元素加1或减1。-您可以假设数组的长度最多为10000。"><a href="#7-2-给定一个非空整数数组，找到使所有数组元素相等所需的最小移动数，其中每次移动可将选定的一个元素加1或减1。-您可以假设数组的长度最多为10000。" class="headerlink" title="7.2 给定一个非空整数数组，找到使所有数组元素相等所需的最小移动数，其中每次移动可将选定的一个元素加1或减1。 您可以假设数组的长度最多为10000。"></a>7.2 给定一个非空整数数组，找到使所有数组元素相等所需的最小移动数，其中每次移动可将选定的一个元素加1或减1。 您可以假设数组的长度最多为10000。</h3><p>例如:</p>
-<pre><code>class Solution {
-    public int minMoves2(int[] nums) {
-        Arrays.sort(nums);
-        int sum = 0;
-        for (int num : nums) {
-            sum += Math.abs(nums[nums.length / 2] - num);
-        }
-        return sum;
-    }
-}</code></pre><h1 id="8-多数元素"><a href="#8-多数元素" class="headerlink" title="8.多数元素"></a>8.多数元素</h1><h4 id="给定一个大小为-n-的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于-⌊-n-2-⌋-的元素。你可以假设数组是非空的，并且给定的数组总是存在多数元素。"><a href="#给定一个大小为-n-的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于-⌊-n-2-⌋-的元素。你可以假设数组是非空的，并且给定的数组总是存在多数元素。" class="headerlink" title="给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。你可以假设数组是非空的，并且给定的数组总是存在多数元素。"></a>给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。你可以假设数组是非空的，并且给定的数组总是存在多数元素。</h4><pre><code>class Solution {
-    public int majorityElement(int[] nums) {
-        Arrays.sort(nums);
-        int n=nums.length;
-        return nums[n/2];
-    }
-}</code></pre><h1 id="9-完全平方数"><a href="#9-完全平方数" class="headerlink" title="9.完全平方数"></a>9.完全平方数</h1><p>完全平方数可以通过累加从1往后的奇数找到，<br>1 = 1;<br>4 = 1 + 3;<br>9 = 1 + 3 + 5;<br>16 = 1 + 3 + 5 + 7;<br>…<br>计算过程只需要加减法，效率极高。  </p>
-<pre><code>class Solution {
-    public boolean isPerfectSquare(int num) {
-        int subNum = 1;
-        while (num &gt; 0) {
-            num -= subNum;
-            subNum += 2;
-        }
-        return num == 0;
-    }
-}</code></pre>]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaWeb资料下载</title>
-    <url>/2020/03/11/%E8%B5%84%E6%96%99%E4%B8%8B%E8%BD%BD/</url>
-    <content><![CDATA[<p>JavaWeb资料下载<br> <a id="more"></a><br><strong>点击查看 <a href="https://pan.baidu.com/s/1gl8PcFW_BEXepVbqZ854VA" target="_blank" rel="noopener">JavaWeb资料</a></strong><br><strong>提取码: 2be4</strong><br><strong>视频可转到<a href="https://www.bilibili.com/" target="_blank" rel="noopener">bilibili</a>搜索</strong></p>
-]]></content>
-      <categories>
-        <category>JavaWeb</category>
-      </categories>
-      <tags>
-        <tag>资料下载</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2020/03/10/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.<br>  <a id="more"></a></p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>leetcode二叉树 递归&lt;一&gt;</title>
-    <url>/2020/03/09/%E4%BA%8C%E5%8F%89%E6%A0%91/</url>
-    <content><![CDATA[<p>leetcode二叉树 递归思想<br> <a id="more"></a></p>
-<p><a href="https://leetcode.com/problems/path-sum/description/" target="_blank" rel="noopener">Leetcode</a>网站 </p>
-<ol start="104">
-<li><p>树的高度 Maximum Depth of Binary Tree (Easy)</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public int maxDepth(TreeNode root) &#123;  </span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;  </span><br><span class="line">    return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;  </span><br><span class="line">&#125;&#96;Balanced Binary Tree (Easy)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>平衡树左右子树高度差都小于等于 1,是否为平衡树 Balanced Binary Tree (Easy)</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">private boolean result &#x3D; true;</span><br><span class="line"></span><br><span class="line">public boolean isBalanced(TreeNode root) &#123;</span><br><span class="line">    maxDepth(root);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public int maxDepth(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int l &#x3D; maxDepth(root.left);</span><br><span class="line">    int r &#x3D; maxDepth(root.right);</span><br><span class="line">    if (Math.abs(l - r) &gt; 1) result &#x3D; false;</span><br><span class="line">    return 1 + Math.max(l, r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>两节点的最长路径 Diameter of Binary Tree (Easy)</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Input:</span><br><span class="line"></span><br><span class="line">         1</span><br><span class="line">        &#x2F; \</span><br><span class="line">       2  3</span><br><span class="line">      &#x2F; \</span><br><span class="line">     4   5</span><br><span class="line"></span><br><span class="line">Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].</span><br><span class="line">private int max &#x3D; 0;</span><br><span class="line"></span><br><span class="line">public int diameterOfBinaryTree(TreeNode root) &#123;</span><br><span class="line">    depth(root);</span><br><span class="line">    return max;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int depth(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int leftDepth &#x3D; depth(root.left);</span><br><span class="line">    int rightDepth &#x3D; depth(root.right);</span><br><span class="line">    max &#x3D; Math.max(max, leftDepth + rightDepth);</span><br><span class="line">    return Math.max(leftDepth, rightDepth) + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="226">
-<li>翻转一棵树 Invert Binary Tree (Easy)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public TreeNode invertTree(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return null;</span><br><span class="line">    TreeNode left &#x3D; root.left;  &#x2F;&#x2F; 后面的操作会改变 left 指针，因此先保存下来</span><br><span class="line">    root.left &#x3D; invertTree(root.right);</span><br><span class="line">    root.right &#x3D; invertTree(left);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="617">
-<li>归并树 Merge Two Binary Trees (Easy)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Input:</span><br><span class="line">       Tree 1                     Tree 2</span><br><span class="line">          1                         2</span><br><span class="line">         &#x2F; \                       &#x2F; \</span><br><span class="line">        3   2                     1   3</span><br><span class="line">       &#x2F;                           \   \</span><br><span class="line">      5                             4   7</span><br><span class="line"></span><br><span class="line">Output:</span><br><span class="line">         3</span><br><span class="line">        &#x2F; \</span><br><span class="line">       4   5</span><br><span class="line">      &#x2F; \   \</span><br><span class="line">     5   4   7</span><br><span class="line">public TreeNode mergeTrees(TreeNode t1, TreeNode t2) &#123;</span><br><span class="line">    if (t1 &#x3D;&#x3D; null &amp;&amp; t2 &#x3D;&#x3D; null) return null;</span><br><span class="line">    if (t1 &#x3D;&#x3D; null) return t2;</span><br><span class="line">    if (t2 &#x3D;&#x3D; null) return t1;</span><br><span class="line">    TreeNode root &#x3D; new TreeNode(t1.val + t2.val);</span><br><span class="line">    root.left &#x3D; mergeTrees(t1.left, t2.left);</span><br><span class="line">    root.right &#x3D; mergeTrees(t1.right, t2.right);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="112">
-<li>路径和是否等于一个数Path Sum (Easy)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Given the below binary tree and sum &#x3D; 22,</span><br><span class="line"></span><br><span class="line">              5</span><br><span class="line">             &#x2F; \</span><br><span class="line">            4   8</span><br><span class="line">           &#x2F;   &#x2F; \</span><br><span class="line">          11  13  4</span><br><span class="line">         &#x2F;  \      \</span><br><span class="line">        7    2      1</span><br><span class="line"></span><br><span class="line">return true, as there exist a root-to-leaf path 5-&gt;4-&gt;11-&gt;2 which sum is 22.</span><br></pre></td></tr></table></figure>
-
-<p>​        路径和定义为从 root 到 leaf 的所有节点的和。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public boolean hasPathSum(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return false;</span><br><span class="line">    if (root.left &#x3D;&#x3D; null &amp;&amp; root.right &#x3D;&#x3D; null &amp;&amp; root.val &#x3D;&#x3D; sum) return true;</span><br><span class="line">    return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="437">
-<li>统计路径和等于一个数的路径数量 Path Sum III (Easy)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root &#x3D; [10,5,-3,3,2,null,11,3,-2,null,1], sum &#x3D; 8</span><br><span class="line"></span><br><span class="line">      10</span><br><span class="line">     &#x2F;  \</span><br><span class="line">    5   -3</span><br><span class="line">   &#x2F; \    \</span><br><span class="line">  3   2   11</span><br><span class="line"> &#x2F; \   \</span><br><span class="line">3  -2   1</span><br><span class="line"></span><br><span class="line">Return 3. The paths that sum to 8 are:</span><br><span class="line"></span><br><span class="line">1.  5 -&gt; 3</span><br><span class="line">2.  5 -&gt; 2 -&gt; 1</span><br><span class="line">3. -3 -&gt; 11</span><br></pre></td></tr></table></figure>
-
-<p>​        路径不一定以 root 开头，也不一定以 leaf 结尾，但是必须连续。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public int pathSum(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int ret &#x3D; pathSumStartWithRoot(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int pathSumStartWithRoot(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int ret &#x3D; 0;</span><br><span class="line">    if (root.val &#x3D;&#x3D; sum) ret++;</span><br><span class="line">    ret +&#x3D; pathSumStartWithRoot(root.left, sum - root.val) + pathSumStartWithRoot(root.right, sum - root.val);</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>leetcode二叉树 递归&lt;二&gt;</title>
-    <url>/2020/03/09/%E4%BA%8C%E5%8F%89%E6%A0%912/</url>
-    <content><![CDATA[<p>leetcode二叉树 递归思想<br> <a id="more"></a></p>
-<p><a href="https://leetcode.com/problems/path-sum/description/" target="_blank" rel="noopener">Leetcode</a>网站 </p>
-<ol start="104">
-<li><p>树的高度 Maximum Depth of Binary Tree (Easy)</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public int maxDepth(TreeNode root) &#123;  </span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;  </span><br><span class="line">    return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;  </span><br><span class="line">&#125;&#96;Balanced Binary Tree (Easy)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>平衡树左右子树高度差都小于等于 1,是否为平衡树 Balanced Binary Tree (Easy)</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">private boolean result &#x3D; true;</span><br><span class="line"></span><br><span class="line">public boolean isBalanced(TreeNode root) &#123;</span><br><span class="line">    maxDepth(root);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public int maxDepth(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int l &#x3D; maxDepth(root.left);</span><br><span class="line">    int r &#x3D; maxDepth(root.right);</span><br><span class="line">    if (Math.abs(l - r) &gt; 1) result &#x3D; false;</span><br><span class="line">    return 1 + Math.max(l, r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>两节点的最长路径 Diameter of Binary Tree (Easy)</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Input:</span><br><span class="line"></span><br><span class="line">         1</span><br><span class="line">        &#x2F; \</span><br><span class="line">       2  3</span><br><span class="line">      &#x2F; \</span><br><span class="line">     4   5</span><br><span class="line"></span><br><span class="line">Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].</span><br><span class="line">private int max &#x3D; 0;</span><br><span class="line"></span><br><span class="line">public int diameterOfBinaryTree(TreeNode root) &#123;</span><br><span class="line">    depth(root);</span><br><span class="line">    return max;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int depth(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int leftDepth &#x3D; depth(root.left);</span><br><span class="line">    int rightDepth &#x3D; depth(root.right);</span><br><span class="line">    max &#x3D; Math.max(max, leftDepth + rightDepth);</span><br><span class="line">    return Math.max(leftDepth, rightDepth) + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="226">
-<li>翻转一棵树 Invert Binary Tree (Easy)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public TreeNode invertTree(TreeNode root) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return null;</span><br><span class="line">    TreeNode left &#x3D; root.left;  &#x2F;&#x2F; 后面的操作会改变 left 指针，因此先保存下来</span><br><span class="line">    root.left &#x3D; invertTree(root.right);</span><br><span class="line">    root.right &#x3D; invertTree(left);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="617">
-<li>归并树 Merge Two Binary Trees (Easy)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Input:</span><br><span class="line">       Tree 1                     Tree 2</span><br><span class="line">          1                         2</span><br><span class="line">         &#x2F; \                       &#x2F; \</span><br><span class="line">        3   2                     1   3</span><br><span class="line">       &#x2F;                           \   \</span><br><span class="line">      5                             4   7</span><br><span class="line"></span><br><span class="line">Output:</span><br><span class="line">         3</span><br><span class="line">        &#x2F; \</span><br><span class="line">       4   5</span><br><span class="line">      &#x2F; \   \</span><br><span class="line">     5   4   7</span><br><span class="line">public TreeNode mergeTrees(TreeNode t1, TreeNode t2) &#123;</span><br><span class="line">    if (t1 &#x3D;&#x3D; null &amp;&amp; t2 &#x3D;&#x3D; null) return null;</span><br><span class="line">    if (t1 &#x3D;&#x3D; null) return t2;</span><br><span class="line">    if (t2 &#x3D;&#x3D; null) return t1;</span><br><span class="line">    TreeNode root &#x3D; new TreeNode(t1.val + t2.val);</span><br><span class="line">    root.left &#x3D; mergeTrees(t1.left, t2.left);</span><br><span class="line">    root.right &#x3D; mergeTrees(t1.right, t2.right);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="112">
-<li>路径和是否等于一个数Path Sum (Easy)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Given the below binary tree and sum &#x3D; 22,</span><br><span class="line"></span><br><span class="line">              5</span><br><span class="line">             &#x2F; \</span><br><span class="line">            4   8</span><br><span class="line">           &#x2F;   &#x2F; \</span><br><span class="line">          11  13  4</span><br><span class="line">         &#x2F;  \      \</span><br><span class="line">        7    2      1</span><br><span class="line"></span><br><span class="line">return true, as there exist a root-to-leaf path 5-&gt;4-&gt;11-&gt;2 which sum is 22.</span><br></pre></td></tr></table></figure>
-
-<p>​        路径和定义为从 root 到 leaf 的所有节点的和。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public boolean hasPathSum(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return false;</span><br><span class="line">    if (root.left &#x3D;&#x3D; null &amp;&amp; root.right &#x3D;&#x3D; null &amp;&amp; root.val &#x3D;&#x3D; sum) return true;</span><br><span class="line">    return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="437">
-<li>统计路径和等于一个数的路径数量 Path Sum III (Easy)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root &#x3D; [10,5,-3,3,2,null,11,3,-2,null,1], sum &#x3D; 8</span><br><span class="line"></span><br><span class="line">      10</span><br><span class="line">     &#x2F;  \</span><br><span class="line">    5   -3</span><br><span class="line">   &#x2F; \    \</span><br><span class="line">  3   2   11</span><br><span class="line"> &#x2F; \   \</span><br><span class="line">3  -2   1</span><br><span class="line"></span><br><span class="line">Return 3. The paths that sum to 8 are:</span><br><span class="line"></span><br><span class="line">1.  5 -&gt; 3</span><br><span class="line">2.  5 -&gt; 2 -&gt; 1</span><br><span class="line">3. -3 -&gt; 11</span><br></pre></td></tr></table></figure>
-
-<p>​        路径不一定以 root 开头，也不一定以 leaf 结尾，但是必须连续。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public int pathSum(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int ret &#x3D; pathSumStartWithRoot(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int pathSumStartWithRoot(TreeNode root, int sum) &#123;</span><br><span class="line">    if (root &#x3D;&#x3D; null) return 0;</span><br><span class="line">    int ret &#x3D; 0;</span><br><span class="line">    if (root.val &#x3D;&#x3D; sum) ret++;</span><br><span class="line">    ret +&#x3D; pathSumStartWithRoot(root.left, sum - root.val) + pathSumStartWithRoot(root.right, sum - root.val);</span><br><span class="line">    return ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript进阶笔记</title>
-    <url>/2020/02/18/JavaScript%E8%BF%9B%E9%98%B6%E7%AC%94%E8%AE%B0/</url>
+    <title>HTML快速入门笔记</title>
+    <url>/2020/02/03/HTML%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p>HTML快速入门笔记<br> <a id="more"></a></p>
-<h1 id="笔记内容："><a href="#笔记内容：" class="headerlink" title="笔记内容："></a>笔记内容：</h1><pre><code>1. JavaScript：
-    1. ECMAScript：
-    2. BOM：
-    3. DOM：
-        1. 事件</code></pre><h2 id="DOM简单学习：为了满足案例要求"><a href="#DOM简单学习：为了满足案例要求" class="headerlink" title="DOM简单学习：为了满足案例要求"></a>DOM简单学习：为了满足案例要求</h2><pre><code>* 功能：控制html文档的内容
-* 获取页面标签(元素)对象：Element
-    * document.getElementById(&quot;id值&quot;):通过元素的id获取元素对象
+<h2 id="web概念概述"><a href="#web概念概述" class="headerlink" title="web概念概述"></a>web概念概述</h2><pre><code>* JavaWeb：
+    * 使用Java语言开发基于互联网的项目
 
-* 操作Element对象：
-    1. 修改属性值：
-        1. 明确获取的对象是哪一个？
-        2. 查看API文档，找其中有哪些属性可以设置
-    2. 修改标签体内容：
-        * 属性：innerHTML
-        1. 获取元素对象
-        2. 使用innerHTML属性修改标签体内容</code></pre><h2 id="事件简单学习"><a href="#事件简单学习" class="headerlink" title="事件简单学习"></a>事件简单学习</h2><pre><code>* 功能： 某些组件被执行了某些操作后，触发某些代码的执行。
-    * 造句：  xxx被xxx,我就xxx
-        * 我方水晶被摧毁后，我就责备对友。
-        * 敌方水晶被摧毁后，我就夸奖自己。
+* 软件架构：
+    1. C/S: Client/Server 客户端/服务器端
+        * 在用户本地有一个客户端程序，在远程有一个服务器端程序
+        * 如：QQ，迅雷...
+        * 优点：
+            1. 用户体验好
+        * 缺点：
+            1. 开发、安装，部署，维护 麻烦
+    2. B/S: Browser/Server 浏览器/服务器端
+        * 只需要一个浏览器，用户通过不同的网址(URL)，客户访问不同的服务器端程序
+        * 优点：
+            1. 开发、安装，部署，维护 简单
+        * 缺点：
+            1. 如果应用过大，用户的体验可能会受到影响
+            2. 对硬件要求过高
 
-* 如何绑定事件
-    1. 直接在html标签上，指定事件的属性(操作)，属性值就是js代码
-        1. 事件：onclick--- 单击事件
+* B/S架构详解
+    * 资源分类：
+        1. 静态资源：
+            * 使用静态网页开发技术发布的资源。
+            * 特点：
+                * 所有用户访问，得到的结果是一样的。
+                * 如：文本，图片，音频、视频, HTML,CSS,JavaScript
+                * 如果用户请求的是静态资源，那么服务器会直接将静态资源发送给浏览器。浏览器中内置了静态资源的解析引擎，可以展示静态资源
+        2. 动态资源：
+            * 使用动态网页及时发布的资源。
+            * 特点：
+                * 所有用户访问，得到的结果可能不一样。
+                * 如：jsp/servlet,php,asp...
+                * 如果用户请求的是动态资源，那么服务器会执行动态资源，转换为静态资源，再发送给浏览器
 
-    2. 通过js获取元素对象，指定事件属性，设置一个函数
+
+
+    * 静态资源：
+        * HTML：用于搭建基础网页，展示页面的内容
+        * CSS：用于美化页面，布局页面
+        * JavaScript：控制页面的元素，让页面有一些动态的效果</code></pre><h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><pre><code>1. 概念：是最基础的网页开发语言
+    * Hyper Text Markup Language 超文本标记语言
+        * 超文本:
+            * 超文本是用超链接的方法，将各种不同空间的文字信息组织在一起的网状文本.
+        * 标记语言:
+            * 由标签构成的语言。&lt;标签名称&gt; 如 html，xml
+            * 标记语言不是编程语言
+
+2. 快速入门：
+    * 语法：
+        1. html文档后缀名 .html 或者 .htm
+        2. 标签分为
+            1. 围堵标签：有开始标签和结束标签。如 &lt;html&gt; &lt;/html&gt;
+            2. 自闭和标签：开始标签和结束标签在一起。如 &lt;br/&gt;
+
+        3. 标签可以嵌套：
+            需要正确嵌套，不能你中有我，我中有你
+            错误：&lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt;
+            正确：&lt;a&gt;&lt;b&gt;&lt;/b&gt;&lt;/a&gt;
+
+        4. 在开始标签中可以定义属性。属性是由键值对构成，值需要用引号(单双都可)引起来
+        5. html的标签不区分大小写，但是建议使用小写。
 
     * 代码：
-        &lt;body&gt;
-            &lt;img id=&quot;light&quot; src=&quot;img/off.gif&quot;  onclick=&quot;fun();&quot;&gt;
-            &lt;img id=&quot;light2&quot; src=&quot;img/off.gif&quot;&gt;
+        &lt;html&gt;
 
-            &lt;script&gt;
-                function fun(){
-                    alert(&apos;我被点了&apos;);
-                    alert(&apos;我又被点了&apos;);
-                }
+            &lt;head&gt;
+                &lt;title&gt;title&lt;/title&gt;
+            &lt;/head&gt;
 
-                function fun2(){
-                    alert(&apos;咋老点我？&apos;);
-                }
+            &lt;body&gt;
+                &lt;FONT color=&apos;red&apos;&gt;Hello World&lt;/font&gt;&lt;br/&gt;
 
-                //1.获取light2对象
-                var light2 = document.getElementById(&quot;light2&quot;);
-                //2.绑定事件
-                light2.onclick = fun2;
+                &lt;font color=&apos;green&apos;&gt;Hello World&lt;/font&gt;
 
+            &lt;/body&gt;
 
-            &lt;/script&gt;
-        &lt;/body&gt;
+        &lt;/html&gt;
 
-* 案例1：电灯开关
-    &lt;!DOCTYPE html&gt;
-    &lt;html lang=&quot;en&quot;&gt;
-    &lt;head&gt;
-        &lt;meta charset=&quot;UTF-8&quot;&gt;
-        &lt;title&gt;电灯开关&lt;/title&gt;
+3. 标签学习：
+    1. 文件标签：构成html最基本的标签
+        * html:html文档的根标签
+        * head：头标签。用于指定html文档的一些属性。引入外部的资源
+        * title：标题标签。
+        * body：体标签
+        * &lt;!DOCTYPE html&gt;：html5中定义该文档是html文档
+    2. 文本标签：和文本有关的标签
+        * 注释：&lt;!-- 注释内容 --&gt;
+        * &lt;h1&gt; to &lt;h6&gt;：标题标签
+            * h1~h6:字体大小逐渐递减
+        * &lt;p&gt;：段落标签
+        * &lt;br&gt;：换行标签
+        * &lt;hr&gt;：展示一条水平线
+            * 属性：
+                * color：颜色
+                * width：宽度
+                * size：高度
+                * align：对其方式
+                    * center：居中
+                    * left：左对齐
+                    * right：右对齐
+        * &lt;b&gt;：字体加粗
+        * &lt;i&gt;：字体斜体
+        * &lt;font&gt;:字体标签
+        * &lt;center&gt;:文本居中
+            * 属性：
+                * color：颜色
+                * size：大小
+                * face：字体
 
-    &lt;/head&gt;
-    &lt;body&gt;
+        * 属性定义：
+            * color：
+                1. 英文单词：red,green,blue
+                2. rgb(值1，值2，值3)：值的范围：0~255  如  rgb(0,0,255)
+                3. #值1值2值3：值的范围：00~FF之间。如： #FF00FF
+            * width：
+                1. 数值：width=&apos;20&apos; ,数值的单位，默认是 px(像素)
+                2. 数值%：占比相对于父元素的比例
 
-    &lt;img id=&quot;light&quot; src=&quot;img/off.gif&quot;&gt;
+    3. 图片标签：
+        * img：展示图片
+            * 属性：
+                * src：指定图片的位置
 
-    &lt;script&gt;
-        /*
-            分析：
-                1.获取图片对象
-                2.绑定单击事件
-                3.每次点击切换图片
-                    * 规则：
-                        * 如果灯是开的 on,切换图片为 off
-                        * 如果灯是关的 off,切换图片为 on
-                    * 使用标记flag来完成
+        * 代码：
+             &lt;!--展示一张图片 img--&gt;
 
-         */
+            &lt;img src=&quot;image/jingxuan_2.jpg&quot; align=&quot;right&quot; alt=&quot;古镇&quot; width=&quot;500&quot; height=&quot;500&quot;/&gt;
 
-        //1.获取图片对象
-        var light = document.getElementById(&quot;light&quot;);
+            &lt;!--
+                相对路径
+                    * 以.开头的路径
+                        * ./：代表当前目录  ./image/1.jpg
+                        * ../:代表上一级目录
+             --&gt;
 
-        var flag = false;//代表灯是灭的。 off图片
+            &lt;img src=&quot;./image/jiangwai_1.jpg&quot;&gt;
 
-        //2.绑定单击事件
-        light.onclick = function(){
-            if(flag){//判断如果灯是开的，则灭掉
-                light.src = &quot;img/off.gif&quot;;
-                flag = false;
+            &lt;img src=&quot;../image/jiangwai_1.jpg&quot;&gt;
+    4. 列表标签：
+        * 有序列表：
+            * ol:
+            * li:
+        * 无序列表：
+            * ul:
+            * li:
+    5. 链接标签：
+        * a:定义一个超链接
+            * 属性：
+                * href：指定访问资源的URL(统一资源定位符)
+                * target：指定打开资源的方式
+                    * _self:默认值，在当前页面打开
+                    * _blank：在空白页面打开
 
-            }else{
-                //如果灯是灭的，则打开
+        * 代码：
+             &lt;!--超链接  a--&gt;
 
-                light.src = &quot;img/on.gif&quot;;
-                flag = true;
-            }
+            &lt;a href=&quot;http://www.itcast.cn&quot;&gt;点我&lt;/a&gt;
+            &lt;br&gt;
 
+            &lt;a href=&quot;http://www.itcast.cn&quot; target=&quot;_self&quot;&gt;点我&lt;/a&gt;
+            &lt;br&gt;
+            &lt;a href=&quot;http://www.itcast.cn&quot; target=&quot;_blank&quot;&gt;点我&lt;/a&gt;
 
-        }
+            &lt;br&gt;
 
-    &lt;/script&gt;
-    &lt;/body&gt;
-    &lt;/html&gt;</code></pre><h1 id="BOM"><a href="#BOM" class="headerlink" title="BOM:"></a>BOM:</h1><pre><code>1. 概念：Browser Object Model 浏览器对象模型
-    * 将浏览器的各个组成部分封装成对象。
+            &lt;a href=&quot;./5_列表标签.html&quot;&gt;列表标签&lt;/a&gt;&lt;br&gt;
+            &lt;a href=&quot;mailto:itcast@itcast.cn&quot;&gt;联系我们&lt;/a&gt;
 
-2. 组成：
-    * Window：窗口对象
-    * Navigator：浏览器对象
-    * Screen：显示器屏幕对象
-    * History：历史记录对象
-    * Location：地址栏对象
+            &lt;br&gt;
+            &lt;a href=&quot;http://www.itcast.cn&quot;&gt;&lt;img src=&quot;image/jiangwai_1.jpg&quot;&gt;&lt;/a&gt;
+    6. div和span：
+        * div:每一个div占满一整行。块级标签
+        * span：文本信息在一行展示，行内标签 内联标签
 
-3. Window：窗口对象
-    1. 创建
-    2. 方法
-         1. 与弹出框有关的方法：
-            alert()    显示带有一段消息和一个确认按钮的警告框。
-            confirm()    显示带有一段消息以及确认按钮和取消按钮的对话框。
-                * 如果用户点击确定按钮，则方法返回true
-                * 如果用户点击取消按钮，则方法返回false
-            prompt()    显示可提示用户输入的对话框。
-                * 返回值：获取用户输入的值
-         2. 与打开关闭有关的方法：
-            close()    关闭浏览器窗口。
-                * 谁调用我 ，我关谁
-            open()    打开一个新的浏览器窗口
-                * 返回新的Window对象
-         3. 与定时器有关的方式
-            setTimeout()    在指定的毫秒数后调用函数或计算表达式。
-                * 参数：
-                    1. js代码或者方法对象
-                    2. 毫秒值
-                * 返回值：唯一标识，用于取消定时器
-            clearTimeout()    取消由 setTimeout() 方法设置的 timeout。
-
-            setInterval()    按照指定的周期（以毫秒计）来调用函数或计算表达式。
-            clearInterval()    取消由 setInterval() 设置的 timeout。
-
-    3. 属性：
-        1. 获取其他BOM对象：
-            history
-            location
-            Navigator
-            Screen:
-        2. 获取DOM对象
-            document
-    4. 特点
-        * Window对象不需要创建可以直接使用 window使用。 window.方法名();
-        * window引用可以省略。  方法名();
+    7. 语义化标签：html5中为了提高程序的可读性，提供了一些标签。
+        1. &lt;header&gt;：页眉
+        2. &lt;footer&gt;：页脚
 
 
-4. Location：地址栏对象
-    1. 创建(获取)：
-        1. window.location
-        2. location
-
-    2. 方法：
-        * reload()    重新加载当前文档。刷新
-    3. 属性
-        * href    设置或返回完整的 URL。
-
-
-5. History：历史记录对象
-    1. 创建(获取)：
-        1. window.history
-        2. history
-
-    2. 方法：
-        * back()    加载 history 列表中的前一个 URL。
-        * forward()    加载 history 列表中的下一个 URL。
-        * go(参数)    加载 history 列表中的某个具体页面。
-            * 参数：
-                * 正数：前进几个历史记录
-                * 负数：后退几个历史记录
-    3. 属性：
-        * length    返回当前窗口历史列表中的 URL 数量。</code></pre><h2 id="DOM："><a href="#DOM：" class="headerlink" title="DOM："></a>DOM：</h2><pre><code>* 概念： Document Object Model 文档对象模型
-    * 将标记语言文档的各个组成部分，封装为对象。可以使用这些对象，对标记语言文档进行CRUD的动态操作
-
-* W3C DOM 标准被分为 3 个不同的部分：
-
-    * 核心 DOM - 针对任何结构化文档的标准模型
-        * Document：文档对象
-        * Element：元素对象
-        * Attribute：属性对象
-        * Text：文本对象
-        * Comment:注释对象
-
-        * Node：节点对象，其他5个的父对象
-    * XML DOM - 针对 XML 文档的标准模型
-    * HTML DOM - 针对 HTML 文档的标准模型
-
-
-
-
-
-* 核心DOM模型：
-    * Document：文档对象
-        1. 创建(获取)：在html dom模型中可以使用window对象来获取
-            1. window.document
-            2. document
-        2. 方法：
-            1. 获取Element对象：
-                1. getElementById()    ： 根据id属性值获取元素对象。id属性值一般唯一
-                2. getElementsByTagName()：根据元素名称获取元素对象们。返回值是一个数组
-                3. getElementsByClassName():根据Class属性值获取元素对象们。返回值是一个数组
-                4. getElementsByName(): 根据name属性值获取元素对象们。返回值是一个数组
-            2. 创建其他DOM对象：
-                createAttribute(name)
-                createComment()
-                createElement()
-                createTextNode()
-        3. 属性
-    * Element：元素对象
-        1. 获取/创建：通过document来获取和创建
-        2. 方法：
-            1. removeAttribute()：删除属性
-            2. setAttribute()：设置属性
-    * Node：节点对象，其他5个的父对象
-        * 特点：所有dom对象都可以被认为是一个节点
-        * 方法：
-            * CRUD dom树：
-                * appendChild()：向节点的子节点列表的结尾添加新的子节点。
-                * removeChild()    ：删除（并返回）当前节点的指定子节点。
-                * replaceChild()：用新节点替换一个子节点。
-        * 属性：
-            * parentNode 返回节点的父节点。
-
-
-* HTML DOM
-    1. 标签体的设置和获取：innerHTML
-    2. 使用html元素对象的属性
-    3. 控制元素样式
-        1. 使用元素的style属性来设置
-            如：
-                 //修改样式方式1
-                div1.style.border = &quot;1px solid red&quot;;
-                div1.style.width = &quot;200px&quot;;
-                //font-size--&gt; fontSize
-                div1.style.fontSize = &quot;20px&quot;;
-        2. 提前定义好类选择器的样式，通过元素的className属性来设置其class属性值。</code></pre><h2 id="事件监听机制："><a href="#事件监听机制：" class="headerlink" title="事件监听机制："></a>事件监听机制：</h2><pre><code>* 概念：某些组件被执行了某些操作后，触发某些代码的执行。    
-    * 事件：某些操作。如： 单击，双击，键盘按下了，鼠标移动了
-    * 事件源：组件。如： 按钮 文本输入框...
-    * 监听器：代码。
-    * 注册监听：将事件，事件源，监听器结合在一起。 当事件源上发生了某个事件，则触发执行某个监听器代码。
-
-
-* 常见的事件：
-    1. 点击事件：
-        1. onclick：单击事件
-        2. ondblclick：双击事件
-    2. 焦点事件
-        1. onblur：失去焦点
-        2. onfocus:元素获得焦点。
-
-    3. 加载事件：
-        1. onload：一张页面或一幅图像完成加载。
-
-    4. 鼠标事件：
-        1. onmousedown    鼠标按钮被按下。
-        2. onmouseup    鼠标按键被松开。
-        3. onmousemove    鼠标被移动。
-        4. onmouseover    鼠标移到某元素之上。
-        5. onmouseout    鼠标从某元素移开。
-
-
-    5. 键盘事件：
-        1. onkeydown    某个键盘按键被按下。    
-        2. onkeyup        某个键盘按键被松开。
-        3. onkeypress    某个键盘按键被按下并松开。
-
-    6. 选择和改变
-        1. onchange    域的内容被改变。
-        2. onselect    文本被选中。
-
-    7. 表单事件：
-        1. onsubmit    确认按钮被点击。
-        2. onreset    重置按钮被点击。</code></pre>]]></content>
+    8. 表格标签：
+        * table：定义表格
+            * width：宽度
+            * border：边框
+            * cellpadding：定义内容和单元格的距离
+            * cellspacing：定义单元格之间的距离。如果指定为0，则单元格的线会合为一条、
+            * bgcolor：背景色
+            * align：对齐方式
+        * tr：定义行
+            * bgcolor：背景色
+            * align：对齐方式
+        * td：定义单元格
+            * colspan：合并列
+            * rowspan：合并行
+        * th：定义表头单元格
+        * &lt;caption&gt;：表格标题
+        * &lt;thead&gt;：表示表格的头部分
+        * &lt;tbody&gt;：表示表格的体部分
+        * &lt;tfoot&gt;：表示表格的脚部分</code></pre>]]></content>
       <categories>
         <category>JavaWeb</category>
       </categories>
       <tags>
         <tag>前端</tag>
-        <tag>JavaScript</tag>
+        <tag>HTML</tag>
       </tags>
   </entry>
 </search>

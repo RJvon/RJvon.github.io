@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    leetcode滑动窗口 |  Aslan&#39;s blog
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Aslan's blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-滑动窗口专题" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  leetcode滑动窗口
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/02/27/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E4%B8%93%E9%A2%98/" class="article-date">
+  <time datetime="2020-02-27T09:20:31.000Z" itemprop="datePublished">2020-02-27</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/leetcode/">leetcode</a>
+  </div>
+
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.3k字</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">6分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p>leetcode滑动窗口专题<br> <a id="more"></a></p>
+<h1 id="滑动窗口算法"><a href="#滑动窗口算法" class="headerlink" title="滑动窗口算法"></a>滑动窗口算法</h1><h2 id="1-滑动窗口算法简介"><a href="#1-滑动窗口算法简介" class="headerlink" title="1.滑动窗口算法简介"></a>1.滑动窗口算法简介</h2><p>滑动窗口是一种双指针解题方法,大多数应用于字符串的子串问题。很多情况下要借助于HashSet和HashMap。</p>
+<pre><code>//HashMap、HashSet解题时使用的常用方法
+HashMap&lt;Character,Integer&gt; map=new HashMap&lt;&gt;();
+//将字符串p的字符存到map中
+for (Character c : p.toCharArray()) 
+    map.put(c, map.getOrDefault(c, 0) + 1);
+    //map.getOrDefault(key,defaultValue)方法，如果map中有key,则使用key对应的值，没有的话就使用defaultValue
+map.get(key);//获取key对应的值
+
+HashSet&lt;Character&gt; set=new HashSet&lt;&gt;();
+    set.add();
+    set.remove();</code></pre><h2 id="2-滑动窗口解题思路"><a href="#2-滑动窗口解题思路" class="headerlink" title="2.滑动窗口解题思路"></a>2.滑动窗口解题思路</h2><p>1、我们在字符串 S 中使⽤双指针中的左右指针技巧，初始化 left = right =0，把索引闭区间 [left, right] 称为⼀个「窗⼝」。<br>2、我们先不断地增加 right 指针扩⼤窗⼝ [left, right]，直到窗⼝中的字符串符合要求（包含了 T 中的所有字符）。<br>3、此时，我们停⽌增加 right，转⽽不断增加 left 指针缩⼩窗⼝ [left,right]，直到窗⼝中的字符串不再符合要求（不包含 T 中的所有字符了）。同时，每次增加 left，我们都要更新⼀轮结果。<br>4、重复第 2 和第 3 步，直到 right 到达字符串 S 的尽头。</p>
+<h2 id="3-滑动窗口解题模板"><a href="#3-滑动窗口解题模板" class="headerlink" title="3.滑动窗口解题模板"></a>3.滑动窗口解题模板</h2><pre><code>int left=0;
+int right=0;
+    while(right&lt;s.length()){
+        window.add(s.charAt(right));
+        right++;
+        while(valid){
+            window.remove(s.charAt(left));
+            left++;
+        }
+    }
+//valid是指window已经符合要求</code></pre><p>leetcode中使用到滑动窗口这一技巧的题目有：（3）无重复字符的最长子串</p>
+<h2 id="4-解题示例"><a href="#4-解题示例" class="headerlink" title="4.解题示例"></a>4.解题示例</h2><h3 id="4-1无重复字符的最长子串（leetcode-3-）"><a href="#4-1无重复字符的最长子串（leetcode-3-）" class="headerlink" title="4.1无重复字符的最长子串（leetcode 3 ）"></a>4.1无重复字符的最长子串（leetcode 3 ）</h3><p>题目描述：给定一个字符串，请你找出其中不含有重复字符的 最长子串的长度。<br>最开始解题时采用的解法：</p>
+<pre><code>class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        HashSet&lt;Character&gt; set=new HashSet&lt;&gt;();
+        int ans=0;
+        int i=0;
+        int j=0;
+        int n=s.length();
+        while(i&lt;n &amp; j&lt;n){
+            if(!set.contains(s.charAt(j))){
+                set.add(s.charAt(j++));
+                ans = Math.max(ans, j - i);
+            }else{
+                set.remove(s.charAt(i++));
+            }        
+        }
+        return ans;
+    }
+}</code></pre><p>套用模板的写法：</p>
+<pre><code>class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        HashSet&lt;Character&gt; window=new HashSet&lt;&gt;();
+        int n=s.length();
+        if(s==&quot; &quot;) return 1;
+        int left=0;
+        int right=0;
+        int max=0;
+        int len=0;
+        while(right&lt;s.length()){
+            window.add(s.charAt(right));
+            right++;
+            max=Math.max(max,right-left);
+            while(right&lt;s.length() &amp;&amp; window.contains(s.charAt(right))){
+                window.remove(s.charAt(left));
+                left++;
+            }
+        }
+        return max;
+    }
+}</code></pre><h3 id="4-2长度最小的子数组（leetcode-209-）"><a href="#4-2长度最小的子数组（leetcode-209-）" class="headerlink" title="4.2长度最小的子数组（leetcode 209 ）"></a>4.2长度最小的子数组（leetcode 209 ）</h3><p>题目描述：给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的连续子数组。如果不存在符合条件的连续子数组，返回 0。<br>第一次做的写法：</p>
+<pre><code>class Solution {
+    public int minSubArrayLen(int s, int[] nums) {
+        int sum=0;
+        int right=0;
+        int len=Integer.MAX_VALUE;
+        int left=0;
+        while(right&lt;nums.length){
+            if(sum+nums[right]&lt;s){
+                sum=sum+nums[right++];
+            }else{
+                len=Math.min(len,right-left+1);
+                sum=sum-nums[left];
+                left++; 
+            }
+        }
+        return len==Integer.MAX_VALUE?0:len;
+
+    }
+}</code></pre><p>套用模板的写法：</p>
+<pre><code>//时间复杂度O(2n)(O(n)),空间复杂度O(1);
+class Solution {
+    public int minSubArrayLen(int s, int[] nums) {
+        int n=nums.length;
+        int left=0;
+        int right=0;
+        int sum=0;
+        int min=Integer.MAX_VALUE;
+        while(right&lt;n){
+            sum+=nums[right];
+            right++;
+            while(sum&gt;=s){
+                min=Math.min(min,right-left);
+                sum-=nums[left];
+                left++;
+            }    
+        }
+        return min==Integer.MAX_VALUE?0:min;
+    }
+}</code></pre><h3 id="4-3字母异位词（leetcode-438-）"><a href="#4-3字母异位词（leetcode-438-）" class="headerlink" title="4.3字母异位词（leetcode 438 ）"></a>4.3字母异位词（leetcode 438 ）</h3><p>题目描述：给定一个字符串 s 和一个非空字符串 p，找到 s 中所有是 p 的字母异位词的子串，返回这些子串的起始索引。字符串只包含小写英文字母，并且字符串 s 和 p 的长度都不超过 20100。   </p>
+<pre><code>class Solution {
+    public List&lt;Integer&gt; findAnagrams(String s, String p) {
+        List&lt;Integer&gt; res = new ArrayList&lt;&gt;();
+        HashMap&lt;Character, Integer&gt; map = new HashMap&lt;&gt;();
+        for (Character c : p.toCharArray()) map.put(c, map.getOrDefault(c, 0) + 1);
+        HashMap&lt;Character, Integer&gt; window = new HashMap&lt;&gt;();
+        int left = 0; 
+        int right = 0; 
+        int valid = p.length(); 
+        while (right &lt; s.length()) {
+            if (map.containsKey(s.charAt(right))) {
+                window.put(s.charAt(right), window.getOrDefault(s.charAt(right), 0) + 1);
+                if (window.get(s.charAt(right)) &lt;= map.get(s.charAt(right))) {
+                    valid--;
+                }
+            }
+            while (valid == 0) {
+                if (right - left + 1 == p.length()) res.add(left);
+                if (map.containsKey(s.charAt(left))) {
+                    window.put(s.charAt(left), window.get(s.charAt(left)) - 1);
+                    if (window.get(s.charAt(left)) &lt; map.get(s.charAt(left))) {
+                        valid++;
+                    }
+                }
+                left++;
+            }
+            right++;
+        }
+        return res;
+    }
+}</code></pre><h3 id="4-4最小覆盖子串（leetcode-438-）"><a href="#4-4最小覆盖子串（leetcode-438-）" class="headerlink" title="4.4最小覆盖子串（leetcode 438 ）"></a>4.4最小覆盖子串（leetcode 438 ）</h3><p>题目描述：给你一个字符串 S、一个字符串 T，请在字符串 S 里面找出：包含 T 所有字母的最小子串。  </p>
+<pre><code>class Solution {
+    public String minWindow(String s, String t) {
+        int left=0;
+        int right=0;
+        int start=0;
+        int minlen=Integer.MAX_VALUE;
+        HashMap&lt;Character,Integer&gt; needs=new HashMap&lt;&gt;();
+        HashMap&lt;Character,Integer&gt; window=new HashMap&lt;&gt;();
+        //for(Character cha:t.toCharArray()) needs.put(cha,getOrDefault(cha,0)+1);
+        for (Character c : t.toCharArray()) needs.put(c, needs.getOrDefault(c, 0) + 1);
+        int match=0;
+        while(right&lt;s.length()){
+            char c1=s.charAt(right);
+            if(needs.containsKey(c1)){
+                window.put(c1,window.getOrDefault(c1,0)+1);
+                if(window.get(c1).compareTo(needs.get(c1))==0)
+                    match++;
+            }
+            right++;
+            while(match==needs.size()){
+                if(right-left&lt;minlen){
+                    start=left;
+                    minlen=right-left;
+                }
+                char c2=s.charAt(left);
+                if(needs.containsKey(c2)){
+                    window.put(c2,window.get(c2)-1);
+                    if(window.get(c2)&lt;needs.get(c2))
+                        match--;
+                }
+                left++;
+            }
+        }
+        return minlen==Integer.MAX_VALUE?&quot;&quot;:s.substring(start,minlen+start);
+    }
+}</code></pre>
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        打赏
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>版权声明： </strong s>
+              本博客所有文章除特别声明外，均采用 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" rel="external nofollow"
+                target="_blank">Apache License 2.0</a> 许可协议。转载请注明出处！
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/02/27/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E4%B8%93%E9%A2%98/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/03/02/%E4%BA%8C%E5%8F%89%E6%A0%91/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            leetcode二叉树 递归&lt;一&gt;
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/02/23/BFS%E6%90%9C%E7%B4%A2/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">BFS搜索</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: '',
+        app_key: '',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2015-2020
+        Aslan von
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Aslan&#39;s blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['夫风生于地，起于青苹之末', '诚则明矣，明则诚矣', '行胜于言'],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+
+    
+  </div>
+</body>
+
+</html>
